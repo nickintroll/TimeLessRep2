@@ -1,0 +1,144 @@
+Шины и диски | https://exist.ru//Catalog/Goods/1
+	Болты колёсные | https://exist.ru//Catalog/Goods/1/389 
+	Гайки колёсные | https://exist.ru//Catalog/Goods/1/605 
+	Диски колёсные, литые | https://exist.ru//Catalog/Goods/1/1 
+	Диски колесные, штампованные | https://exist.ru//Catalog/Goods/1/90 
+	Колпаки колесные | https://exist.ru//Catalog/Goods/1/700 
+	Колпачки на шинный вентиль | https://exist.ru//Catalog/Goods/1/939 
+	Кольца центровочные | https://exist.ru//Catalog/Goods/1/962 
+	Проставки колесного диска | https://exist.ru//Catalog/Goods/1/390 
+	Цепи противоскольжения | https://exist.ru//Catalog/Goods/1/574 
+	Чехлы для хранения колес | https://exist.ru//Catalog/Goods/1/995 
+	Шины всесезонные | https://exist.ru//Catalog/Goods/1/285 
+	Шины зимние | https://exist.ru//Catalog/Goods/1/284 
+	Шины летние | https://exist.ru//Catalog/Goods/1/2 
+	Шины мотоциклетные | https://exist.ru//Catalog/Goods/1/286 
+Автохимия | https://exist.ru//Catalog/Goods/7
+	Автокосметика | https://exist.ru//Catalog/Goods/7/216 
+	Автохимия | https://exist.ru//Catalog/Goods/7/311 
+	Антисептики | https://exist.ru//Catalog/Goods/7/968 
+	Ароматизаторы | https://exist.ru//Catalog/Goods/7/305 
+	Бытовая и прочая химия | https://exist.ru//Catalog/Goods/7/104 
+	Герметики | https://exist.ru//Catalog/Goods/7/810 
+	Жидкости гидравлические | https://exist.ru//Catalog/Goods/7/857 
+	Жидкости для омывателя стекла | https://exist.ru//Catalog/Goods/7/339 
+	Жидкости охлаждающие | https://exist.ru//Catalog/Goods/7/174 
+	Жидкости тормозные | https://exist.ru//Catalog/Goods/7/304 
+	Клей | https://exist.ru//Catalog/Goods/7/218 
+	Масла компрессора кондиционера | https://exist.ru//Catalog/Goods/7/397 
+	Масла моторные | https://exist.ru//Catalog/Goods/7/3 
+	Масла прочие | https://exist.ru//Catalog/Goods/7/858 
+	Масла трансмиссионные | https://exist.ru//Catalog/Goods/7/303 
+	Раствор мочевины | https://exist.ru//Catalog/Goods/7/1040 
+	Смазки | https://exist.ru//Catalog/Goods/7/223 
+Все для малярных работ | https://exist.ru//Catalog/Goods/35
+	Грунтовки | https://exist.ru//Catalog/Goods/35/970 
+	Карандаши подкрасочные | https://exist.ru//Catalog/Goods/35/812 
+	Краски аэрозольные | https://exist.ru//Catalog/Goods/35/813 
+	Краски прочие | https://exist.ru//Catalog/Goods/35/222 
+	Краскопульты и оснастка  | https://exist.ru//Catalog/Goods/35/1015 
+	Лаки | https://exist.ru//Catalog/Goods/35/814 
+	Малярный инструмент | https://exist.ru//Catalog/Goods/35/1013 
+	Растворители и отвердители | https://exist.ru//Catalog/Goods/35/974 
+	Расходные материалы для малярных работ | https://exist.ru//Catalog/Goods/35/1014 
+	Средства индивидуальной защиты | https://exist.ru//Catalog/Goods/35/997 
+Автоэлектроника | https://exist.ru//Catalog/Goods/15
+	DVD-Чейнджеры | https://exist.ru//Catalog/Goods/15/888 
+	FM-модуляторы, контроллеры | https://exist.ru//Catalog/Goods/15/351 
+	Автоакустика коаксиальная | https://exist.ru//Catalog/Goods/15/886 
+	Автоакустика компонентная | https://exist.ru//Catalog/Goods/15/887 
+	Автомагнитолы | https://exist.ru//Catalog/Goods/15/345 
+	Антенны | https://exist.ru//Catalog/Goods/15/360 
+	Батарейки | https://exist.ru//Catalog/Goods/15/302 
+	Видеорегистраторы | https://exist.ru//Catalog/Goods/15/344 
+	Динамик | https://exist.ru//Catalog/Goods/15/355 
+	Кабели и адаптеры | https://exist.ru//Catalog/Goods/15/366 
+	Камеры заднего вида | https://exist.ru//Catalog/Goods/15/369 
+	Контроллеры AV и модули расширения | https://exist.ru//Catalog/Goods/15/358 
+	Ксенон, подсветка, спецсигналы | https://exist.ru//Catalog/Goods/15/372 
+	Мониторы и телевизоры | https://exist.ru//Catalog/Goods/15/353 
+	Накидка с подогревом | https://exist.ru//Catalog/Goods/15/947 
+	Отделочные материалы | https://exist.ru//Catalog/Goods/15/362 
+	Охранные системы | https://exist.ru//Catalog/Goods/15/352 
+	Парковочные радары | https://exist.ru//Catalog/Goods/15/371 
+	Провода прикуривания | https://exist.ru//Catalog/Goods/15/938 
+	Прочая автотехника | https://exist.ru//Catalog/Goods/15/361 
+	Пылесосы автомобильные | https://exist.ru//Catalog/Goods/15/937 
+	Радар-детекторы | https://exist.ru//Catalog/Goods/15/368 
+	Рации и принадлежности | https://exist.ru//Catalog/Goods/15/1019 
+	Сабвуферы | https://exist.ru//Catalog/Goods/15/356 
+	Сигналы звуковые | https://exist.ru//Catalog/Goods/15/375 
+	Силовые конденсаторы | https://exist.ru//Catalog/Goods/15/350 
+	Усилители автомобильные | https://exist.ru//Catalog/Goods/15/354 
+	Холодильник | https://exist.ru//Catalog/Goods/15/575 
+Аксессуары | https://exist.ru//Catalog/Goods/22
+	Аксессуары для автотехники | https://exist.ru//Catalog/Goods/22/363 
+	Аксессуары для мобильных устройств | https://exist.ru//Catalog/Goods/22/912 
+	Аптечки первой помощи | https://exist.ru//Catalog/Goods/22/582 
+	Багажные системы | https://exist.ru//Catalog/Goods/22/959 
+	Бокс автомобильный | https://exist.ru//Catalog/Goods/22/883 
+	Брелоки | https://exist.ru//Catalog/Goods/22/106 
+	Брызговики | https://exist.ru//Catalog/Goods/22/297 
+	Воронки для топлива и масла | https://exist.ru//Catalog/Goods/22/1012 
+	Детские автокресла | https://exist.ru//Catalog/Goods/22/316 
+	Домкраты | https://exist.ru//Catalog/Goods/22/21 
+	Знак аварийной остановки | https://exist.ru//Catalog/Goods/22/576 
+	Зонты | https://exist.ru//Catalog/Goods/22/918 
+	Игрушки | https://exist.ru//Catalog/Goods/22/933 
+	Канистры | https://exist.ru//Catalog/Goods/22/921 
+	Канцтовары | https://exist.ru//Catalog/Goods/22/919 
+	Коврики багажника | https://exist.ru//Catalog/Goods/22/818 
+	Коврики салона | https://exist.ru//Catalog/Goods/22/272 
+	Колпаки колесные | https://exist.ru//Catalog/Goods/22/700 
+	Колпачки на шинный вентиль | https://exist.ru//Catalog/Goods/22/939 
+	Кошельки/сумки | https://exist.ru//Catalog/Goods/22/952 
+	Манометры шинные | https://exist.ru//Catalog/Goods/22/942 
+	Масштабные модели | https://exist.ru//Catalog/Goods/22/384 
+	Наборы автомобилиста | https://exist.ru//Catalog/Goods/22/915 
+	Насосы для подкачки шин | https://exist.ru//Catalog/Goods/22/936 
+	Огнетушители | https://exist.ru//Catalog/Goods/22/907 
+	Оплетки на руль | https://exist.ru//Catalog/Goods/22/948 
+	Органайзер | https://exist.ru//Catalog/Goods/22/581 
+	Посуда | https://exist.ru//Catalog/Goods/22/916 
+	Рамки номерного знака | https://exist.ru//Catalog/Goods/22/928 
+	Ребенок в автомобиле | https://exist.ru//Catalog/Goods/22/382 
+	Сигнальные жилеты | https://exist.ru//Catalog/Goods/22/583 
+	Скребки и щетки | https://exist.ru//Catalog/Goods/22/924 
+	Товары для животных | https://exist.ru//Catalog/Goods/22/1001 
+	Тросы буксировочные | https://exist.ru//Catalog/Goods/22/578 
+	Фары дополнительного освещения | https://exist.ru//Catalog/Goods/22/489 
+	Флэш-накопители | https://exist.ru//Catalog/Goods/22/913 
+	Фонари и переноски  | https://exist.ru//Catalog/Goods/22/945 
+	Часы наручные | https://exist.ru//Catalog/Goods/22/931 
+	Чехлы на сидения автомобиля | https://exist.ru//Catalog/Goods/22/941 
+	Шторка солнцезащитная | https://exist.ru//Catalog/Goods/22/731 
+Автозапчасти | https://exist.ru//Catalog/Goods/2
+	Стандартные части | https://exist.ru//Catalog/Goods/20 
+	Электрооборудование | https://exist.ru//Catalog/Goods/5 
+Инструмент | https://exist.ru//Catalog/Goods/6
+	Все для сада | https://exist.ru//Catalog/Goods/36 
+	Оснастка | https://exist.ru//Catalog/Goods/37 
+	Пневматический инструмент | https://exist.ru//Catalog/Goods/38 
+	Ручной инструмент | https://exist.ru//Catalog/Goods/16 
+	Электроинструмент | https://exist.ru//Catalog/Goods/8 
+Все для автосервиса | https://exist.ru//Catalog/Goods/12
+	Оборудование для сервиса | https://exist.ru//Catalog/Goods/10 
+	Профессиональная автохимия | https://exist.ru//Catalog/Goods/11 
+Литература и ПО | https://exist.ru//Catalog/Goods/33
+	Книги и руководства | https://exist.ru//Catalog/Goods/33/294 
+	Программное обеспечение | https://exist.ru//Catalog/Goods/33/150 
+Одежда и экипировка | https://exist.ru//Catalog/Goods/24
+	Аксессуары для одежды | https://exist.ru//Catalog/Goods/24/951 
+	Головные уборы | https://exist.ru//Catalog/Goods/24/927 
+	Комбинезон | https://exist.ru//Catalog/Goods/24/331 
+	Куртки | https://exist.ru//Catalog/Goods/24/329 
+	Обувь | https://exist.ru//Catalog/Goods/24/873 
+	Одежда | https://exist.ru//Catalog/Goods/24/580 
+	Очки | https://exist.ru//Catalog/Goods/24/1033 
+	Перчатки | https://exist.ru//Catalog/Goods/24/330 
+	Футболки и поло | https://exist.ru//Catalog/Goods/24/926 
+	Часы наручные | https://exist.ru//Catalog/Goods/24/931 
+	Шлемы | https://exist.ru//Catalog/Goods/24/328 
+Велосипеды и самокаты | https://exist.ru//Catalog/Goods/34
+	Велосипеды | https://exist.ru//Catalog/Goods/34/969 
+	Самокаты | https://exist.ru//Catalog/Goods/34/1004 

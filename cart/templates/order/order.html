@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div>
+	<div class="centered product-item " style="padding: 1rem;">
+		<h3 style="color: black">
+			Заказ #{{ order.slug }}
+		</h3>
+		<br>
+		
+		<div style="padding-left: 0.5rem;">
+			<div>
+				Мы получили сообщение о вашем заказе и <br> вскоре с вами свяжемся.
+			</div>
+			<div>
+				Вы можете проверять заказ по этой ссылке.
+			</div>
+			<div>
+				Вы сможете дополнить заказ в процессе <br> общения и добавленный товар отобразиться <br> тут.
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="check-bill centered">
+		<h2>Ваш заказ</h2>
+
+		<div class="check-list">
+			<div class="grid-4-cols">
+				{% for prod in order %}
+						<div class="product-block-span-3 attrib-dotts">
+							<div>
+								<a href="{{ prod.product.get_absolute_url }}">
+									<strong>
+										{{ prod.product.title }}
+									</strong>
+								</a> x {{ prod.quantity }}
+							</div>
+							<div class="dots">
+							</div>
+						</div>
+						<div>
+							{{ prod.get_total_price }}г
+						</div>	
+				{% endfor %}
+			</div>
+		</div>
+		<div class="grid-4-cols">
+			<div class="product-block-span-3 attrib-dotts">
+				<div>
+					<strong>
+						Общий вес
+					</strong>
+				</div>
+				<div class="dots">
+				</div>
+			</div>
+			<div>
+				<strong>
+					{{ order.get_total_price }}г
+				</strong>
+			</div>	
+		</div>
+	</div>
+
+
+</div>
+{% endblock %}

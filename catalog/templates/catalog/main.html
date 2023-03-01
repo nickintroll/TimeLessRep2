@@ -1,0 +1,201 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block headscripts %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% endblock %}
+
+
+{% block content %}
+<div class="content-width catalog-grid-meta" style="text-align: center;">
+	<div style="text-align: left;">
+		<div class="centered-on-phone" style="position: relative;">
+			<form method="GET" class="catalog-search-thing">
+				{{ form.request }}
+				{% csrf_token %}
+				<input type="submit" value="Поиск" class="btn">
+			</form>
+			<div id="suggestions">
+			</div>
+		</div>	
+		<div>
+			<h3>
+				<a href="{% url 'catalog:catalog' %}">
+					Все товары
+				</a>
+			</h3> 
+		</div>
+	
+		{% for cat in categories %}
+		<div class="meta-category">
+			<div class="category-closer">></div>
+			<div class="category">
+				<h4 class="dif-font-h4">
+					<a href="{% url 'catalog:category' cat.slug %}">{{ cat }}</a>
+				</h4>	
+			</div>
+			<div class="subcategory-keeper hidden">
+				{% for sub in cat.kids.all %}
+					<div>
+						<a href="{{ sub.get_absolute_url }}">
+							{{ sub.name }}
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="catalog-catalog">
+		<div>
+			<div>
+				Кол-во: <span id="posit_counter">{{ total_names|length }}</span>
+			</div>
+			<div class="catalog-catalog-grid infinite-container">
+				{% for prod in object_list %}
+				<div class="product-item infinite-item">
+					<h3 class="product-title">
+						<a href="{{ prod.get_absolute_url }}">{{ prod.title }}</a>
+					</h3>
+
+					<div class="product-image">
+						<img src="{{ prod.images.all.0.image.url }}" alt="">
+					</div>
+					<div class="productvendor-code">
+						{{ prod.vendor_code }}
+					</div>
+					<div class="product-descript">
+						{% if prod.description %}
+						{{ prod.description|truncatechars:50 }}
+						{% else %}
+						Без описания
+						{% endif %}
+					</div>
+					<div class="product-price">
+						{% if prod.weight %}
+						{{ prod.weight }} g
+						{% else %}
+						- g
+						{% endif %}
+					</div>
+				</div>
+			{% empty %}
+				<div>
+					No results for this queryset
+				</div>
+			{% endfor %}
+			</div>				
+		</div>
+		{% if page_obj.has_next %}
+			<h3>
+				<a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">Loading...</a>
+			</h3>
+		
+		{% endif %}
+			
+
+	</div>
+	
+
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+	var pool = [];
+	var search_field = document.getElementById('id_request');
+	var suggestions_pool = document.getElementById('suggestions');
+
+	// fill pull with search stuff
+	{% for title in total_names %}
+		if (pool.includes('{{ title }}'.split(' ')[0]) == false){
+			pool.push(
+				'{{ title }}'.split(' ')[0]
+			);
+		}
+	{% endfor %}
+	console.log(pool)
+
+	const fill_search_field = function(e) {
+		search_field.value=e.innerHTML
+	}
+
+
+	const search_engine = function(event) {
+		// get var from field
+		var req = search_field.value;
+		var suggestions = [];
+		var result = '';
+
+		// list suggestions
+		for (let i=0; i<pool.length; i++) {
+			if (pool[i].toLowerCase().includes(req.toLowerCase())){
+				suggestions.push(pool[i])
+			};
+		};
+
+		// if req is not empty and there are variants
+		// console.log(req);
+		if (pool.length != suggestions.length && suggestions.length != 0) {
+			// make html
+			for (let i=0; i<suggestions.length; i++) {
+				result += '<div class="search-variant" onclick="fill_search_field(this)">'+ suggestions[i] +'</div>';
+			};
+		};
+
+		// display suggestions, clean or fill
+		suggestions_pool.innerHTML = result;
+	};
+
+	search_field.addEventListener('propertychange', search_engine)
+	search_field.addEventListener('input', search_engine)
+	
+</script>
+
+<script>
+	var meta_cats = document.getElementsByClassName('meta-category');
+	var buts = document.getElementsByClassName('category-closer');
+
+	var open_category = function(e) {
+		let but = e.target;
+			let subs = but.parentElement.getElementsByClassName('subcategory-keeper')[0];
+
+			if (but.classList.contains('category-closer-activaited')) {
+				but.classList.remove('category-closer-activaited');
+			} else {
+				but.classList.add('category-closer-activaited');
+			};
+
+			if (subs.classList.contains('hidden')) {
+				subs.classList.remove('hidden');
+			} else {
+				subs.classList.add('hidden');
+			};
+	}
+
+	for (i=0; i < buts.length; i++) {
+		buts[i].onclick = open_category;
+	}
+</script>
+
+<script src="/static/js/jquery-2.2.4.min.js"></script>
+<script src="/static/js/jquery.waypoints.min.js"></script>
+<script src="/static/js/infinite.min.js"></script>
+
+
+<script>
+	var infinite = new Waypoint.Infinite({
+		element: $('.infinite-container')[0],
+		offset: 'bottom-in-view',
+		onBeforePageLoad: function (){
+			console.log('BeforeLoad')
+		},
+		onAfterPageLoad: function (){
+			console.log('AfterLoad')
+		},
+	})
+		
+</script>
+{% endblock %}

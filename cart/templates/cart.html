@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block tab_title %}
+	Корзина
+{% endblock %}
+
+
+{% block content %}
+<div class="content-width">
+	<a href="{% url 'catalog:catalog' %}">
+		<h4 class="lil-red-but">	
+			в магазин
+		</h4>	
+	</a>
+</div>
+<br>
+<div class="inline-bastards centered">
+	<div>
+		<table class="cart-table light-shadow">
+			<tr>
+				<th>
+					<h3>
+						Название
+					</h3>
+				</th>
+				<th class="display--only-on-desk">
+					<h3>
+						Артикуль
+					</h3>
+				</th>
+				<th>
+					<h3>
+						Кол-во
+					</h3>
+				</th>
+				<th>
+					<h3>
+						Вес
+					</h3>
+				</th>
+				<th>
+					<h3>
+						Общий вес
+					</h3>
+				</th>					
+			</tr>
+			{% for prod in cart %}
+				<tr>
+					<td>
+						<h3>
+							{{ prod.product.title }}
+						</h3>
+					</td>
+					<td class="display--only-on-desk">
+						<h4 style="color: gray;">
+							{{ prod.product.vendor_code }}
+						</h4>
+					</td>
+					<td>
+						<form action="{% url 'cart:cart_add' prod.product.id %}" method="post">
+							{{ prod.update_quantity_form.quantity }}{{ prod.update_quantity_form.override }} {% csrf_token %}
+							<input type="submit" value="Сохранить">
+						</form> 	
+					</td>
+					<td>
+						{% if prod.product.weight %}
+							{{ prod.product.weight }} g
+						{% else %}
+							- 
+						{% endif %}
+					</td>
+					<td>
+						<strong>
+							{{ prod.total_price }} g
+						</strong>
+					</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<td>
+					<strong>
+						Общий вес
+					</strong>
+				</td>
+				<td>
+					{{ cart.get_total_price }} g
+				</td>
+			</tr>
+
+		</table>
+	</div>
+	<div class="cart-finih-block light-shadow">
+		<div>
+			Отправьте запрос, наша команда свяжется с вами и сможет оформить заказ по собранному вами запросу. 
+		</div>
+		<a href="{% url 'cart:create_order' %}">
+			<div class="stick-to-bottom-left finish-cart-button">
+				Отправить запрос
+			</div>
+		</a>
+	</div>
+</div>
+{% endblock %}

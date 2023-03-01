@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block tab_title %}
+	Сохранить запрос
+{% endblock %}
+
+{% block content %}
+<div class="inline-bastards centered">
+	<div class="product-item tight-block" style="margin-right: 3rem;">
+		<div>
+			<h1>
+				Заполните заказ
+			</h1>
+			<br>
+			<div>
+				Оставьте ваши контактные данные, мы получим ваш запрос и свяжемся с вами и оформим заказ. 
+			</div>
+		</div>
+		<form method="post">
+			<div class="form-tight">
+				{{ form }}
+				{% csrf_token %}
+			</div>
+			<br>
+			<div>
+				<input type="submit" value="Отправить" class="stick-to-bottom-left finish-cart-button">
+			</div>
+		</form>
+	</div>
+	
+
+	<div class="check-bill">
+		<h2>Чек....</h2>
+		<div>Список из вашей корзины:</div>
+		<div class="check-list">
+			<div class="grid-4-cols">
+				{% for prod in cart %}
+						<div class="product-block-span-3 attrib-dotts">
+							<div>
+								{{ prod.product.title }} x {{ prod.quantity }}
+							</div>
+							<div class="dots">
+							</div>
+						</div>
+						<div>
+							{{ prod.total_price }}г
+						</div>	
+				{% endfor %}
+			</div>
+		</div>
+		<div class="grid-4-cols">
+			<div class="product-block-span-3 attrib-dotts">
+				<div>
+					Общий вес
+				</div>
+				<div class="dots">
+				</div>
+			</div>
+			<div>
+				{{ cart.get_total_price }}г
+			</div>	
+		</div>
+	</div>
+</div>
+
+{% endblock %}

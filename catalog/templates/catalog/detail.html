@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="content-width">
+	<a href="{% url 'catalog:catalog' %}">
+		<h4 class="lil-red-but">
+			в магазин
+		</h4>
+	</a>
+</div>
+<div class="product-detail-block">
+	<div class=" product-block-span-2">
+		<div id="product-detail-photo">
+			<img src="{{ product.images.all.0.image.url }}" alt="">
+		</div>
+		<div class=" product-detail--photos-list">
+			{% for img in product.images.all %}
+			<div>
+				<img src="{{ img.image.url }}" alt="">
+			</div>
+			{% empty %}
+			{% endfor %}
+		</div>	
+		<div>
+			<div class="display--only-on-desk paddin-1rem">
+				<h3>
+					Описание
+				</h3>
+				{%  if product.description %}
+					{{ product.description }}
+				{% else %}
+					Нет описания
+				{% endif %}
+			</div>
+	
+		</div>
+	</div>
+	<div class="product-block-span-2">
+		<h2>
+			{{ product.title|title }}
+		</h2>
+		<div class="productvendor-code">
+			{{ product.vendor_code }}
+		</div>
+		<div class="inline-bastards">
+			<div>
+				<form action="{% url 'cart:cart_add' product.id %}" method='post' class="inline-bastards">
+					<div>
+						<input type="submit" value="Добавить в корзину" class="add-to-cart">
+					</div>
+					<div>
+						{{ form }}
+						{% csrf_token %}
+					</div>
+
+				</form>
+			</div>	
+			<div class="margin-100-desk-30-phone">
+				<strong>{{ product.weight }} грамм</strong>
+			</div>
+			
+		</div>
+		<div class="gray-back-lil-push">
+			<h3>
+				Параметры
+			</h3>
+			<div class="two-columns">
+				{% for par in product.attributes.all %}
+					<div class="attrib-dotts">
+						<div>
+							{{ par.name }}
+						</div>
+						<div class="dots">
+						</div>
+					</div> 
+					<div>
+						{{ par.value|truncatechars:35 }}
+					</div>
+				{% empty %}
+					--
+				{% endfor %}
+			</div>
+		</div>
+		<div class="display--only-on-phone paddin-1rem">
+			<h3>
+				Описание
+			</h3>
+			{%  if product.description %}
+				{{ product.description }}
+			{% else %}
+				Нет описания
+			{% endif %}
+		</div>
+		
+	</div>
+</div>
+
+<script>
+	var photo_place = document.getElementById('product-detail-photo').getElementsByTagName('img')[0];
+	var photos_list = document.getElementsByClassName('product-detail--photos-list')[0].getElementsByTagName('img');
+
+	for (let i=0; i < photos_list.length; i++) {
+
+		photos_list[i].onclick = function(e) {
+			photo_place.src = e.target.src;
+		}
+
+	}
+
+</script>
+{% endblock %}

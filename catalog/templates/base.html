@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<title>
+		{% block tab_title %}
+			Zapchasty
+		{% endblock %}
+	</title>
+</head>
+<body>
+<div class="header">
+	<div class="header-in content-width">
+		<div class="title">
+			<h2>
+				Запчасти из дубаи
+			</h2>	
+		</div>
+		<div class="header-center">
+			<a href="https://t.me/proglobalwork">@Proglobalwork</a>
+		</div>
+		<div class="cart-button" style=" float: right; margin-right: 30px;">
+			<a href="{% url 'cart:cart' %}">
+				<div class="inline-bastards">
+					<div style="vertical-align: bottom;">
+						<svg viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="cart-svg">
+							<path fill="orange" class="svg-fill-primary" d="M67.6,57.5c1.51,0,2.9-.85,3.57-2.21l14.11-28.1c.62-1.24,.55-2.71-.18-3.89-.72-1.18-2.01-1.9-3.4-1.9H30.09l-.77-3.87c-.37-1.88-2.01-3.23-3.92-3.23h-7.1c-2.21,0-4,1.79-4,4s1.79,4,4,4h3.81l.75,3.8c.01,.06,.02,.11,.03,.16l5.17,25.92-6.56,6.56c-2.95,2.9-3,7.65-.11,10.61,.29,.3,.61,.57,.94,.81-.6,1.36-.93,2.86-.93,4.44,0,6.07,4.93,11,11,11s11-4.93,11-11c0-1.04-.15-2.05-.42-3h14.04c-.28,.95-.42,1.96-.42,3,0,6.07,4.93,11,11,11s11-4.93,11-11-4.93-11-11-11H27.96l6.1-6.1h33.54Zm0,14.1c1.65,0,3,1.35,3,3s-1.35,3-3,3-3-1.35-3-3,1.35-3,3-3Zm-35.2,0c1.65,0,3,1.35,3,3s-1.35,3-3,3-3-1.35-3-3,1.35-3,3-3ZM75.22,29.4l-10.09,20.1h-29.45l-4-20.1h43.54Z">
+							</path>
+							<polygon fill="gray" class="svg-fill-primary" opacity=".5" points="75.22 29.4 65.13 49.5 35.68 49.5 31.68 29.4 75.22 29.4">
+							</polygon>
+						</svg>
+					</div>
+					<div style="margin-top: 0.4rem;">
+						<h4>
+							Корзина
+						</h4>	
+					</div>	
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+{% block content %}
+{% endblock %}
+
+<div class="bottom-page">
+	<div class="centered inline-bastards">
+		<div style="margin-right: 5rem;">
+			<h2>
+				Контакты
+			</h2>
+			<ul>
+				<li>
+					Телеграм: <a href="https://t.me/proglobalwork">@Proglobalwork</a>
+				</li>
+				<li>
+					Номер: +7 978 57 344 58  
+				</li>
+			</ul>
+		</div>
+		<div>
+			<h2>
+				Про Нас
+			</h2>
+			<ul>
+				<li>
+					Мы занимаемся заказной закупкой  <br> 
+					и поставкой запчастей в Россию
+				</li>
+				<li>
+					Закупаем запчасти в Дубае и Европе
+				</li>
+				<li>
+					Заказ делается в формате общения
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+</body>
+{% block js %}
+{% endblock %}
+</html>
