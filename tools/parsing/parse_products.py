@@ -23,20 +23,24 @@ def get_products_list(category: dict, session: HTMLSession, file):
 	try:
 		last_page = req.html.element('#ctl00_ctl00_b_b_ucPagerHead')[0].cssselect('a')[-1].text
 	except IndexError:
-		print('Could not find last page number, skip')
-		return 
+		last_page = 5;
+		# print('Could not find last page number, skip')
+		# return 
 
 	for page_num in range(1, int(last_page) +1):
 		req = session.get(category['url'].replace('_', str(page_num)))
 
-		print('page_number: ', page_num)
-
-		for i in req.html.element('.catheader'):
-			print(category['title'],' | ', 'https://exist.ru/'+i.attrib['href'])
-			file.write(f"{category['title']} | https://exist.ru/{i.attrib['href']} \n")
-		
-		if page_num == 3:
+		if req.status_code == 404:
 			break
+		else:
+			print('page_number: ', page_num)
+	
+			for i in req.html.element('.catheader'):
+				print(category['title'],' | ', 'https://exist.ru/'+i.attrib['href'])
+				file.write(f"{category['title']} | https://exist.ru/{i.attrib['href']} \n")
+			
+			if page_num == 5:
+				break
 
 
 
@@ -50,9 +54,10 @@ if __name__ == '__main__':
 	print(f"____________________________\ntotal_categories: {len(categories)}")
 	
 
-	session = HTMLSession()
-	with open('prods.txt', 'w+') as file:
-		for category in categories:
-			print('collecting category: ', category['title'], '(', category['url'], ')')
-			prods = get_products_list(category, session, file)
+	# session = HTMLSession()
+	# with open('prods.txt', 'w+') as file:
+		# for category in categories:
+			# print('collecting category: ', category['title'], '(', category['url'], ')')
+			# prods = get_products_list(category, session, file)
 					
+

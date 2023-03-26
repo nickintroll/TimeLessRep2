@@ -9,13 +9,6 @@ from django.core.files.temp import NamedTemporaryFile
 
 from django.db.utils import IntegrityError
 
-
-def load_prod_to_db(product, category):
-	prod = Product()
-	prod.save()
-	return
-
-
 def clean(line: str):
 	return line.replace('\\t', '').replace('\\r', '').replace('\t', '').replace('\r', '').replace('\\n', '').replace('\n', '')
 
@@ -24,6 +17,10 @@ def collect_data(url, session:HTMLSession, category: SubCategory):
 	prod = {}
 	req = session.get(url)
 
+	if req.status_code != 200:
+		req = session.get(url)
+		if req.status_code != 200:
+			return None
 	print(url)
 	try:
 		prod['title'] = clean(req.html.element('.fn.identifier')[0].text)
@@ -43,33 +40,46 @@ def collect_data(url, session:HTMLSession, category: SubCategory):
 	prod['weight'] = ''
 	prod['vendor_code'] = ''
 
-	attr = [i for i in req.html.element('div.ZeForm.item_des')[0].getchildren() if i.tag =='div']
+	try:
+		attr = [i for i in req.html.element('div.ZeForm.item_des')[0].getchildren() if i.tag =='div']
 
-	for i in attr:
-		name = clean(i.cssselect('div > span')[0].text)
+		for i in attr:
+			name = clean(i.cssselect('div > span')[0].text)
 
-		if 'вес' in name.lower():
-			prod['weight'] = clean([a for a in i.getchildren() if a.tag =='span'][0].text)
-		elif 'артикул' in name.lower():
-			prod['vendor_code'] = clean([a for a in i.getchildren() if a.tag =='span'][0].text)
-		else:	
-			prod['attributes'].append({
-				'name': name,
-				'value': clean([a for a in i.getchildren() if a.tag =='span'][0].text),
-			})
-	
+			if 'вес' in name.lower():
+				prod['weight'] = clean([a for a in i.getchildren() if a.tag =='span'][0].text)
+			elif 'артикул' in name.lower():
+				vendor = [a for a in i.getchildren() if a.tag =='span'][0].text
+				if  vendor == None:
+					print('could not get attribute:', name)
+					vendor = i.text_content().replace(name, '')
+
+				prod['vendor_code'] = clean(vendor)
+			else:
+				try: 
+					prod['attributes'].append({
+						'name': name,
+						'value': clean([a for a in i.getchildren() if a.tag =='span'][0].text),
+					})
+				except:
+					print('missing attribute: ', name)
+	except IndexError:
+		print('ok..')
+
+
 	photo = req.html.element('.photo')[0]
-	if len(photo.getchildren()):
-		if photo.getchildren()[0].cssselect('img')[0].attrib['src']:
-			prod['images'].append(
-				'http://exist.ru/' + photo.cssselect('img')[0].attrib['src']
-			)
-
-		if len(photo.getchildren()) != 1:
-			for i in photo.getchildren()[1].cssselect('a'):
+	if len(photo.getchildren()) != 0:
+		if len(photo.getchildren()[0].cssselect('img')) != 0:
+			if photo.getchildren()[0].cssselect('img')[0].attrib['src']:
 				prod['images'].append(
-					'http://exist.ru/' + i.attrib['href']
+					'http://exist.ru/' + photo.cssselect('img')[0].attrib['src']
 				)
+
+			if len(photo.getchildren()) != 1:
+				for i in photo.getchildren()[1].cssselect('a'):
+					prod['images'].append(
+						'http://exist.ru/' + i.attrib['href']
+					)
 	
 
 	return prod
@@ -82,6 +92,9 @@ def main():
 	for prod in prods:
 		c += 1
 		print('prod#', c)
+
+		if c < 3691:
+			continue
 
 		category = SubCategory.objects.all().filter(Q(name__contains=clean(prod.split('|')[0]).strip()))[0]
 		prod = collect_data(clean(prod.split('|')[1]).replace(' ', '').replace('exist.ru/', 'exist.ru'), session, category)
@@ -117,7 +130,7 @@ def main():
 						img_tmp.flush()
 						
 						img = File(img_tmp)
-						img.name='/'.join(img.name.split('/')[-1])
+						img.name=img.name.split('/')[-1]
 						
 						Photo(product=product, image=img).save()
 

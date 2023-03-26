@@ -5,7 +5,7 @@ import json
 def get_categories(session: HTMLSession, file):
 	req = session.get('https://exist.ru/Catalog/Goods/')
 
-	cats = req.html.delement('div#ajaxupdatepanel')[0].cssselect('div.title')
+	cats = req.html.element('div#ajaxupdatepanel')[0].cssselect('div.title')
 	subcats = req.html.element('div#ajaxupdatepanel')[0].cssselect('div.ucatlist')
 	for cat in range(len(cats)):
 		cat_title = cats[cat].cssselect('a')[1].text
@@ -27,5 +27,5 @@ def get_categories(session: HTMLSession, file):
 if __name__ == '__main__':
 	session = HTMLSession()
 
-	with open('categories.txt', 'w+') as file:
-		get_categories(session, file)
+	# with open('categories.txt', 'w+') as file:
+		# get_categories(session, file)

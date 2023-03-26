@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 	# installed tools
+	'pg_copy',	# for coping bd
 
 	# created apps
 	'catalog',

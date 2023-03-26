@@ -58,12 +58,12 @@ class Product(models.Model):
 	category = models.ForeignKey(SubCategory, related_name='products', on_delete=models.CASCADE)
 
 	title = models.CharField(max_length=100, db_index=True)
-	slug = models.SlugField(max_length=150, db_index=True, unique=True)
-
-	vendor_code = models.CharField(max_length=100, unique=True)	
-	available = models.BooleanField(default=True)
 	description = models.TextField()
 	weight = models.CharField(max_length=100, unique=True)
+	vendor_code = models.CharField(max_length=100, unique=True)	
+
+	slug = models.SlugField(max_length=150, db_index=True, unique=True)
+	available = models.BooleanField(default=True)
 	
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
