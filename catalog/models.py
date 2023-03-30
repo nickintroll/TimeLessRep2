@@ -59,7 +59,7 @@ class Product(models.Model):
 
 	title = models.CharField(max_length=100, db_index=True)
 	description = models.TextField()
-	weight = models.CharField(max_length=100, unique=True)
+	weight = models.CharField(max_length=100)
 	vendor_code = models.CharField(max_length=100, unique=True)	
 
 	slug = models.SlugField(max_length=150, db_index=True, unique=True)
@@ -80,7 +80,8 @@ class Product(models.Model):
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(unidecode(self.title))
-
+		if len(Product.objects.all().filter(slug=self.slug)) != 0:
+			self.slug = slugify(unidecode(self.title)) + get_random_string(10) 
 		return super().save(*args, **kwargs)
 
 

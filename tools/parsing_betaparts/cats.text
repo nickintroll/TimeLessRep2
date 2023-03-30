@@ -1,0 +1,17 @@
+# cats:
+
+res = []
+
+for (i=0; i<subs.length; i++) {
+	item = subs[i];
+	if (item.getElementsByClassName('sub-menu').length != 0){
+		item = item.getElementsByTagName('a')[0]
+		res.push({
+			'name': item.textContent,
+			'href': item['href']
+		})
+	}
+}
+
+categories = [{"name":"Body components","href":"https://www.betaautoparts.com/product_parts/body-components/"},{"name":"Grille","href":"https://www.betaautoparts.com/product_parts/grille/"},{"name":"Bumpers","href":"https://www.betaautoparts.com/product_parts/bumpers/"},{"name":"Mirrors","href":"https://www.betaautoparts.com/product_parts/mirrors/"},{"name":"Spoilers","href":"https://www.betaautoparts.com/product_parts/spoilers/"},{"name":"Fenders","href":"https://www.betaautoparts.com/product_parts/fenders/"},{"name":"Engine hoods (Bonnet)","href":"https://www.betaautoparts.com/product_parts/engine-hoods-bonnet/"},{"name":"Door","href":"https://www.betaautoparts.com/product_parts/door/"},{"name":"Lighting and signaling system","href":"https://www.betaautoparts.com/product_parts/lighting-and-signaling-system/"},{"name":"Headlamps","href":"https://www.betaautoparts.com/product_parts/headlights-headlamps/"},{"name":"Tail Lamps","href":"https://www.betaautoparts.com/product_parts/tail-lights-tail-lamps/"},{"name":"Signal Lamps","href":"https://www.betaautoparts.com/product_parts/signal-lights/"},{"name":"Engine Cooling System","href":"https://www.betaautoparts.com/product_parts/engine-cooling-system/"},{"name":"Radiators","href":"https://www.betaautoparts.com/product_parts/radiators/"},{"name":"Air conditioning (A/C)","href":"https://www.betaautoparts.com/product_parts/air-conditioning-a-c/"},{"name":"Heating / Ventilation","href":"https://www.betaautoparts.com/product_parts/heating-ventilation/"},{"name":"Exhaust System","href":"https://www.betaautoparts.com/product_parts/exhaust-system/"},{"name":"Electrical System","href":"https://www.betaautoparts.com/product_parts/electrical-system/"},{"name":"Exterior","href":"https://www.betaautoparts.com/product_parts/exterior/"},{"name":"Interior","href":"https://www.betaautoparts.com/product_parts/interior/"},{"name":"Brake System","href":"https://www.betaautoparts.com/product_parts/brake-system/"},{"name":"Support Panel","href":"https://www.betaautoparts.com/product_parts/support-panel/"}]
+

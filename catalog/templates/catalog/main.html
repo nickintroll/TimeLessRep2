@@ -18,7 +18,7 @@
 			<div id="suggestions">
 			</div>
 		</div>	
-		<div>
+		<div class="meta-category">
 			<h3>
 				<a href="{% url 'catalog:catalog' %}">
 					Все товары
@@ -28,19 +28,23 @@
 	
 		{% for cat in categories %}
 		<div class="meta-category">
-			<div class="category-closer">></div>
 			<div class="category">
 				<h4 class="dif-font-h4">
 					<a href="{% url 'catalog:category' cat.slug %}">{{ cat }}</a>
 				</h4>	
 			</div>
+			<div class="category-closer">
+				=
+			</div>
+
 			<div class="subcategory-keeper hidden">
 				{% for sub in cat.kids.all %}
-					<div>
-						<a href="{{ sub.get_absolute_url }}">
+				<a href="{{ sub.get_absolute_url }}">
+					<div class="sub-cat">
 							{{ sub.name }}
-						</a>
 					</div>
+				</a>
+
 				{% endfor %}
 			</div>
 		</div>
@@ -48,9 +52,9 @@
 	</div>
 	<div class="catalog-catalog">
 		<div>
-			<div>
-				Кол-во: <span id="posit_counter">{{ total_names|length }}</span>
-			</div>
+			<!-- <div> -->
+				<!-- Кол-во: <span id="posit_counter">{{ total_names|length }}</span> -->
+			<!-- </div> -->
 			<div class="catalog-catalog-grid infinite-container">
 				{% for prod in object_list %}
 				<div class="product-item infinite-item">
@@ -61,15 +65,15 @@
 					<div class="product-image">
 						<img src="{{ prod.images.all.0.image.url }}" alt="">
 					</div>
-					<div class="productvendor-code">
-						{{ prod.vendor_code }}
-					</div>
 					<div class="product-descript">
 						{% if prod.description %}
 						{{ prod.description|truncatechars:50 }}
 						{% else %}
 						Без описания
 						{% endif %}
+					</div>
+					<div class="productvendor-code">
+						Арт: {{ prod.vendor_code }}
 					</div>
 					<div class="product-price">
 						{% if prod.weight %}
