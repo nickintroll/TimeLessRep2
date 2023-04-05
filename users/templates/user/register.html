@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Registration
+{% endblock %}
+
+{% block content %}
+<div class="full-heigt">
+	<div class="cetered centered-hard">
+		<div class=" info-block" style="border-radius: 0.3rem .3rem  0.3rem 0rem; padding: 1rem 1rem 0.6rem 1rem">
+			<div class="info-block-colored-title-top">
+				<h2>
+					Registration
+				</h2>
+			</div>
+			<div>
+				{% if notification %}
+				<div>
+					 <strong>{{ notification }}</strong>
+				</div>
+				{% endif %}
+					
+				<form mesthod="post">
+					<br>
+		
+					{{ form.as_p }}
+					{% csrf_token %}
+					<br>
+					<input type="submit" value="Register" class="button-for-light-back long-but">	
+				</form>
+			</div>	
+		</div>
+		<div class="right-addition-to-info-block google-back">
+			<a href=""><h3>G</h3></a>
+		</div>
+
+		<div class="info-block-addition">
+			or <a href="{% url 'users:login'%}">login</a>
+		</div>
+
+	</div>
+
+</div>
+
+{% endblock %}
