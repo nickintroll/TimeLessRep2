@@ -5,6 +5,42 @@ from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegisterForm
 from .models import Profile
 
+
+# profile
+@login_required
+def bonus_page(request):
+	return render(request, 'controll/bonus.html')
+
+@login_required
+def my_partners(request):
+	return render(request, 'controll/my_partners.html')
+
+@login_required
+def my_deposits(request):
+	return render(request, 'controll/my_deposits.html')
+
+@login_required
+def topup_wallet(request):
+	return render(request, 'controll/topup_wallet.html')
+
+@login_required
+def withdraw(request):
+	return render(request, 'controll/withdraw.html')
+
+@login_required
+def promo_matireals(request):
+	return render(request, 'controll/promo_materials.html')
+
+@login_required
+def history(request):
+	return render(request, 'controll/history.html')
+
+@login_required
+def settings(request):
+	return render(request, 'controll/setings.html')
+
+
+# users
 def user_login(request):
 	form = LoginForm()
 	notification = None
@@ -69,7 +105,3 @@ def user_profile(request):
 	user = request.user
 	
 	return render(request, 'controll/profile.html', {'notification': notification, 'profile':profile, 'user':user})
-
-
-def logout(request):
-	pass

@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="centered content-width">
+	<div class="controller-meta">
+		<div class="controller-map-meta">
+			<div class="map-display wide-filler">
+				{% block map-display %}
+					<h2>Профиль</h2>
+				{% endblock %}
+				<div>
+					Hi, {{ request.user }}
+				</div>
+				<div>
+					99012.7p
+				</div>
+			</div>
+			<div class="controller-map-list">
+				<div>
+					<h3>
+						<a href="{% url 'users:profile' %}">
+							<svg class="svg-snoweb svg-theme-light" viewbox="0 0 100 100" x="0" y="0">
+								<path class="svg-fill-primary" d="M53.3,13.9a4.7,4.7,0,0,0-6.6,0L13.9,46.7a4.7,4.7,0,0,0,0,6.6,4.8,4.8,0,0,0,6.7,0l1.3-1.4V82.7a4.7,4.7,0,0,0,4.7,4.7H36a4.7,4.7,0,0,0,4.6-4.7V73.4a4.7,4.7,0,0,1,4.7-4.7h9.4a4.7,4.7,0,0,1,4.7,4.7v9.3A4.7,4.7,0,0,0,64,87.4h9.4a4.7,4.7,0,0,0,4.7-4.7V51.9l1.3,1.4a4.8,4.8,0,0,0,6.7,0,4.7,4.7,0,0,0,0-6.6Z">
+								</path>
+							   </svg>
+							</svg>
+							<span class="pre-filler">
+								Профиль
+							</span>
+						</a>
+					</h3>
+				</div>
+				<div>
+					<h3>
+						<a href="{% url 'users:my_deposits' %}">
+							<svg class="svg-snoweb svg-theme-light" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+								<path class="svg-fill-primary" d="M50,50V18A32,32,0,1,0,82,50Z">
+								</path>
+								<path class="svg-fill-primary" d="M58,19V42H81A31.9,31.9,0,0,0,58,19Z">
+								</path>
+							</svg>
+							<span class="pre-filler">
+								Мои депозиты	
+							</span>
+						</a>
+					</h3>
+				</div>
+				<div>
+					<h3>
+
+						<a href="{% url 'users:topup_wallet' %}">
+							<svg class="svg-snoweb svg-theme-light" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+								<path class="svg-fill-primary" d="M54.6,18.1a3.6,3.6,0,0,1,2.5,3.4V39.3H71.3a3.7,3.7,0,0,1,3.2,1.9,3.8,3.8,0,0,1-.2,3.7L49.4,80.5a3.6,3.6,0,0,1-6.5-2V60.7H28.7a3.7,3.7,0,0,1-3.2-1.9,3.8,3.8,0,0,1,.2-3.7L50.6,19.5A3.7,3.7,0,0,1,54.6,18.1Z" fill-rule="evenodd">
+								</path>
+							</svg>
+							<span class="pre-filler">
+								Пополнить
+							</span>
+						</a>
+					</h3>
+				</div>
+				<div>
+					<h3>
+						<a href="{% url 'users:withdraw' %}">
+							<svg class="svg-snoweb svg-theme-light" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+								<path class="svg-fill-primary" d="M71.3,29.1l-.8,3.3a3.6,3.6,0,0,1-1.9,2.4,3.3,3.3,0,0,1-1.7.4,3,3,0,0,1-1.3-.2l-2.3-.9a3.6,3.6,0,0,1-2.4-4l.3-1.7a3.7,3.7,0,0,1,2.6-2.9l2.9-.9a3.9,3.9,0,0,1,3.6.9A3.5,3.5,0,0,1,71.3,29.1Z">
+								</path>
+								<path class="svg-fill-primary" d="M75.7,43.1l-1.5,1.8a2.8,2.8,0,0,1-2.1,1h-.4a3,3,0,0,1-2.1-1.7l-.9-2.1A2.7,2.7,0,0,1,70,38.6l1.1-.6a2.6,2.6,0,0,1,2.9.3l1.2.9a2.7,2.7,0,0,1,1.1,1.9A2.4,2.4,0,0,1,75.7,43.1Z">
+								</path>
+								<path class="svg-fill-primary" d="M79.9,33.2a2.8,2.8,0,0,1-2.8,2.7,2.7,2.7,0,0,1-2.7-2.7,2.8,2.8,0,0,1,2.7-2.8A2.9,2.9,0,0,1,79.9,33.2Z">
+								</path>
+								<path class="svg-fill-primary" d="M79,53.3a1.8,1.8,0,0,0-1.6-.5H76.2A8.6,8.6,0,0,1,68.1,47a2.7,2.7,0,0,0-2-1.9A14,14,0,0,1,54.6,31.3,13.6,13.6,0,0,1,57,23.5a1.7,1.7,0,0,0,.1-1.7,1.6,1.6,0,0,0-1.3-1.1,30.8,30.8,0,0,0-9.1-.4,29.9,29.9,0,0,0-16.4,7.3h-.1l-2.5,2.5h-.1A30,30,0,0,0,22,60.5a29.2,29.2,0,0,0,6.3,10A29.5,29.5,0,0,0,50,79.9a29.7,29.7,0,0,0,19.7-7.5l2.6-2.6h.1a30,30,0,0,0,7.1-14.9A1.7,1.7,0,0,0,79,53.3ZM32.3,40.6A4.7,4.7,0,0,1,36.9,36a4.7,4.7,0,0,1,0,9.3A4.7,4.7,0,0,1,32.3,40.6ZM38.8,63a3.7,3.7,0,1,1,0-7.3,3.7,3.7,0,1,1,0,7.3ZM49.1,48.1a2.9,2.9,0,0,1-2.8-2.8,2.8,2.8,0,0,1,2.8-2.7,2.7,2.7,0,0,1,2.7,2.7A2.8,2.8,0,0,1,49.1,48.1Zm7.4,18.7a4.7,4.7,0,1,1,4.7-4.6A4.7,4.7,0,0,1,56.5,66.8Z">
+								</path>
+							</svg>
+							<span class="pre-filler">
+								Вывести
+							</span>
+						</a>
+					</h3>
+				</div>
+				<div>
+					<h3>
+						<a href="{% url 'users:my_partners' %}">
+							<svg class="svg-snoweb svg-theme-light" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100"x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+								<circle class="svg-fill-primary" cx="42.1" cy="34.2" r="11.9">
+								</circle>
+								<path class="svg-fill-primary" d="M42.1,54A23.8,23.8,0,0,0,18.3,77.7H65.8A23.7,23.7,0,0,0,42.1,54Z">
+								</path>
+								<path class="svg-fill-primary" d="M77.7,42.1H73.8v-4a4,4,0,0,0-8,0v4H61.9a4,4,0,1,0,0,7.9h3.9v4a4,4,0,0,0,8,0V50h3.9a4,4,0,1,0,0-7.9Z">
+								</path>
+							   </svg>
+							<span class="pre-filler">
+								Мои партнеры
+							</span>
+						</a>
+					</h3>
+				</div>
+				<div>
+					<h3>
+						<a href="{% url 'users:bonus_page' %}">
+							<svg class="svg-snoweb svg-theme-light" viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+								<path class="svg-fill-primary" d="M74,34H69.3a10.9,10.9,0,0,0,.7-4A12,12,0,0,0,58,18a11.8,11.8,0,0,0-8,3,11.8,11.8,0,0,0-8-3A12,12,0,0,0,30,30a10.9,10.9,0,0,0,.7,4H26a8,8,0,0,0,0,16H46V46a4,4,0,0,1,8,0v4H74a8,8,0,0,0,0-16ZM46,34H42a4,4,0,1,1,4-4Zm12,0H54V30a4,4,0,1,1,4,4Z">
+								</path>
+								<path class="svg-fill-primary" d="M22,74a8,8,0,0,0,8,8H46V54H22Z">
+								</path>
+								<path class="svg-fill-primary" d="M54,82H70a8,8,0,0,0,8-8V54H54Z">
+								</path>
+							</svg>
+							<span class="pre-filler">
+								Бонус
+							</span>
+						</a>
+					</h3>
+				</div>
+
+				<div>
+					<h3>
+						<a href="{% url 'users:promo_matireals' %}">
+							<svg class="svg-snoweb svg-theme-light"  viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+								<path class="svg-fill-primary" d="M73.9,34.1H54l-8-8H26.1a8,8,0,0,0-8,8V65.9a8,8,0,0,0,8,8H73.9a8,8,0,0,0,8-8V42A7.9,7.9,0,0,0,73.9,34.1ZM58,58H54v4a4,4,0,0,1-8,0V58H42a4,4,0,0,1,0-8h4V46a4,4,0,0,1,8,0v4h4a4,4,0,0,1,0,8Z">
+								</path>
+							   </svg>
+							<span class="pre-filler">
+								Промо материалы
+							</span>
+						</a>
+					</h3>
+				</div>
+				<div>
+					<h3>
+						<a href="{% url 'users:history' %}">
+							<svg class="svg-snoweb svg-theme-light"viewbox="0 0 100 100" x="0" y="0">
+								<path class="svg-fill-primary" d="M50,82A32,32,0,1,0,18,50,32,32,0,0,0,50,82Zm4-48a4,4,0,0,0-8,0V50a3.6,3.6,0,0,0,1.2,2.8L58.5,64.2a4,4,0,0,0,5.7-5.7L54,48.3Z" fill-rule="evenodd">
+								</path>
+							</svg>
+							<span class="pre-filler">
+								История счета
+							</span>
+						</a>
+					</h3>
+				</div>
+				<div>
+					<h3>
+						<a href="{% url 'users:settings' %}">
+							<svg class="svg-snoweb svg-theme-light" viewbox="0 0 100 100" x="0"y="0">
+								<path class="svg-fill-primary" d="M56,22.7a6.2,6.2,0,0,0-12,0,6.1,6.1,0,0,1-9.1,3.8,6.1,6.1,0,0,0-8.4,8.4A6.1,6.1,0,0,1,22.7,44a6.2,6.2,0,0,0,0,12,6.1,6.1,0,0,1,3.8,9.1,6.1,6.1,0,0,0,8.4,8.4A6.1,6.1,0,0,1,44,77.3a6.2,6.2,0,0,0,12,0,6.1,6.1,0,0,1,9.1-3.8,6.1,6.1,0,0,0,8.4-8.4A6.1,6.1,0,0,1,77.3,56a6.2,6.2,0,0,0,0-12,6.1,6.1,0,0,1-3.8-9.1,6.1,6.1,0,0,0-8.4-8.4A6.1,6.1,0,0,1,56,22.7ZM50,62A12,12,0,1,0,38,50,12,12,0,0,0,50,62Z" fill-rule="evenodd">
+								</path>
+							   </svg>
+							<span class="pre-filler">
+								Настройки
+							</span>
+						</a>
+					</h3>
+				</div>
+				<div>
+					<h3>
+						<a href="{% url 'users:logout' %}">
+							<svg class="svg-snoweb svg-theme-light" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+								<path class="svg-fill-primary" d="M50,87.4A37.4,37.4,0,1,0,12.6,50,37.3,37.3,0,0,0,50,87.4ZM44,37.3A4.7,4.7,0,0,0,37.3,44l6.1,6-6.1,6A4.7,4.7,0,0,0,44,62.7l6-6.1,6,6.1A4.7,4.7,0,0,0,62.7,56l-6.1-6,6.1-6A4.7,4.7,0,0,0,56,37.3l-6,6.1Z" fill-rule="evenodd">
+								</path>
+							</svg>
+							<span class="pre-filler" class="pre-filler">
+								Выход
+							</span>
+						</a>
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="controller-room-meta">
+		{% block subcontent %}
+			
+		{% endblock %}
+		</div>	
+	</div>
+</div>
+{% endblock %}

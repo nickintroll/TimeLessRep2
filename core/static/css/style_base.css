@@ -106,11 +106,15 @@ input[type='text'], input[type='password']{
 }
 
 .content{
-	min-height: 100vh;
+	min-height: 100vh;	
+}
+
+.pagebottom h3{
+	color: white
 }
 
 .pagebottom{
-	margin-top:4rem;
+	margin-top:1rem;
 
 	background-color: var(--dark-background-color);
 	color: var(--dark-background-font-color);
@@ -181,7 +185,7 @@ input[type='text'], input[type='password']{
 	background-color: var(--dark-child-highlighted-back-color);
 }
 
-.cool-back h1{
+.cool-back h1, .cool-back h2{
 	color: rgba(255, 255, 255, 0.95);
 }
 
@@ -199,7 +203,9 @@ input[type='text'], input[type='password']{
 .tight-50{
 	max-width: 50rem;
 }
-
+.tight-40{
+	max-width: 40rem;
+}
 .tight-30{
 	max-width: 30rem;
 }
@@ -311,11 +317,26 @@ input[type='text'], input[type='password']{
 .variable-show{
 	padding: 0.8rem 0.4rem 0.8rem 0.4rem;
 }
+.no-padding{
+	padding: 0 !important;
+}
+
+.variable-show h3, .variable-show h2{
+	color: white;
+}
+
+.variable-show > div h4{
+	color: rgba(255, 255, 255, 0.586);
+}
+
+.variable-show > div + div h4{
+	color: black;
+}
 
 .variable-show > div{
 	background: linear-gradient(90deg, rgb(52, 70, 148), rgb(53, 3, 146));
 	color: white;
-	border-radius: 0.5rem 0.5rem 0 0;
+	border-radius: 0.3rem 0.3rem 0 0;
 
 	padding: 0.6rem 0.8rem 0.6rem 0.8rem;
 	box-shadow: 0rem 0rem 0rem transparent;
@@ -323,9 +344,9 @@ input[type='text'], input[type='password']{
 .variable-show > div + div{
 	background: none;
 	background-color: white;
-	border-radius: 0 0 0.5rem 0.5rem;
+	border-radius: 0 0 0.3rem 0.3rem;
 	padding: 0.6rem 1rem 0.6rem 1.2rem;
-	box-shadow: 0rem 0rem 1rem rgba(0, 0, 0, 0.1) inset;
+	box-shadow: 0rem 0rem 1rem rgba(0, 0, 0, 0.3) inset;
 	color: black;
 }
 
@@ -387,6 +408,79 @@ input[type='text'], input[type='password']{
 	padding: 0.8rem 3rem 0.8rem 3rem;
 }
 
+.controller-meta{
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+}
+.controller-map-meta{
+	background: linear-gradient(40deg, rgb(45, 68, 172), rgb(24, 47, 123));
+	grid-column: span 2;
+	padding: 1rem;
+
+	color: white;
+}
+
+.controller-map-meta h2{
+	color: white;
+}
+
+.controller-map-meta *{
+	transition: 0.2s;
+	color: rgba(222, 215, 215, 0.9);
+}
+.controller-map-list >div:hover *{
+	transition: 0.4s;
+	color: rgba(255, 255, 255);
+	fill: white;
+}
+
+.controller-map-list > div{
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background-color: rgba(255, 255, 255, 0.05);
+	margin: 0.2rem;
+	margin-left: -0rem;
+	padding: 0.4rem;
+	border-radius: 0.1rem 0.5rem;
+}
+
+.controller-map-list > div:hover{
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 0.1rem 0.3rem;
+}
+
+.controller-room-meta{
+	grid-column: span 10;
+	border:1px solid lightgrey;
+	background-color: white;
+	box-shadow: 1rem 1rem 2rem rgb(0, 0, 0, 0.3);
+	padding: 0.5rem;
+}
+
+.controller-room-meta .variable-show{
+	margin: 0rem;
+}
+
+.map-display{
+	padding: 1rem;
+	box-shadow: 0rem 0rem 3rem rgba(4, 4, 66, 0.5) ;
+}
+
+.numeric-list{
+	counter-reset:item;
+}
+
+
+.numeric-list > div{
+	counter-increment:item;
+}
+.numeric-list > div:before{
+	content:counter(item) ".";
+	color: darkblue;
+	padding: 0.2rem;
+}
+
+
 @media only screen and (max-width: 600px) {
 	.filler{
 		display: none;
@@ -407,5 +501,35 @@ input[type='text'], input[type='password']{
 	.center-text-phone{
 		text-align: center;
 	}
+
 }
-  
+
+.svg-snoweb{
+	vertical-align: bottom;
+	fill: rgba(255, 255, 255, 0.6);
+	height: 1.5rem !important;
+}
+
+@media only screen and (max-width: 800px) {
+	.pre-filler{
+		display: none;
+		visibility:hidden;
+	}
+
+	.controller-map-meta{
+		padding: 0.5rem 0.5rem;
+		text-align: center;
+	}
+	
+	.controller-room-meta{
+		padding: .4rem;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.wide-filler{
+		display: none;
+		visibility:hidden;
+	}
+}  
+

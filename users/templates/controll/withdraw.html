@@ -1,0 +1,77 @@
+
+{% extends 'prof_base.html' %}
+
+{% block title %}
+	Вывод средств
+{% endblock %}
+
+{% block map-display %}
+<h2>
+	Вывод
+</h2>
+{% endblock %}
+
+
+{% block subcontent  %}
+	<div class="variable-show tight-40 no-padding">
+		<div>
+			<h2>
+				Вывод средств
+			</h2>
+			<h4>
+				<div>
+					На Банковские карты выплаты идут от 5 до 60 минут.
+					Перед тем, как сделать выплату, укажите кошелек в настройках!
+				</div>	
+			</h4>
+		</div>
+
+		<div>
+			<div>
+				Выберете кошелек
+			</div>
+			<div>
+				--- --- ---
+			</div>
+			<div>
+				Сумма
+			</div>
+			<div>
+				--- --- ---
+			</div>
+			<br>
+
+			<div class="button-for-light-back" style="width: fit-content;">
+				Вывести
+			</div>
+			<br>
+
+		</div>	
+	</div>
+
+	<div class="variable-show">
+		<div>
+			<h2>
+				История выплат
+			</h2>
+		</div>
+		<div class="five-column-grid">
+			<div>
+				Дата	
+			</div>
+			<div>
+				Сумма	
+			</div>
+			<div>
+				Система	
+			</div>
+			<div>
+				Кошелек	
+			</div>
+			<div>
+				Статус
+			</div>
+		</div>	
+	</div>
+	
+{% endblock %}

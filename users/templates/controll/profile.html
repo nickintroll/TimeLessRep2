@@ -1,13 +1,94 @@
-{% extends 'base.html' %}
+{% extends 'prof_base.html' %}
 
 {% block title %}
 	{{ profile.user.username|title }}
 {% endblock %}
 
-{% block content %}
-	<h1>Profile</h1>
-	{{ profile.user }}
-	<a href="{% url 'users:logout' %}">Log out</a>
+{% block subcontent %}
+<div class="three-columns destroy-grid">
+	<div class="variable-show">
+		<div>
+			<h2>
+				Мой профиль
+			</h2>	
+		</div>
+		<div>
+			<div>
+				<div>
+					<h4>
+						Мой статус
+					</h4>
+					<div>
+						Member	
+					</div>
+				</div>
+			</div>
+			<dir>
+				<h4>
+					До Partner еще
+				</h4>
+				25 000.00 RUB
+			</dir>	
+		</div>
+	</div>
+	<div class="variable-show">
+		<div>
+			<h3>
+				Финансы
+			</h3>	
+		</div>
+		<div>
+			<div>
+				<h4>
+					Баланс
+				</h4>
+				0.00 
+			</div>	
+			<div>
+				<h4>
+					Сумма депозитов
+				</h4>
+				0.00 
+			</div>
+
+			<div>
+				<h4>
+					Сумма выплат
+				</h4>
+				0.00 	
+			</div>
+	
+		</div>
+	</div>
+	<div class="variable-show">
+		<div>
+			<h3>
+				Партнеры
+			</h3>	
+		</div>
+		<div>
+			<div>
+				<h4>
+					Всего партнеров
+				</h4>
+				0 чел.
+			</div>
+			<div>
+				<h4>
+					Прибыль с партнеров
+				</h4>
+				0.00 
+			</div>
+	
+		</div>
+	</div>	
+</div>
+<div>
+	<h2>
+		Статистика дохода
+	</h2>
+</div>
+<script>
+	// javascript:location.reload(true)
+</script>
 {% endblock %}
-
-
