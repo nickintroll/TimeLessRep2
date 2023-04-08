@@ -5,7 +5,7 @@
 
 
 {% block content %}
-<div class="cool-back">
+<div class="cool-back" style="padding-bottom:5rem; background: linear-gradient(-45deg, rgb(44, 116, 137,0.5), rgb(0, 12, 87, 0.4)), url('static/imgs/abstract-geometric-shapes-wallpaper-2880x900_60.jpg')">
 	<h1>
 		Про нас
 	</h1>
@@ -114,11 +114,11 @@
 			Самая популярная и самая стабильная Инвестиционная возможность в Интернете!
 		</div>
 		<br>
-		<a href="">
+		<a href="{% url 'users:register' %}">
 			<div class="button-for-light-back">
 				Пройти регстрацию
 			</div>		
 		</a>
 	</div>
 </div>
-{% endblock %}/
+{% endblock %}

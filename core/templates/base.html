@@ -13,18 +13,18 @@
 		<div class="centered content-width">
 			<div class="five-column-grid">
 				<div>
-					<a href="{% url 'core:about_us' %}">About us</a>
+					<a href="{% url 'core:about_us' %}">О нас</a>
 				</div>
 				<div>
-					<a href="">Reviews</a>
+					<a href="">Обзоры</a>
 				</div>
 				<div>
 					<h4>
-						<a href="{% url 'core:main' %}">CryptoProfit</a>
+						<a href="{% url 'core:main' %}">RichGroup</a>
 					</h4>
 				</div>
 				<div>
-					<a href="{% url 'core:partners' %}">Partners</a>
+					<a href="{% url 'core:partners' %}">Партнерам</a>
 				</div>
 				<div>
 					<a href="{% url 'core:faq' %}">FAQ</a>
@@ -47,7 +47,15 @@
 					</span>
 				</div>
 				<div>
-					{% if request.user.is_authenticated %}<a href="{% url 'users:profile' %}">{{ request.user.username|title }}</a>{% else %} <a href="{% url 'users:login' %}">Login</a> {% endif %}	
+					{% if request.user.is_authenticated %}
+						<svg class="svg-snoweb svg-snoweb-dark svg-theme-light" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+							<path class="svg-fill-primary" d="M53.3,13.9a4.7,4.7,0,0,0-6.6,0L13.9,46.7a4.7,4.7,0,0,0,0,6.6,4.8,4.8,0,0,0,6.7,0l1.3-1.4V82.7a4.7,4.7,0,0,0,4.7,4.7H36a4.7,4.7,0,0,0,4.6-4.7V73.4a4.7,4.7,0,0,1,4.7-4.7h9.4a4.7,4.7,0,0,1,4.7,4.7v9.3A4.7,4.7,0,0,0,64,87.4h9.4a4.7,4.7,0,0,0,4.7-4.7V51.9l1.3,1.4a4.8,4.8,0,0,0,6.7,0,4.7,4.7,0,0,0,0-6.6Z">
+							</path>
+					   </svg>
+						<a href="{% url 'users:profile' %}">{{ request.user.username|title }}</a>
+					{% else %} 
+						<a href="{% url 'users:login' %}">Login</a> 
+					{% endif %}	
 				</div>		
 			</div>	
 		</div>
@@ -73,34 +81,50 @@
 						Мы в соц сетях
 					</h3>
 					<div class="inline-bastards dark-child-highligth">
-						<div>
-							vk
+						<div style="background-color: rgba(44, 44, 255, 0.3);">
+							<a href="#">
+								vk
+							</a>
 						</div>
-						<div>
-							tg
+						<div style="background-color: rgba(0, 0, 139, 0.3);">
+							<a href="#">
+								tg
+							</a>
 						</div>	
 					</div>
 				</div>
 				<div class="dark-child-highligth">
 					<div>
-						Логин
+						<a href="{% url 'users:login' %}">
+							Логин
+						</a>
 					</div>
 					<div>
-						Регистрация
+						<a href="{% url 'users:register' %}">
+							Регистрация
+						</a>
 					</div>
 					<div>
-						профиль
+						<a href="{% url 'users:profile' %}">
+							профиль
+						</a>
 					</div>
 				</div>
 				<div class="dark-child-highligth">
 					<div>
+						<a href="{% url 'core:faq' %}">
 						FAQ
+					</a>
 					</div>
 					<div>
-						Партнерам
-					</div>		
+						<a href="{% url 'core:partners' %}">
+							Партнерам
+						</a>
+					</div>
 					<div>
-						Контакты
+						<a href="{% url 'core:about_us' %}">
+							Контакты
+						</a>
 					</div>
 				</div>
 			</div>

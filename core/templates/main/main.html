@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<div class="cool-back" style="padding-bottom:5rem;">
+<div class="cool-back" style="padding-bottom:5rem; background: linear-gradient(-45deg, rgb(44, 116, 137,0.5), rgb(0, 12, 87, 0.4)), url('static/imgs/abstract-geometric-shapes-wallpaper-2880x900_60.jpg')">
 	<div class="centered content-width">
 		<div class="centered tight-30">
 			<h1 style="text-transform: uppercase;">
@@ -16,7 +16,7 @@
 			</h4>
 			<br>
 			<br>
-			<div class="button-on-dakr-back centered">
+			<div class="button-on-dakr-back centered scroll-down-a-little">
 				Узнать больше
 			</div>
 		</div>
@@ -86,7 +86,9 @@
 
 			</div>
 			<div class="centered button-for-light-back" style="margin-top: 1rem;">
-				Открыть депозит
+				<a href="{% url 'users:register' %}">
+					Открыть депозит
+				</a>
 			</div>
 		</div>
 	</div>
@@ -116,7 +118,9 @@
 				<br>
 				<br>
 				<div class="button-for-light-back" style="width:fit-content">
-					Подробнее
+					<a href="{% url 'core:about_us' %}">
+						Подробнее
+					</a>
 				</div>
 			</div>
 			<div class="filler">
@@ -294,5 +298,12 @@
 		Мы принимаем:
 	</h4>
 </div>
+
+<script>
+	var scrollbut = document.getElementsByClassName('scroll-down-a-little')[0];
+	scrollbut.onclick = function(e){
+		window.scroll(0, 800)
+	}
+</script>
 
 {% endblock %}

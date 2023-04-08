@@ -3,7 +3,8 @@
 {% block content %}
 <div class="centered content-width">
 	<div class="controller-meta">
-		<div class="controller-map-meta">
+		
+		<div class="controller-map-meta" style="background: linear-gradient(-45deg, rgb(44, 116, 137,0.5), rgb(0, 12, 87, 0.4)), url('/static/imgs/abstract-geometric-shapes-wallpaper-2880x900_60.jpg')">
 			<div class="map-display wide-filler">
 				{% block map-display %}
 					<h2>Профиль</h2>
@@ -12,7 +13,7 @@
 					Hi, {{ request.user }}
 				</div>
 				<div>
-					99012.7p
+					{{ request.user.profile.wallet.amount }}р
 				</div>
 			</div>
 			<div class="controller-map-list">
