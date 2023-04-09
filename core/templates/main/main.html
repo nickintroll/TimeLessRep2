@@ -34,7 +34,7 @@
 						</h3>
 					</div>
 					<div class="span-three">
-						<input class="earn-slider-line" type="range">						
+						<input class="earn-slider-line" type="range" min="100" max="300000">
 					</div>
 
 					<div class="variable-show">
@@ -42,7 +42,10 @@
 							За сутки:
 						</div>
 						<div>
-							- - -
+							<span id="per_day_income">
+								- - -
+							</span>
+							p
 						</div>
 					</div>
 					<div class="variable-show">
@@ -50,7 +53,9 @@
 							Сумма:
 						</div>
 						<div>
-							- - -
+							<span id="amount-input">
+								- - -
+							</span>р
 						</div>
 					</div>
 					<div class="variable-show">
@@ -58,7 +63,10 @@
 							Прибыль:
 						</div>
 						<div>
-							- - -
+							<span id="income_150">
+								- - -
+							</span>
+							p
 						</div>
 					</div>
 				</div>
@@ -302,8 +310,29 @@
 <script>
 	var scrollbut = document.getElementsByClassName('scroll-down-a-little')[0];
 	scrollbut.onclick = function(e){
-		window.scroll(0, 800)
+		window.scroll(0, 800);
 	}
+</script>
+
+<script>
+	var input_value = document.getElementsByClassName('earn-slider-line')[0];
+	
+	var amount_ = document.getElementById('amount-input');
+	var income_140 = document.getElementById('income_150');
+	var per_day_income = document.getElementById('per_day_income');
+	input_value.onchange = function(e){
+		// console.log(input_value.value);
+		amount_.innerHTML = input_value.value;
+
+		let res = parseFloat(input_value.value) * 1.40883;
+		income_140.innerHTML = res.toFixed(2);
+
+
+		let per_day = parseFloat(input_value.value) * 0.4976;
+		per_day_income.innerHTML = per_day.toFixed(2);
+
+
+	};
 </script>
 
 {% endblock %}
