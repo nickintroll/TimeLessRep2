@@ -12,6 +12,16 @@
 
 
 {% block subcontent  %}
+	{% if notification %}
+	<div class="green-notification">
+		<div class="green-notification-title">
+			Уведомление!
+		</div>
+		<div class="green-notification-text">
+			{{ notification }}
+		</div>
+	</div>
+	{% endif %}
 	<div class="three-columns destroy-grid">
 		<div class="variable-show span-two">
 			<div>
@@ -23,12 +33,17 @@
 				<div>
 					Выберите план
 				</div>
+
 				<div>
-					Платежная система
+					<form method="POST">
+						{{ form.as_p }}
+						{% csrf_token %}
+						<div>
+							<br>
+							<input type="submit" value="Пополнить" class="button-for-light-back">
+						</div>
+					</form>
 				</div>
-				<div>
-					Сумма
-				</div>		
 			</div>
 		</div>
 		<div class="variable-show">

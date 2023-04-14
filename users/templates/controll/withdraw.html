@@ -27,23 +27,13 @@
 		</div>
 
 		<div>
-			<div>
-				Выберете кошелек
-			</div>
-			<div>
-				--- --- ---
-			</div>
-			<div>
-				Сумма
-			</div>
-			<div>
-				--- --- ---
-			</div>
-			<br>
-
-			<div class="button-for-light-back" style="width: fit-content;">
-				Вывести
-			</div>
+			<form method="POST">
+				{{ form.as_p }}
+				{% csrf_token %}
+				<br>
+	
+				<input class="button-for-light-back" type="submit" value="Вывести">
+			</form>
 			<br>
 
 		</div>	

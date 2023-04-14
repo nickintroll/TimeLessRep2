@@ -23,6 +23,7 @@ urlpatterns = [
 	# created
 	path('', include('core.urls', namespace='core')),
 	path('user/', include('users.urls', namespace='users')),
+	path('trans/', include('transactions.urls', namespace='transaction')),
 
 	# predefined
     path('admin/', admin.site.urls),

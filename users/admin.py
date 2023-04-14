@@ -1,3 +1,18 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import SourceWallet, Profile, ReferalLink
+
+@admin.register(SourceWallet)
+class SourceWalletAdmin(admin.ModelAdmin):
+	pass
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+	pass
+
+
+@admin.register(ReferalLink)
+class ReferalLinkAdmin(admin.ModelAdmin):
+	pass
+

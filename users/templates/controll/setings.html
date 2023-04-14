@@ -11,19 +11,23 @@
 
 {% block subcontent  %}
 	<h1>Настройка кошельков</h1>
+	{% for form in forms %}
 	<div class="variable-show tight-30">
 		<div>
-			<h3>qiwi</h3>
+			<h3>{{ form.platform }}</h3>
 		</div>
 		<div>
-			<div class="inline-bastards">
-				<div>
-					--------------------
-				</div>
-				<div class="button-for-light-back">
-					Сохранить
-				</div>
-			</div>
+			<form action="{% url 'users:save_platform' form.platform form.obj_id %}" method="post">
+				{{ form.form.as_p }}
+				{% csrf_token %}
+				<input type="submit" class="button-for-light-back" value="Сохранить">
+			</form>
+	
 		</div>
+
 	</div>
+	{% endfor %}
+
+
+
 {% endblock %}

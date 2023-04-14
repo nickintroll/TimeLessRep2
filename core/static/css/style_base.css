@@ -531,6 +531,20 @@ input[type='text'], input[type='password']{
 	fill: rgba(15, 14, 14, 0.8);
 }
 
+.history-item{
+	padding: 0.3rem;
+	display: inline-block;
+	border: 1px solid lightgray;
+	margin: 0.1rem;
+	text-align: center;
+}
+.history-topup{
+	background-color: lightgreen;
+}
+.history-withdraw{
+	background-color: lightyellow;
+}
+
 @media only screen and (max-width: 800px) {
 	.pre-filler{
 		display: none;

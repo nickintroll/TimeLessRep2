@@ -1,9 +1,13 @@
+from django.utils.crypto import get_random_string
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.core import serializers
 
-from .forms import LoginForm, RegisterForm
-from .models import Profile
+from transactions.models import Wallet, Transaction, Deposit, DepositType
+
+from .forms import LoginForm, RegisterForm, SourceWalletForm, TopUpAndWithdrawForm
+from .models import Profile, SourceWallet, online_wallet_platform_all, ReferalLink
 
 
 # profile
@@ -13,19 +17,126 @@ def bonus_page(request):
 
 @login_required
 def my_partners(request):
-	return render(request, 'controll/my_partners.html')
+	referal = ReferalLink.objects.filter(owner=request.user.profile)
+	if len(referal) == 0:
+		referal = ReferalLink.objects.create(owner=request.user.profile, link=get_random_string(16))
+	else:
+		referal = referal[0]
+
+	ref_profs = Profile.objects.filter(invited_by=request.user.profile)
+
+
+	return render(request, 'controll/my_partners.html', context={'referal': referal, 'ref_profs': ref_profs})
 
 @login_required
 def my_deposits(request):
 	return render(request, 'controll/my_deposits.html')
 
+
 @login_required
 def topup_wallet(request):
-	return render(request, 'controll/topup_wallet.html')
+	sources = request.user.profile.source_wallets.all()
+
+	if len(sources) == 0:
+		sources = (('-', '-'), )
+	else:
+		sources = [(i.platform, i.platform) for i in sources]
+
+	form = TopUpAndWithdrawForm(sources=sources)
+	if request.method == 'POST':
+		form = TopUpAndWithdrawForm(request.POST, sources=sources)
+		if form.is_valid():
+			obj = form.save(commit=False)
+			obj.wallet = request.user.profile.wallet
+			obj.type = 'topup'
+
+
+			# if source is not right
+			if form.cleaned_data['source'] in [i for i in request.user.profile.source_wallets.all()]:
+				notification = 'Сначала необходимо выбрать кошелек. Вы можете добавить кошелек в меню настроек'
+				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+
+
+			# if amount is too low
+			if obj.amount < obj.deposit_type.minimun_deposit:
+				notification = f'Минимальная сумма депозита: {obj.deposit_type.minimun_deposit}р'
+				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+
+			# referal tax
+			ref_wal = request.user.profile.invited_by
+			print(ref_wal)
+			if ref_wal:
+				ref_wal = ref_wal.wallet
+				ref_wal.amount = ref_wal.amount + (obj.amount * .05)
+				obj.amount = obj.amount - (obj.amount * .05)
+				ref_wal.save()
+
+			# add to deposit
+			deps = Deposit.objects.all().filter(deposit_type=obj.deposit_type, wallet=obj.wallet)
+			if len(deps) == 0:
+				Deposit.objects.create(deposit_type=obj.deposit_type, wallet=obj.wallet, amount=obj.amount)
+			else:
+				deps = deps[0]
+				deps.amount = deps.amount + obj.amount
+				deps.save()			
+
+
+			# here should be some check with payment platform
+			obj.status = 'done'
+			
+
+			obj.save()
+
+			if obj.status == 'done':
+				wal = Wallet.objects.get(id=request.user.profile.wallet.id)
+				request.user.profile.wallet.amount = wal.amount + float(obj.amount)
+				wal.amount = wal.amount + float(obj.amount)
+				wal.save()
+
+			notification = None
+			if obj.status == 'done':
+				notification = 'Успех, ваш счет был пополнен!'
+			request.method = 'GET'
+
+			return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+
+	return render(request, 'controll/topup_wallet.html', context={'form': form})
+
 
 @login_required
 def withdraw(request):
-	return render(request, 'controll/withdraw.html')
+	sources = request.user.profile.source_wallets.all()
+
+	if len(sources) == 0:
+		sources = (('-', '-'), )
+	else:
+		sources = [(i.platform, i.platform) for i in sources]
+
+	form = TopUpAndWithdrawForm(sources=sources, is_withdraw=True)
+	if request.method == 'POST':
+		form = TopUpAndWithdrawForm(request.POST, sources=sources, is_withdraw=True)
+		if form.is_valid():
+			obj = form.save(commit=False)
+			obj.wallet = request.user.profile.wallet
+			obj.type = 'withdraw'
+
+			obj.status = 'done'	# this should be changed
+			# here should be some check with payment platform
+
+			obj.save()
+
+			if obj.status == 'done':
+				wal = Wallet.objects.get(id=request.user.profile.wallet.id)
+				wal.amount = wal.amount - float(obj.amount)
+				wal.save()
+
+			notification = None
+			if obj.status == 'done':
+				notification = 'Успех, деньги были отправлены!'
+			request.method = 'GET'
+			return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
+
+	return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True)})
 
 @login_required
 def promo_matireals(request):
@@ -33,11 +144,57 @@ def promo_matireals(request):
 
 @login_required
 def history(request):
-	return render(request, 'controll/history.html')
+	trans = Transaction.objects.all().filter(wallet=request.user.profile.wallet)
+	trans = serializers.serialize('json', trans)
+	return render(request, 'controll/history.html', {'trans': trans})
+
 
 @login_required
 def settings(request):
-	return render(request, 'controll/setings.html')
+	forms = []
+
+	if request.method == 'POST':
+		print(request.POST)
+
+	wallets = request.user.profile.source_wallets.all()
+
+	for platform in online_wallet_platform_all:
+		platform = platform[0]
+		wal = wallets.filter(platform=platform)
+		if len(list(wal)) == 0:
+			forms.append({
+				'form':SourceWalletForm(),
+				'platform': platform,
+				'obj_id': None
+			})
+		else:
+			forms.append({
+				'form':SourceWalletForm(instance=wal[0]),
+				'platform': platform,
+				'obj_id': wal[0].id
+			})
+
+	return render(request, 'controll/setings.html', context={'forms': forms})
+
+
+@login_required
+def save_platform(request, platform, obj_id):
+	# request.POST, platform
+	form = SourceWalletForm(request.POST)
+	if obj_id != 'None':
+		obj = SourceWallet.objects.get(id=obj_id)
+		form = SourceWalletForm(request.POST, instance=obj)
+		form.save()
+
+	if form.is_valid():
+		object = form.save(commit=False)
+		object.platform = platform
+		object.owner = request.user.profile
+
+		object.save()
+
+	return redirect('users:settings')
+
 
 
 # users
@@ -71,13 +228,18 @@ def user_login(request):
 	return render(request, 'user/login.html', {'form': form, 'notification': notification})
 
 
-def user_register(request):
+def user_register(request, ref=None):
 	form = RegisterForm()
 	notification = None
 
+	ref_profile = None
+	if ref != None:
+		refs = ReferalLink.objects.filter(link=ref)
+		if len(refs) != 0:
+			ref_profile = refs[0].owner
+
 	if request.method == 'POST':
 		form = RegisterForm(request.POST)
-
 		if form.is_valid():
 			new_user = form.save(commit=False)
 
@@ -85,13 +247,18 @@ def user_register(request):
 				new_user.set_password(form.clean_password())
 
 			except forms.ValidationError:
-				notification = 'Passwords are don\'t match'
+				notification = 'Пароли не совпали'
 				return render(request, 'user/register.html', {'form': form, 'notification': notification})
 
 			new_user.save()
-			Profile.objects.create(
-				user = new_user
+			prof = Profile.objects.create(
+				user = new_user,
+				invited_by = ref_profile
 			)
+			Wallet.objects.create(
+				owner = prof
+			)
+
 			login(request, new_user)
 			return redirect('users:profile')
 

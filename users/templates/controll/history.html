@@ -11,5 +11,34 @@
 			История счета
 		</h2>	
 	</div>
+	<div id="history-placement">
+		{{ trans }}
+	</div>
 </div>
+<script>
+	var h_place = document.getElementById('history-placement');
+	var trans = JSON.parse(h_place.innerHTML);
+	console.log(trans)
+	h_place.innerHTML = '';
+
+	var history_ = '';
+	var wal_status = 0;
+
+	for (var i in trans) {
+		let item = trans[i].fields;
+		if (item.type == 'topup') {
+			wal_status += item.amount;
+		};
+		if (item.type == 'withdraw') {
+			wal_status -= item.amount;
+		};
+
+		let padd = wal_status / 10;
+
+		item.date = item.date.slice(0, 10).replace('-', '.').replace('-', '.');
+		history_ += '<div class="history-item history-'+ item.type +'" title="'+ item.type +'" style="padding-top:'+padd+'px" > <h4>'+ wal_status +'</h4><h5>'+ item.date +'</h5></div>';
+	}
+
+	h_place.innerHTML = history_;
+</script>
 {% endblock %}

@@ -5,30 +5,68 @@
 {% endblock %}
 
 {% block subcontent  %}
-<h3>
-	Мои партнеры
-</h3>
-<div>
-	<div>
-		Вы можете повысить статус своей партнерской программы и получать более высокие проценты от своих партнеров
+<div class="three-columns">
+	<div class="variable-show span-two">
+		<div>
+			<h2>
+				Партнерский Уровень
+			</h2>	
+		</div>
+		<div>
+			<div>
+				Вы можете повысить статус своей партнерской программы и получать более высокие проценты от своих партнеров
+			</div>
+			<div>
+				Повысить статус
+			</div>	
+		</div>	
 	</div>
-	<div>
-		Повысить статус
-	</div>	
-</div>
 
-<div>
-	<div>
-		TOKEN
+	<div class="variable-show">
+		<div>
+			<h3>
+				Моя рефиральная ссылка
+			</h3>	
+		</div>
+		<div>
+			<div>
+				<h3>
+					<a href="{% url 'users:register' %}{{ referal.link }}">сылка</a>
+				</h3>
+			</div>
+			<br>
+
+			<input class="button-for-light-back" type="submit" value="Копировать">
+		</div>	
+	</div>	
+	<div class="variable-show span-three">
+		<div>
+			Ваши 
+		</div>
+		<div class="four-columns">
+			<div class="span-two">
+				Логин					
+			</div>
+			<div>
+				E-Mail	
+			</div>
+			<div>
+				Прибыль	
+			</div>
+			{% for prof in ref_profs %}
+				<div class="span-two">
+					{{ prof.user }}
+				</div>
+				<div>
+					{{ prof.user.email }}
+				</div>
+				<div>
+					Прибыль	
+				</div>
+			{% endfor %}
+		</div>
 	</div>
-	<div>
-		СКОПИРОВАТЬ
-	</div>	
-</div>
-
-<div>
-	Уровень	
-	Логин	E-Mail	Прибыль
+	
 </div>
 
 {% endblock %}
