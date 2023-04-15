@@ -19,7 +19,7 @@
 						Мой статус
 					</h4>
 					<div>
-						Member	
+						{{ profile.status }}
 					</div>
 				</div>
 			</div>
@@ -48,14 +48,14 @@
 				<h4>
 					Сумма депозитов
 				</h4>
-				0.00 
+				{{ profile.wallet.get_deposits_summ }}р
 			</div>
 
 			<div>
 				<h4>
 					Сумма выплат
 				</h4>
-				0.00 	
+				{{ profile.wallet.get_withdraw_summ }}
 			</div>
 	
 		</div>

@@ -2,6 +2,11 @@ from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
 
+partner_status = (
+	('Партнер', 'Partner'),
+	('Участник', 'Member'),
+	('Куратор', 'Kurator')
+)
 
 # Create your models here.
 class Profile(models.Model):
@@ -10,6 +15,7 @@ class Profile(models.Model):
 	slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
 
 	invited_by = models.ForeignKey('profile', blank=True, null=True, on_delete=models.DO_NOTHING)
+	status = models.CharField(max_length=40, blank=True, null=True, choices=partner_status, default='Партнер')
 
 	def save(self, *args, **kwargs):
 		if not self.slug:
@@ -18,7 +24,7 @@ class Profile(models.Model):
 		return super().save(*args, **kwargs)
 
 	def __str__(self):
-			return self.user.username + '.'
+			return self.user.username
 
 	def get_absolute_url(self):
 		return reverse('account:profile_other', args=[self.slug])

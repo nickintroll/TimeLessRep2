@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
-<div class="cool-back" style="padding-bottom:5rem; background: linear-gradient(-45deg, rgb(44, 116, 137,0.5), rgb(0, 12, 87, 0.4)), url('static/imgs/abstract-geometric-shapes-wallpaper-2880x900_60.jpg')">
+<div class="cool-back" style="padding-bottom:5rem; background: linear-gradient(-45deg, rgb(44, 116, 137,0.2), rgb(0, 12, 87, .8)), url('static/imgs/abstract-geometric-shapes-wallpaper-2880x900_60.jpg')">
 	<div class="centered content-width">
 		<div class="centered tight-30">
 			<h1 style="text-transform: uppercase;">
@@ -11,12 +11,12 @@
 			<div class="cool-line tight-10" style="margin-top: 1rem; margin-bottom: 0.5rem">
 			</div>
 			<h4 class="tight-30 centered">
-				oken-fund.cc ваш маяк в мире инвестиций на крипто валютном рынке. Трейдеры нашей компании торгуют на
+				Rich Group ваш маяк в мире инвестиций на крипто валютном рынке. Трейдеры нашей компании торгуют на
 				рынке более пяти лет.
 			</h4>
 			<br>
 			<br>
-			<div class="button-on-dakr-back centered scroll-down-a-little">
+			<div class="button-on-dakr-back  scroll-down-a-little">
 				Узнать больше
 			</div>
 		</div>
@@ -87,9 +87,6 @@
 					<div>
 						Вывод прибыли
 					</div>
-					<div>
-						мгновенно
-					</div>
 				</div>
 
 			</div>
@@ -105,12 +102,13 @@
 <br>
 <div class="centered content-width">
 	<div class="phone-padding">
-		<h2>
-			КОРОТКО О НАС
-		</h2>
-		<br>
 		<div class="two-columns destroy-grid">
 			<div>
+				<h2>
+					КОРОТКО О НАС
+				</h2>
+				<br>
+		
 				<div>
 					Трейдеры нашей компании торгуют на крипто валютном рынке более пяти лет. За это время было проверено,
 					отобрано и разработано множество различных стратегий торговли. Но 2023 год был особенно успешным, так
@@ -119,7 +117,7 @@
 				<br>
 				<div>
 					Эти инструменты предоставляют нашей команде широкие возможности, 95% всех наших операций с криптовалютой
-					проходит с большой прибылью. В связи с этим было принято решение создать инвестиционный проект oken-fund
+					проходит с большой прибылью. В связи с этим было принято решение создать инвестиционный проект Rich Group
 					для реализации наших амбициозных устремлений по занятию лидирующих позиций в сфере крипто валютной
 					торговли.
 				</div>
@@ -133,16 +131,17 @@
 			</div>
 			<div class="filler">
 				<div class="pictre-placeholder">
-					PICTURE
+					<img src="{% static 'imgs/investor-with-laptop-monitoring-growth-dividends-trader-sitting-stack-money-investing-capital-analyzing-profit-graphs-vector-illustration-finance-stock-trading-investment_74855-8432.avif' %}" 
+					style="height: 20rem; " class="block-push">
 				</div>
 				<div class="three-columns">
-					<div>
+					<div class="mistic-20">
 						Регистрация
 					</div>
-					<div>
+					<div class="mistic-20 mistic-green-dark">
 						Депозит
 					</div>
-					<div>
+					<div class="mistic-20 mistic-green-isumrud">
 						Прибыль
 					</div>
 				</div>
@@ -164,53 +163,61 @@
 			<div class="four-columns split-to-half">
 				<div class="inline-bastards">
 					<div class="pictre-placeholder">
-						PIC
+						<img src="{% static '/imgs/istockphoto-1287201284-612x612.jpg' %}" alt="" class="small-img">
 					</div>
 					<div>
 						<div>
 							Работаем дней:
 						</div>
 						<div>
-							----
+							<h1>
+								100
+							</h1>
 						</div>
 					</div>
 				</div>
 				<div class="inline-bastards">
 					<div class="pictre-placeholder">
-						PIC
+						<img src="{% static 'imgs/26f535b0-6f9a-4379-a471-304e5fd76d3f.jpg' %}" alt="" class="small-img">
 					</div>
 					<div>
 						<div>
 							Пользователей:
 						</div>
 						<div>
-							----
+							<h1>
+								200
+							</h1>
 						</div>
 					</div>
 				</div>
 				<div class="inline-bastards">
 					<div class="pictre-placeholder">
-						PIC
+						<img src="{% static 'imgs/istockphoto-538595396-612x612.jpg' %}" alt="" class="small-img">
 					</div>
 					<div>
 						<div>
 							Инвестировано:
 						</div>
 						<div>
-							----
+							<h1>
+								3000000
+							</h1>
 						</div>
 					</div>
 				</div>
 				<div class="inline-bastards">
 					<div class="pictre-placeholder">
-						PIC
+						<img src="{% static 'imgs/contactless-payment-illustration-concept-with-woman-character-vector.webp' %}" alt="" class="small-img">
 					</div>
 					<div>
 						<div>
 							Выплачено:
 						</div>
 						<div>
-							----
+							<h1>
+								1000
+							</h1>
 						</div>
 					</div>
 				</div>
@@ -218,34 +225,116 @@
 		
 			<br>
 			<br>
+			<br>
 
-
-			<div class="three-columns">
+			<div class="three-columns" style="text-align: center">
 				<div>
 					<h3>
-						Последние пополнения:	
+						Последние пополнения:
 					</h3>
-					<div>
-						---
+					<div class="three-columns">
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+
 					</div>
 				</div>
 				<div>
 					<h3>
 						Последние выплаты:
 					</h3>
-					<div>
-						---
+					<div class="three-columns">
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
 					</div>
 				</div>
 				<div>
 					<h3>
-						Топ партнеров:
+						Топ <br class="for-phone"> партнеров:
 					</h3>
-					<div>
-						---
+					<div class="three-columns">
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+						<div>
+							---------
+						</div>
+
 					</div>
 				</div>
 			</div>
+			<br>
 		</div>
 	</div>
 </div>
@@ -261,7 +350,7 @@
 		<div class="three-columns destroy-grid center-text-phone">
 			<div class="info-block block-push">
 				<div class="pictre-placeholder">
-					Picture
+					<img src="{% static 'imgs/payment-via-digital-wallet-3678915-3135973.webp' %}" class="mid-pic">
 				</div>
 				<h3>
 					Ежедневный доход
@@ -274,7 +363,7 @@
 			</div>
 			<div class="info-block block-push">
 				<div class="pictre-placeholder">
-					Picture
+					<img src="{% static 'imgs/workplace-safety-illustration-exclusive-design-inspiration-vector.webp' %}" class="mid-pic">
 				</div>
 				<h3>
 					Надежная система
@@ -287,7 +376,7 @@
 			</div>
 			<div class="info-block block-push">
 				<div class="pictre-placeholder">
-					Picture
+					<img src="{% static 'imgs/istockphoto-1146425090-612x612.jpg' %}" class="mid-pic">
 				</div>
 				<h3>
 					Нам доверяют

@@ -46,7 +46,7 @@
 	</div>
 	<div class="four-columns">
 		<div>
-			Дата вклада
+			Дата первого вклада
 		</div>
 		<div>
 			Сумма
@@ -57,6 +57,21 @@
 		<div>
 			Статус
 		</div>
+		{% for dep in deposits %}
+			<div>
+				date
+			</div>
+			<div>
+				{{ dep.amount }}
+			</div>
+			<div>
+				date
+			</div>
+			<div>
+				work
+			</div>
+		{% endfor %}
+
 	</div>
 </div>
 {% endblock %}

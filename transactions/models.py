@@ -37,6 +37,20 @@ class Wallet(models.Model):
 	def __str__(self):
 		return f"prof: {self.owner} amount:{self.amount}"
 
+	def get_deposits_summ(self):
+		res = 0
+		for i in self.deposits.all():
+			res += i.amount
+		
+		return res
+	
+	def get_withdraw_summ(self):
+		res = 0
+		
+		for i in self.transactions.filter(type='withdraw'):
+			res += i.amount
+		
+		return res
 
 class DepositType(models.Model):
 	persentage = models.FloatField()

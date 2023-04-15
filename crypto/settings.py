@@ -34,7 +34,8 @@ from django.urls import reverse_lazy
 # LOGIN_REDIRECT_URL = reverse_lazy('users:profile_me')
 # LOGIN_URL = reverse_lazy('account:login')
 LOGOUT_REDIRECT_URL = reverse_lazy('core:main')
-
+LOGIN_REDIRECT_URL = reverse_lazy('users:login')
+LOGIN_URL = reverse_lazy('users:login')
 
 STATIC_URL = '/static/'
 

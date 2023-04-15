@@ -30,7 +30,8 @@ def my_partners(request):
 
 @login_required
 def my_deposits(request):
-	return render(request, 'controll/my_deposits.html')
+	deposits = request.user.profile.wallet.deposits.all()
+	return render(request, 'controll/my_deposits.html', {'deposits': deposits, })
 
 
 @login_required
@@ -264,11 +265,16 @@ def user_register(request, ref=None):
 
 	return render(request, 'user/register.html', {'form': form, 'notification': notification})
 
+
 @login_required
 def user_profile(request):
 	notification = ''
 
-	profile = Profile.objects.get(user=request.user)
 	user = request.user
-	
-	return render(request, 'controll/profile.html', {'notification': notification, 'profile':profile, 'user':user})
+	profile = Profile.objects.get(user=user)
+
+	if profile.status == None:
+		profile.status = 'Partner'
+		profile.save()
+
+	return render(request, 'controll/profile.html', context={'notification': notification, 'profile':profile, 'user':user})

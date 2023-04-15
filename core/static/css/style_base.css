@@ -3,6 +3,11 @@
 /* h* */
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow&display=swap');
 
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');
+
+
+
 .debug, .debug *{
 	border: 1px solid rgba(255, 0, 0, 0.515) !important;
 	background-color: rgba(0, 26, 255, 0.218) !important;
@@ -38,6 +43,11 @@ a:hover{
 h1, h2, h3, h4, h5{
 	color: rgba(0, 0, 0, 1);
 	font-family: 'PT Sans Narrow', sans-serif;
+}
+h1{
+	font-family: 'Oswald', sans-serif;
+	line-height: 2.5rem;
+	letter-spacing: 0.1rem;
 }
 
 input{
@@ -198,11 +208,12 @@ input[type='text'], input[type='password']{
 
 .cool-back h1, .cool-back h2{
 	color: rgba(255, 255, 255, 0.95);
+	text-shadow: 5px 10px 1rem black
 }
 
 .cool-back{
 	/* background: linear-gradient(-45deg, rgb(44, 116, 137), rgb(0, 12, 87)); */
-	text-shadow: 0rem 0rem 1rem rgba(0, 0, 0) !important;
+	text-shadow: 0.1rem .1rem 0.5rem rgba(0, 0, 0) !important;
 	background-position: center !important;
 	background-size: cover !important;
 	color: white;
@@ -404,10 +415,41 @@ input[type='text'], input[type='password']{
 .block-push{
 	margin: 0.5rem
 }
+
+.mistic-20{
+	position: relative;
+}
+.mistic-20:before{
+	content: '';
+	display: block;
+	position: absolute;
+
+	height: 100%;
+	width: 20%;
+	background-color: lightgreen;
+	top: 0;
+	right: 30%;
+}
+
+.mistic-green-dark:before{
+	background-color: green;
+}
+.mistic-green-isumrud:before{
+	background-color: rgb(0, 128, 58)
+}
 .pictre-placeholder{
-	padding: 1rem;
+	/* padding: 1rem; */
 	min-height: 2rem;
-	background-color: lightgray;
+	/* background-color: lightgray; */
+}
+
+.small-img{
+	max-height: 10rem;
+	max-width: 12rem;
+}
+.mid-pic{
+	max-height: 20rem;
+	max-width: 21rem;
 }
 
 .full-heigt{
@@ -527,6 +569,7 @@ input[type='text'], input[type='password']{
 	fill: rgba(255, 255, 255, 0.6);
 	height: 1.5rem !important;
 }
+
 .svg-snoweb-dark{
 	fill: rgba(15, 14, 14, 0.8);
 }
@@ -538,11 +581,17 @@ input[type='text'], input[type='password']{
 	margin: 0.1rem;
 	text-align: center;
 }
+
 .history-topup{
 	background-color: lightgreen;
 }
+
 .history-withdraw{
 	background-color: lightyellow;
+}
+
+@media screen and (min-width: 600px)  {
+	.for-phone { display: none; }
 }
 
 @media only screen and (max-width: 800px) {
