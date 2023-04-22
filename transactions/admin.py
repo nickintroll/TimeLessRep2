@@ -10,7 +10,7 @@ class WalletAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-	pass
+	list_display = ('wallet', 'amount', 'date', 'type')
 
 
 @admin.register(DepositType)

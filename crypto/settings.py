@@ -22,11 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '=vr_^lmegwi6m$-+eq0thu+$8*+2t^*@&q!e@ytmk#p%0^y%#m'
 
+# to handle ids, apperantly its not always set up right...
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # REdirects
 from django.urls import reverse_lazy
@@ -53,6 +55,9 @@ INSTALLED_APPS = [
 	'users',
 	'core',
 	'transactions',
+
+	# installed apps
+	'channels',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +89,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'crypto.wsgi.application'
+ASGI_APPLICATION = 'crypto.routing.application'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+		'CONFIG': {
+			'hosts': [('127.0.0.1', 6379)]
+		}
+    },
+}
 
 
 # Database

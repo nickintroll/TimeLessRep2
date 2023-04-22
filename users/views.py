@@ -6,7 +6,7 @@ from django.core import serializers
 
 from transactions.models import Wallet, Transaction, Deposit, DepositType
 
-from .forms import LoginForm, RegisterForm, SourceWalletForm, TopUpAndWithdrawForm
+from .forms import LoginForm, RegisterForm, SourceWalletForm, TopUpAndWithdrawForm, ReinvestForm
 from .models import Profile, SourceWallet, online_wallet_platform_all, ReferalLink
 
 
@@ -14,6 +14,7 @@ from .models import Profile, SourceWallet, online_wallet_platform_all, ReferalLi
 @login_required
 def bonus_page(request):
 	return render(request, 'controll/bonus.html')
+
 
 @login_required
 def my_partners(request):
@@ -25,13 +26,39 @@ def my_partners(request):
 
 	ref_profs = Profile.objects.filter(invited_by=request.user.profile)
 
-
 	return render(request, 'controll/my_partners.html', context={'referal': referal, 'ref_profs': ref_profs})
+
 
 @login_required
 def my_deposits(request):
 	deposits = request.user.profile.wallet.deposits.all()
-	return render(request, 'controll/my_deposits.html', {'deposits': deposits, })
+	notification = None
+	sources = [(i.id, i.deposit_type) for i in deposits]
+	form = ReinvestForm(source=sources, end=sources)	# add source and end goal here
+
+	if request.method == 'POST':
+		form = ReinvestForm(request.POST, source=sources, end=sources)
+		if form.is_valid():
+			cd = form.cleaned_data
+
+			source = deposits.filter(id=cd['source'])[0]
+			if source.amount - source.deposit_type.minimum_deposit < cd['amount']:
+				notification = 'На счету депозита не может оставаться сумма маньше минимального платежа'
+			else:
+				end = deposits.filter(id=cd['end'])[0]
+
+				if end != source:
+					end.amount = end.amount + cd['amount']
+					source.amount = source.amount - cd['amount']
+
+					source.save()
+					end.save()
+					notification = 'Успех! Средства переведены'
+				else:
+					notification = 'Вы не можете перести средства с депозита на этотже депозит'
+
+
+	return render(request, 'controll/my_deposits.html', {'deposits': deposits, 'form': form, 'notification': notification})
 
 
 @login_required
@@ -59,8 +86,8 @@ def topup_wallet(request):
 
 
 			# if amount is too low
-			if obj.amount < obj.deposit_type.minimun_deposit:
-				notification = f'Минимальная сумма депозита: {obj.deposit_type.minimun_deposit}р'
+			if obj.amount < obj.deposit_type.minimum_deposit:
+				notification = f'Минимальная сумма депозита: {obj.deposit_type.minimum_deposit}р'
 				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
 
 			# referal tax
@@ -69,8 +96,14 @@ def topup_wallet(request):
 			if ref_wal:
 				ref_wal = ref_wal.wallet
 				ref_wal.amount = ref_wal.amount + (obj.amount * .05)
+
+				# saving transaction
+				Transaction.objects.create(wallet=ref_wal, amount=obj.amount * .05, status='done', type='partner_tax')
+
 				obj.amount = obj.amount - (obj.amount * .05)
 				ref_wal.save()
+
+
 
 			# add to deposit
 			deps = Deposit.objects.all().filter(deposit_type=obj.deposit_type, wallet=obj.wallet)
@@ -137,11 +170,15 @@ def withdraw(request):
 			request.method = 'GET'
 			return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
 
-	return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True)})
+	withdraws = request.user.profile.wallet.transactions.filter(type='withdraw')
+
+	return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'wthdraws': withdraws})
+
 
 @login_required
 def promo_matireals(request):
 	return render(request, 'controll/promo_materials.html')
+
 
 @login_required
 def history(request):
@@ -195,7 +232,6 @@ def save_platform(request, platform, obj_id):
 		object.save()
 
 	return redirect('users:settings')
-
 
 
 # users

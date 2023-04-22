@@ -71,13 +71,13 @@
 				<h4>
 					Всего партнеров
 				</h4>
-				0 чел.
+				{{ profile.invited.all.count }} чел.
 			</div>
 			<div>
 				<h4>
 					Прибыль с партнеров
 				</h4>
-				0.00 
+				{{ profile.wallet.get_partners_summ }} р
 			</div>
 	
 		</div>

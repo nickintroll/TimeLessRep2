@@ -29,3 +29,4 @@ def income_task_kill(request):
 			secret_income_thread = None
 		else: print('secret_income_thread is none')
 	return redirect('core:main')
+

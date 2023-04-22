@@ -347,7 +347,7 @@
 		<h5 class="centered">
 			Почему выбирают нас?
 		</h5>
-		<div class="three-columns destroy-grid center-text-phone">
+		<div class="three-columns destroy-grid-wide center-text-phone">
 			<div class="info-block block-push">
 				<div class="pictre-placeholder">
 					<img src="{% static 'imgs/payment-via-digital-wallet-3678915-3135973.webp' %}" class="mid-pic">
@@ -396,6 +396,20 @@
 	</h4>
 </div>
 
+<div id="chat-room" class="chat-room-non-active">
+	<div id="chat-closer">
+		открыть
+	</div>
+	<div id="chat" >
+		Напишите вопрос...
+	</div>
+	<div id="chat-input">
+		<input type="text" placeholder="Сообщение" id="chat_message_input">
+		<input type="submit" value="Отправить" class="button-for-light-back message-but" id="chat_message_submit">
+	</div>
+</div>
+
+
 <script>
 	var scrollbut = document.getElementsByClassName('scroll-down-a-little')[0];
 	scrollbut.onclick = function(e){
@@ -416,12 +430,92 @@
 		let res = parseFloat(input_value.value) * 1.40883;
 		income_140.innerHTML = res.toFixed(2);
 
-
 		let per_day = parseFloat(input_value.value) * 0.4976;
 		per_day_income.innerHTML = per_day.toFixed(2);
-
-
 	};
 </script>
+
+{% endblock %}
+
+{% block domready %}
+	<script>
+		var url = 'ws://' + window.location.host;
+		var ChatSocket = new WebSocket(url);
+
+		var chat_place = document.getElementById('chat');
+		var chat_mesage_input = document.getElementById('chat_message_input');
+		var chat_mesage_submit = document.getElementById('chat_message_submit');
+
+		var my_messages = [];
+
+
+		// logging
+		ChatSocket.onopen = function() {
+			console.log('Chat socket successfully opened');
+		};
+		ChatSocket.onclose = function(e) {
+			console.error('Chat socket closed unexpectedly');
+		};
+
+		// recieving message and adding to chat
+		ChatSocket.onmessage = function(e) {
+			if (chat_place.innerHTML.includes('Напишите вопрос...')){
+				chat_place.innerHTML = '';
+			}
+
+			let data = JSON.parse(e.data);
+			let message = data['message'];			
+			let classes = 'chat-message ';
+			if (my_messages.includes(message)){
+				classes += ' my_message'
+			}
+
+			chat_place.innerHTML += '<div><div class="'+classes+'">' + message + '</div></div>';
+			chat_place.scrollTop = chat_place.scrollHeight;
+
+		};
+
+		// sending message
+		chat_mesage_submit.onclick = function(e) {
+			let message_text = chat_mesage_input.value;
+			my_messages.push(message_text)
+
+			if (message_text) {
+				ChatSocket.send(
+					JSON.stringify(
+						{'message': message_text}
+					)
+				);
+
+				chat_mesage_input.value = '';
+				chat_mesage_input.focus();
+			};
+		};
+
+		// presssing enter
+		chat_mesage_input.onkeydown = function(e){
+			if(e.keyCode == 13){
+				chat_mesage_submit.click();
+			}
+		}
+	</script>
+
+	<script>
+		var chat_room = document.getElementById('chat-room')
+		var closer = document.getElementById('chat-closer');
+		closer.onclick = function(e) {
+			if (closer.innerHTML.includes('скрыть')) {
+				closer.innerHTML = 'открыть'
+			} else {
+				closer.innerHTML = 'скрыть'
+			}
+
+			if (chat_room.classList.value.includes('chat-room-non-active')){
+				chat_room.classList.remove('chat-room-non-active');
+			} else {
+				chat_room.classList.add('chat-room-non-active');
+			}
+		}
+	</script>
 
 {% endblock %}

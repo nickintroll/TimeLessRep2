@@ -12,6 +12,9 @@
 
 
 {% block subcontent  %}
+{% if notification %}
+	{{ notification }}
+{% endif %}
 <div class="variable-show tight-30">
 	<div>
 		<h3>
@@ -19,21 +22,29 @@
 		</h3>	
 	</div>
 	<div>
-		<div>
-			Выберете план
+		<form method="post">
+
 			<div>
-				----
+				Выберете план
+				<div>
+					{{ form.source }}
+				</div>
 			</div>
-		</div>
-		<div>
-			Сумма
 			<div>
-				----
+				Сумма
+				<div>
+					{{ form.amount }}
+				</div>
 			</div>
-		</div>
-		<div class="button-for-light-back" style="width: fit-content">
-			Реинвест
-		</div>
+			<div>
+				Куда перевести
+				<div>
+					{{ form.end }}
+				</div>
+			</div>
+		{% csrf_token %}
+			<input class="button-for-light-back" value="Реинвест" type="submit">	
+		</form>
 	</div>
 </div>
 
@@ -59,7 +70,7 @@
 		</div>
 		{% for dep in deposits %}
 			<div>
-				date
+				{{ dep.created.year }}.{{ dep.created.month }}.{{ dep.created.day }}
 			</div>
 			<div>
 				{{ dep.amount }}

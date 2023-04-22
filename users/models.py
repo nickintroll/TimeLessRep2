@@ -14,7 +14,7 @@ class Profile(models.Model):
 
 	slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
 
-	invited_by = models.ForeignKey('profile', blank=True, null=True, on_delete=models.DO_NOTHING)
+	invited_by = models.ForeignKey('profile', blank=True, null=True, on_delete=models.DO_NOTHING, related_name='invited')
 	status = models.CharField(max_length=40, blank=True, null=True, choices=partner_status, default='Партнер')
 
 	def save(self, *args, **kwargs):

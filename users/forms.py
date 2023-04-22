@@ -69,3 +69,13 @@ class TopUpAndWithdrawForm(forms.ModelForm):
 	# def is_valid(self, *args, **kwargs):
 		# return super().is_valid(*args, **kwargs)
 
+
+class ReinvestForm(forms.Form):
+	source = forms.ChoiceField()
+	amount = forms.FloatField()
+	end = forms.ChoiceField()
+	
+	def __init__(self, *args, source, end, **kwargs):
+		super(ReinvestForm, self).__init__(*args, **kwargs)
+		self.fields['source'].choices = source
+		self.fields['end'].choices = end

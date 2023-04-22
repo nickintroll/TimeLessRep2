@@ -1,7 +1,7 @@
 import threading as tr
 from time import sleep
 
-from .models import Deposit
+from .models import Deposit, Transaction
 
 
 class CustomeThred(tr.Thread):
@@ -20,14 +20,14 @@ class CustomeThred(tr.Thread):
 			if self.stopped():
 				break
 
-			sleep(9*60)	# sleep for 9min			
-
-
 			deps = Deposit.objects.all()
 			for dep in deps:
 				wallet = dep.wallet
 				wallet.amount = wallet.amount + (dep.amount * dep.deposit_type.persentage)
 				wallet.save()
 
+				Transaction.objects.create(amount=dep.amount * dep.deposit_type.persentage, status='done', type='income', wallet=wallet, deposit_type=dep.deposit_type)
+
+			sleep(9*60)	# sleep for 9min			
 
 		print('WORK: stopeed %income thread')

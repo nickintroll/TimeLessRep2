@@ -19,7 +19,8 @@ transaction_types = (
 	('withdraw','withdraw'),
 	('working','working'),
 	('income', 'income'),
-	('deposit', 'deposit')
+	('deposit', 'deposit'),
+	('partner_tax', 'partner_tax')
 )
 
 
@@ -52,12 +53,25 @@ class Wallet(models.Model):
 		
 		return res
 
+	def get_partners_summ(self):
+		res = 0
+		for i in self.transactions.filter(type='partner_tax'):
+			res += i.amount
+
+		return res
+
+	def get_to_zero_but_deposit(self):
+		Transaction.objects.create(wallet=self, type='groud_zero', amount=self.get_deposits_summ() - self.summ, status='done')
+		self.amount = self.get_deposits_summ()
+		self.save()
+
+
 class DepositType(models.Model):
 	persentage = models.FloatField()
-	minimun_deposit = models.FloatField()
+	minimum_deposit = models.FloatField()
 
 	def __str__(self):
-		return f'{self.persentage}% каждые 9 мин, {self.persentage*320}% через 48 часов. Минимальный платеж: {self.minimun_deposit}'
+		return f'{self.persentage}% каждые 9 мин, {self.persentage*320}% через 48 часов. Минимальный платеж: {self.minimum_deposit}'
 
 
 class Transaction(models.Model):
@@ -75,6 +89,8 @@ class Deposit(models.Model):
 	wallet = models.ForeignKey(Wallet, related_name='deposits', on_delete=models.CASCADE)
 	deposit_type = models.ForeignKey(DepositType, related_name='deposits', on_delete=models.CASCADE)
 	amount = models.FloatField(default=0)
+
+	created = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
 		return f"deposit for:{self.wallet.owner}({self.deposit_type}) amount:{self.amount}"

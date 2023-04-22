@@ -11,8 +11,10 @@
 			История счета
 		</h2>	
 	</div>
-	<div id="history-placement">
-		{{ trans }}
+	<div>
+		<div id="history-placement">
+			{{ trans }}
+		</div>
 	</div>
 </div>
 <script>
@@ -22,23 +24,106 @@
 	h_place.innerHTML = '';
 
 	var history_ = '';
-	var wal_status = 0;
 
-	for (var i in trans) {
-		let item = trans[i].fields;
-		if (item.type == 'topup') {
-			wal_status += item.amount;
-		};
-		if (item.type == 'withdraw') {
-			wal_status -= item.amount;
-		};
+	function set_history() {
+		history_ = '';
+		var wal_status = 0;
+		var aaa = h_place.offsetWidth;
+		var bbb = 180;
 
-		let padd = wal_status / 10;
+		let single_step = aaa / (trans.length -0.8);
+		let vert_step = {{ request.user.profile.wallet.amount }} / bbb;
+	
+		let step = 0;
+		for (var i in trans) {
+			let item = trans[i].fields;
+			if (item.type == 'topup') {
+				wal_status += item.amount;
+			};
 
-		item.date = item.date.slice(0, 10).replace('-', '.').replace('-', '.');
-		history_ += '<div class="history-item history-'+ item.type +'" title="'+ item.type +'" style="padding-top:'+padd+'px" > <h4>'+ wal_status +'</h4><h5>'+ item.date +'</h5></div>';
+			if (item.type == 'income') {
+				wal_status += item.amount;
+			};
+			
+			if (item.type == 'withdraw') {
+				wal_status -= item.amount;
+			};
+
+			let padd = wal_status / 10;
+
+			item.date = item.date.slice(0, 10).replace('-', '.').replace('-', '.');
+			
+			history_ += '<div class="history-point" style="left:'+ step +'px; bottom:'+ (wal_status/vert_step) +'px"></div>'
+			step += single_step;
+		}
+		
 	}
 
+	set_history()
 	h_place.innerHTML = history_;
+
+</script>
+
+<script>
+	var h_place = document.getElementById('history-placement');
+	var points = document.getElementsByClassName('history-point');
+	
+
+	for (let i= 0; i < points.length - 1; i++){
+
+		let line = document.createElement('canvas');
+		line.style.position = 'absolute';
+		line.style.zIndex = 1;
+		line.style.background = 'rgb(255, 100, 100, 0)'
+		document.body.appendChild(line)
+
+
+		let point = points[i];
+		let end_point = points[i + 1]; 
+
+		let start = {};
+		start.x = point.offsetParent.offsetLeft + point.offsetLeft;
+		start.y = point.offsetParent.offsetTop + point.offsetTop;
+
+		let end = {};
+		end.x = end_point.offsetParent.offsetLeft + end_point.offsetLeft;
+		end.y = end_point.offsetParent.offsetTop + end_point.offsetTop - 2;
+
+		let top = Math.min(start.y, end.y);
+		let width = end.x - start.x + 5;
+		let height = Math.max(start.y - end.y, end.y - start.y);
+	
+
+		line.style.top =  top + 5 + 'px';
+		line.style.left = start.x + 5 + 'px';
+		line.style.width = width + 'px';
+		line.style.height = height + 'px';
+
+		let context = line.getContext('2d');
+		context.save()
+		context.setTransform(1, 0, 0, 1, 0, 0)
+		
+
+		let difference = Math.max(end.y - start.y, start.y - end.y);
+		context.lineWidth = 200 / difference;
+		context.lineCap = 'round';
+		context.lineJoin = 'round';
+		// document.getElementsByTagName('canvas')
+
+		context.beginPath();
+		if (end.y < start.y){
+			context.moveTo(0, line.height)
+			context.lineTo(line.width, 0)
+			context.strokeStyle = 'green';
+		} else {
+			context.moveTo(0, 00)
+			context.lineTo(line.width, line.height)
+			context.strokeStyle = 'red';
+		}
+
+		context.stroke()
+		context.closePath()
+
+	}
 </script>
 {% endblock %}

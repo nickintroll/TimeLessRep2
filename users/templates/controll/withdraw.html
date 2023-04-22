@@ -45,22 +45,27 @@
 				История выплат
 			</h2>
 		</div>
-		<div class="five-column-grid">
+		<div class="four-columns">
 			<div>
 				Дата	
 			</div>
-			<div>
+			<div class="span-two">
 				Сумма	
-			</div>
-			<div>
-				Система	
-			</div>
-			<div>
-				Кошелек	
 			</div>
 			<div>
 				Статус
 			</div>
+			{% for trans in wthdraws %}
+				<div>
+					{{ trans.date.year }}.{{ trans.date.month }}.{{ trans.date.day }}
+				</div>
+				<div class="span-two">
+					{{ trans.amount }}p
+				</div>
+				<div>
+					{{ trans.status }}
+				</div>
+			{% endfor %}
 		</div>	
 	</div>
 	

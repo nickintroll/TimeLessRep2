@@ -6,7 +6,7 @@
 		<div class=" info-block" style="border-radius: 0.3rem .3rem  0.3rem 0rem; padding: 1rem 1rem 0rem 1rem">
 			<div class="info-block-colored-title-top">
 				<h2>
-					login
+					Вход
 				</h2>
 			</div>
 			<div style="padding: 1rem 0rem 1rem 0rem;">
@@ -20,17 +20,18 @@
 					{% csrf_token %}
 					<br>
 					<h3>
-						<input type="submit" value="login" class="button-for-light-back long-but">	
+						<input type="submit" value="Войти" class="button-for-light-back long-but">	
 					</h3>
 				</form>
 			</div>
 			<div class="right-addition-to-info-block google-back">
 				<a href=""><h3>G</h3></a>
+				<!-- do we really need this? -->
 			</div>
 		</div>
 		<div class="inline-bastards">
 			<div class="info-block-addition">
-				or <a href="{% url 'users:register'%}">register</a>
+				<a href="{% url 'users:register'%}">Регистрация</a>
 			</div>	
 		</div>
 
