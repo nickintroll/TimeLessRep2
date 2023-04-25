@@ -16,18 +16,18 @@
 			<div>
 				<div>
 					<h4>
-						Мой статус
+						Мой статус:
 					</h4>
 					<div>
-						{{ profile.status }}
+						{{ profile.partner_status.title|title }}
 					</div>
 				</div>
 			</div>
 			<dir>
 				<h4>
-					До Partner еще
+					Следующий уровень {{ next_level.title|title }} начнется с:
 				</h4>
-				25 000.00 RUB
+				{{ next_level.minimum_amount }}
 			</dir>	
 		</div>
 	</div>

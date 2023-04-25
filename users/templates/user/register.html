@@ -7,7 +7,7 @@ Registration
 {% block content %}
 <div class="full-heigt">
 	<div class="cetered centered-hard">
-		<div class=" info-block" style="border-radius: 0.3rem .3rem  0.3rem 0rem; padding: 1rem 1rem 0.6rem 1rem">
+		<div class="info-block tight-15" style="border-radius: 0.3rem .3rem  0.3rem 0rem; padding: 1rem 1rem 0.6rem 1rem">
 			<div class="info-block-colored-title-top">
 				<h2>
 					Регистрация
@@ -15,17 +15,20 @@ Registration
 			</div>
 			<div>
 				{% if notification %}
-				<div>
+				<div class="notification">
 					 <strong>{{ notification }}</strong>
 				</div>
 				{% endif %}
-					
+
 				<form method="post">
 					<br>
-	
-					{{ form.as_p }}
+					{{ form.username }}
+					{{ form.email }}
+					{{ form.password1 }}
+					{{ form.password2 }}
 					{% csrf_token %}
 					<br>
+					
 					<input type="submit" value="Зарегистрироаться" class="button-for-light-back long-but">
 				</form>
 			</div>	

@@ -36,7 +36,7 @@ class Wallet(models.Model):
 			return False
 		
 	def __str__(self):
-		return f"prof: {self.owner} amount:{self.amount}"
+		return f"{self.owner}({self.amount})"
 
 	def get_deposits_summ(self):
 		res = 0
@@ -94,11 +94,3 @@ class Deposit(models.Model):
 
 	def __str__(self):
 		return f"deposit for:{self.wallet.owner}({self.deposit_type}) amount:{self.amount}"
-
-
-class PartnerType(models.Model):
-	title = models.CharField(max_length=300)
-	start_amount = models.FloatField()
-	hidden = models.BooleanField(default=False)
-	bonus = models.CharField(max_length=100)
-

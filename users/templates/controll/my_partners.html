@@ -16,7 +16,8 @@
 			<div>
 				Вы можете повысить статус своей партнерской программы и получать более высокие проценты от своих партнеров
 			</div>
-			<div>
+			<br>
+			<div class="button-for-light-back" style="width: fit-content;">
 				Повысить статус
 			</div>	
 		</div>	
@@ -31,37 +32,31 @@
 		<div>
 			<div>
 				<h3>
-					<a href="{% url 'users:register' %}{{ referal.link }}">сылка</a>
+					<a href="{% url 'users:register' %}{{ referal.link }}">Ссылка</a>
 				</h3>
+				<textarea id="ref_link">{{ request.get_host }}{% url 'users:register' %}{{ referal.link }}</textarea>
 			</div>
 			<br>
-
-			<input class="button-for-light-back" type="submit" value="Копировать">
+			<input id="ref_link_but" class="button-for-light-back" type="submit" value="Копировать">
 		</div>	
 	</div>	
 	<div class="variable-show span-three">
 		<div>
 			Ваши 
 		</div>
-		<div class="four-columns">
-			<div class="span-two">
-				Логин					
+		<div class="two-columns">
+			<div>
+				Логин
 			</div>
 			<div>
 				E-Mail	
 			</div>
-			<div>
-				Прибыль	
-			</div>
 			{% for prof in ref_profs %}
-				<div class="span-two">
+				<div>
 					{{ prof.user }}
 				</div>
 				<div>
 					{{ prof.user.email }}
-				</div>
-				<div>
-					Прибыль	
 				</div>
 			{% endfor %}
 		</div>
@@ -69,4 +64,18 @@
 	
 </div>
 
+<script>
+	var link = document.getElementById('ref_link');
+	var but = document.getElementById('ref_link_but');
+
+	var copy_ref = function(e) {
+		let ele = document.querySelector('#ref_link');
+		ele.select();
+		ele.setSelectionRange(0, 9999)/
+		document.execCommand('copy')
+	};
+
+	link.onclick = copy_ref
+	but.onclick = copy_ref
+</script>
 {% endblock %}

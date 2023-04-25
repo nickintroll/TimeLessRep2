@@ -20,15 +20,34 @@
 			</h2>
 			<h4>
 				<div>
-					На Банковские карты выплаты идут от 5 до 60 минут.
+					На Банковские карты выплаты идут от 5мин до 24 часов. <br>
 					Перед тем, как сделать выплату, укажите кошелек в настройках!
 				</div>	
 			</h4>
 		</div>
 
 		<div>
+			{% if notification %}
+				<div class="notification">
+					{{ notification }}
+				</div>
+			{% endif %}
 			<form method="POST">
-				{{ form.as_p }}
+				<div class="three-columns">
+					<div>
+						Размер: 
+					</div>	
+					<div class="span-two">
+						{{ form.amount }}
+					</div>	
+					<div>
+						Куда: 
+					</div>	
+					<div class="span-two">
+						{{ form.source }}
+					</div>	
+
+				</div>
 				{% csrf_token %}
 				<br>
 	

@@ -15,15 +15,39 @@
 		<div id="history-placement">
 			{{ trans }}
 		</div>
+		<div id="under-history">
+		
+		</div>
+	
 	</div>
 </div>
 <script>
 	var h_place = document.getElementById('history-placement');
 	var trans = JSON.parse(h_place.innerHTML);
-	console.log(trans)
+	var undhis = document.getElementById('under-history');
 	h_place.innerHTML = '';
 
 	var history_ = '';
+	var wal_amounts = [];
+	var temp_amount = 0;
+	var max_amount = 0
+	for (let i in trans) {
+		let item = trans[i].fields;
+		if (item.type == 'income' || item.type == 'topup' || item.type == 'partner_tax') {
+			temp_amount += item.amount;
+		};
+
+		if (item.type == 'withdraw') {
+			temp_amount -= item.amount;
+		};
+		wal_amounts.push(temp_amount)
+	
+		if (i != 0){
+			max_amount = Math.max(max_amount, wal_amounts[i-1])
+		}
+
+	}
+
 
 	function set_history() {
 		history_ = '';
@@ -32,35 +56,58 @@
 		var bbb = 180;
 
 		let single_step = aaa / (trans.length -0.8);
-		let vert_step = {{ request.user.profile.wallet.amount }} / bbb;
+		let vert_step = max_amount / bbb;
+
 	
 		let step = 0;
-		for (var i in trans) {
-			let item = trans[i].fields;
-			if (item.type == 'topup') {
-				wal_status += item.amount;
-			};
 
-			if (item.type == 'income') {
+		for (var i in trans) {
+			
+			let item = trans[i].fields;
+			console.log(item);
+			if (item.type == 'income' || item.type == 'topup' || item.type == 'partner_tax') {
 				wal_status += item.amount;
 			};
-			
 			if (item.type == 'withdraw') {
 				wal_status -= item.amount;
 			};
 
-			let padd = wal_status / 10;
-
 			item.date = item.date.slice(0, 10).replace('-', '.').replace('-', '.');
-			
-			history_ += '<div class="history-point" style="left:'+ step +'px; bottom:'+ (wal_status/vert_step) +'px"></div>'
+			var classlist = 'history-point';
+
+			history_ += '<div class="'+ classlist +'" style="left:'+ step +'px; bottom:'+ (wal_status/vert_step) +'px" hel ></div>';
 			step += single_step;
-		}
-		
+
+			if (i != trans.length-1) {
+
+				let width = single_step;
+				if (i==0){
+					width += 8
+				};
+				
+				let bot = wal_status/vert_step + 14;
+
+				if (bot > 130) {
+					bot = wal_status/vert_step - 94;
+				}
+				undhis.innerHTML += '<div class="under-history-item" style="width:'+ width +'px"><div style="bottom:'+ bot +'px">до: <strong>'+ (wal_status-item.amount) +'</strong><br>Сумма: <strong>'+ item.amount +'</strong></div></div>';
+			}
+		}	
 	}
 
 	set_history()
 	h_place.innerHTML = history_;
+
+	var under = document.getElementsByClassName('under-history-item');
+	var points = document.getElementsByClassName('history-point');
+	for (let i=0; i<under.length;i++){
+		under[i].onmouseover = function(e) {
+			points[i].style.background = 'orange'
+		}
+		under[i].onmouseout = function(e) {
+			points[i].style.background = 'darkblue'
+		}
+	}
 
 </script>
 
@@ -73,7 +120,7 @@
 
 		let line = document.createElement('canvas');
 		line.style.position = 'absolute';
-		line.style.zIndex = 1;
+		// line.style.zIndex = 1;
 		line.style.background = 'rgb(255, 100, 100, 0)'
 		document.body.appendChild(line)
 
@@ -92,7 +139,7 @@
 		let top = Math.min(start.y, end.y);
 		let width = end.x - start.x + 5;
 		let height = Math.max(start.y - end.y, end.y - start.y);
-	
+
 
 		line.style.top =  top + 5 + 'px';
 		line.style.left = start.x + 5 + 'px';
@@ -102,7 +149,7 @@
 		let context = line.getContext('2d');
 		context.save()
 		context.setTransform(1, 0, 0, 1, 0, 0)
-		
+
 
 		let difference = Math.max(end.y - start.y, start.y - end.y);
 		context.lineWidth = 200 / difference;
@@ -112,12 +159,13 @@
 
 		context.beginPath();
 		if (end.y < start.y){
+			// going up
 			context.moveTo(0, line.height)
-			context.lineTo(line.width, 0)
+			context.lineTo(line.width-10, 5)
 			context.strokeStyle = 'green';
 		} else {
 			context.moveTo(0, 00)
-			context.lineTo(line.width, line.height)
+			context.lineTo(line.width-40, line.height+10)
 			context.strokeStyle = 'red';
 		}
 

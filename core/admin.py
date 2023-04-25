@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Parameters
 
-# Register your models here.
+@admin.register(Parameters)
+class ParametersAdmin(admin.ModelAdmin):
+	list_display = ('title', 'value')

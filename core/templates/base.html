@@ -16,7 +16,7 @@
 					<a href="{% url 'core:about_us' %}">О нас</a>
 				</div>
 				<div>
-					<a href="">Обзоры</a>
+					<a href="{% url 'core:reviews' %}">Обзоры</a>
 				</div>
 				<div>
 					<h4>
@@ -41,18 +41,24 @@
 				</div>
 			</div>
 			<div>
-				<div>
-					<span class="filler">
+				<div class="filler">
+					<span>
 						cryptoprofit@gmail.com
 					</span>
 				</div>
-				<div>
+				<div class="phone-span-two">
 					{% if request.user.is_authenticated %}
-						<svg class="svg-snoweb svg-snoweb-dark svg-theme-light" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
-							<path class="svg-fill-primary" d="M53.3,13.9a4.7,4.7,0,0,0-6.6,0L13.9,46.7a4.7,4.7,0,0,0,0,6.6,4.8,4.8,0,0,0,6.7,0l1.3-1.4V82.7a4.7,4.7,0,0,0,4.7,4.7H36a4.7,4.7,0,0,0,4.6-4.7V73.4a4.7,4.7,0,0,1,4.7-4.7h9.4a4.7,4.7,0,0,1,4.7,4.7v9.3A4.7,4.7,0,0,0,64,87.4h9.4a4.7,4.7,0,0,0,4.7-4.7V51.9l1.3,1.4a4.8,4.8,0,0,0,6.7,0,4.7,4.7,0,0,0,0-6.6Z">
-							</path>
-					   </svg>
-						<a href="{% url 'users:profile' %}">{{ request.user.username|title }}</a>
+					<div class="inline-bastards">
+						<div>
+							<svg class="svg-snoweb svg-snoweb-dark svg-theme-light" height="100" preserveaspectratio="xMidYMid meet" viewbox="0 0 100 100" x="0" xmlns="http://www.w3.org/2000/svg" y="0">
+								<path class="svg-fill-primary" d="M53.3,13.9a4.7,4.7,0,0,0-6.6,0L13.9,46.7a4.7,4.7,0,0,0,0,6.6,4.8,4.8,0,0,0,6.7,0l1.3-1.4V82.7a4.7,4.7,0,0,0,4.7,4.7H36a4.7,4.7,0,0,0,4.6-4.7V73.4a4.7,4.7,0,0,1,4.7-4.7h9.4a4.7,4.7,0,0,1,4.7,4.7v9.3A4.7,4.7,0,0,0,64,87.4h9.4a4.7,4.7,0,0,0,4.7-4.7V51.9l1.3,1.4a4.8,4.8,0,0,0,6.7,0,4.7,4.7,0,0,0,0-6.6Z">
+								</path>
+							</svg>	
+						</div>
+						<div>
+							<a href="{% url 'users:profile' %}">{{ request.user.username|title }}</a>
+						</div>
+					</div>
 					{% else %} 
 						<a href="{% url 'users:login' %}">Login</a> 
 					{% endif %}	

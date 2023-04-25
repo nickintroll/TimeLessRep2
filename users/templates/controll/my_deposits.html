@@ -12,9 +12,6 @@
 
 
 {% block subcontent  %}
-{% if notification %}
-	{{ notification }}
-{% endif %}
 <div class="variable-show tight-30">
 	<div>
 		<h3>
@@ -23,7 +20,13 @@
 	</div>
 	<div>
 		<form method="post">
-
+			<div id="is_empty" class="notification-yellow">
+			</div>
+			{% if notification %}
+			<div class="notification">
+				{{ notification }}
+			</div>
+			{% endif %}
 			<div>
 				Выберете план
 				<div>
@@ -47,8 +50,6 @@
 		</form>
 	</div>
 </div>
-
-
 <div class="variable-show">
 	<div>
 		<h3>
@@ -82,7 +83,16 @@
 				work
 			</div>
 		{% endfor %}
-
 	</div>
 </div>
+
+<script>
+	var place = document.getElementById('is_empty');
+	var choices = document.getElementById('id_source');
+	if (choices.length == 0){
+		place.innerHTML = 'Выбор появиться после того как пополните один из депозитов';
+	} else { 
+		place.style.display = 'none'
+	}
+</script>
 {% endblock %}

@@ -49,8 +49,11 @@ h1{
 	line-height: 2.5rem;
 	letter-spacing: 0.1rem;
 }
+select{
+	max-width: 20rem;
+}
 
-input{
+input, select{
 	border: 0;
 	box-shadow: 0rem 0rem 1rem rgba(0, 0, 0, 0.1) inset;
 	border: 1px solid lightgray;
@@ -233,6 +236,9 @@ input[type='text'], input[type='password']{
 }
 .tight-30{
 	max-width: 30rem;
+}
+.tight-15{
+	max-width: 15rem;
 }
 
 .tight-10{
@@ -650,6 +656,94 @@ input[type='text'], input[type='password']{
 	background-color: rgb(56, 56, 180);
 	user-select: none;
 }
+
+#reviews-grid{
+	max-width: 52rem;
+}
+
+#reviews-grid > div{
+	margin: 1rem;
+}
+
+.stylized-back{
+	background: linear-gradient(45deg, rgb(29, 29, 96), rgb(49, 49, 156) 60%, rgb(76, 110, 223), rgb(40, 40, 150) 95%);
+	margin: -1rem -1rem 1rem -1rem;
+	padding: 1rem;
+	color: white;
+	border-radius: 0.3rem .5rem 0 0;
+}
+
+#under-history{
+	position: absolute;
+	margin-left: 8px;
+}
+
+#under-history > div{
+	margin-left: -8px;
+}
+#under-history > div + div{
+	margin-left: 0px;
+}
+
+.under-history-item{
+	transition: .2s;
+	height: 210px;
+	/* background-color: rgba(0, 0, 0, 0.2); */
+	margin-top: -210px;
+
+	display: inline-block;
+	vertical-align: top;
+	color: transparent;
+	position: relative;
+}
+
+.under-history-item:hover{
+	transition: .3s;
+	/* background-color: rgba(0, 0, 0, 0.6); */
+	color: black;
+}
+
+.under-history-item > div{
+	left: 6px;
+	position: absolute;
+	padding: .5rem;
+	z-index: 10;
+	border-radius: 0.2rem 0.1rem;
+}
+
+.under-history-item:hover > div{
+	transition: .3s;
+	background-color: rgb(205, 175, 155);
+}
+
+.stylized-back h2{
+	color: white;
+}
+.review-prof-pic{
+	height: 3rem;
+	margin-top: -0.5rem;
+	margin-bottom: -0.7rem;
+
+	border: 0.3rem solid white;
+	border-radius: 100%;
+}
+
+.notification, .notification-yellow{
+	padding: 1rem;
+	margin: 0.2rem
+}
+.notification{
+	background-color: rgba(255, 192, 203, 0.574);
+	color: rgb(188, 53, 53);
+	border: 2px solid rgb(144, 53, 53);
+}
+
+.notification-yellow{
+	background-color: rgba(255, 218, 158, 0.739);
+	/* color: rgb(212, 201, 72); */
+	border: 2px solid rgb(141, 144, 53);
+}
+
 @media only screen and (max-width: 600px) {
 	.filler{
 		display: none;
@@ -675,6 +769,10 @@ input[type='text'], input[type='password']{
 	#chat-room{
 		left: 10%;
 	}
+	.phone-span-two{
+		grid-column: span 2 !important;
+		/* background-color: red !important; */
+	}
 
 }
 
@@ -695,7 +793,6 @@ input[type='text'], input[type='password']{
 	#chat-room{
 		left: 30%;
 	}
-
 }
 
 @media only screen and (max-width: 1000px) {

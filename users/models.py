@@ -2,11 +2,12 @@ from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
 
-partner_status = (
-	('Партнер', 'Partner'),
-	('Участник', 'Member'),
-	('Куратор', 'Kurator')
-)
+
+class PartnersLevel(models.Model):
+	minimum_amount = models.FloatField()
+	tax_persentage = models.FloatField()
+	title = models.CharField(max_length=100)
+
 
 # Create your models here.
 class Profile(models.Model):
@@ -15,7 +16,7 @@ class Profile(models.Model):
 	slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
 
 	invited_by = models.ForeignKey('profile', blank=True, null=True, on_delete=models.DO_NOTHING, related_name='invited')
-	status = models.CharField(max_length=40, blank=True, null=True, choices=partner_status, default='Партнер')
+	partner_status = models.ForeignKey(PartnersLevel, blank=True, null=True, related_name='profiles', on_delete=models.DO_NOTHING)
 
 	def save(self, *args, **kwargs):
 		if not self.slug:

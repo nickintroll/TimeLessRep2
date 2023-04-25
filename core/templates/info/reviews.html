@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="cool-back" style="padding-bottom:5rem; background: linear-gradient(-45deg, rgb(44, 116, 137,0.5), rgb(0, 12, 87, 0.4)), url('static/imgs/abstract-geometric-shapes-wallpaper-2880x900_60.jpg')">
+	<div class="content-width centered">
+		<h1>
+			Обзоры
+		</h1>
+		<div>
+			Информация о нашей организации оставленная нашими инвесторами
+		</div>
+	</div>
+</div>
+
+<div class="content-width centered">
+	<div id="reviews-grid" class="centered">
+		<div class="info-block">
+			<div class="inline-bastards stylized-back">
+				<div>
+					<img src="{% static 'imgs/ZgomxucUag4.jpg' %}" alt="" class="review-prof-pic">
+				</div>
+				<div>
+					<h2>
+						Ольга Викториева
+					</h2>	
+				</div>
+			</div>
+			<div>
+				Сначала думала вранье,но начала работать с ребятами через неделю уже достала хороший заработок. Уже три месяца с ними, и все еще никаких проблем.
+			</div>
+		</div>
+		<div class="info-block">
+			<div class="inline-bastards stylized-back">
+				<div>
+					<img src="{% static 'imgs/unnamed.jpg' %}" alt="" class="review-prof-pic">
+				</div>
+				<div>
+					<h2>
+						Михаил созонов
+					</h2>	
+				</div>
+	
+			</div>
+			<div>
+				Честно понятно, все оплатили. Уже 2 месяца с ними, много вложил и отлично заработал, буду дальше вкладывать и желать удачи.
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django import forms
 
@@ -16,7 +17,6 @@ class LoginForm(forms.Form):
 		
 
 class RegisterForm(forms.ModelForm):
-
 	password1 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder':'Passowrd'}))
 	password2 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder':'Repeat passowrd'}))
 
@@ -29,11 +29,10 @@ class RegisterForm(forms.ModelForm):
 			'email': forms.TextInput(attrs={'placeholder': 'Email'})
 		}
 
-
 	def clean_password(self):
 		cd = self.cleaned_data
 		if cd['password1'] != cd['password2']:
-			raise forms.ValidationError('Password do\'t match.')
+			raise ValidationError('Password do\'t match.')
 		else:
 			return cd['password2']
 

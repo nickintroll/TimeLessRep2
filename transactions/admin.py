@@ -5,7 +5,6 @@ from .models import Wallet, Transaction, DepositType, Deposit
 @admin.register(Wallet)
 class WalletAdmin(admin.ModelAdmin):
 	list_display = ('owner', 'amount', 'status')
-	pass
 
 
 @admin.register(Transaction)
@@ -15,9 +14,9 @@ class TransactionAdmin(admin.ModelAdmin):
 
 @admin.register(DepositType)
 class DepositTypeAdmin(admin.ModelAdmin):
-	pass
+	list_display = ('persentage', 'minimum_deposit', )
 
 
 @admin.register(Deposit)
 class DepositAdmin(admin.ModelAdmin):
-	pass
+	list_display = ('wallet', 'deposit_type', 'amount', 'created')

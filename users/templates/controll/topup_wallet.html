@@ -12,16 +12,6 @@
 
 
 {% block subcontent  %}
-	{% if notification %}
-	<div class="green-notification">
-		<div class="green-notification-title">
-			Уведомление!
-		</div>
-		<div class="green-notification-text">
-			{{ notification }}
-		</div>
-	</div>
-	{% endif %}
 	<div class="three-columns destroy-grid">
 		<div class="variable-show span-two">
 			<div>
@@ -30,13 +20,39 @@
 				</h2>			
 			</div>
 			<div>
-				<div>
-					Выберите план
+				{% if notification %}
+				<div class="notification {{ notification_class }}">
+					<div>
+						{{ notification }}
+					</div>
 				</div>
+				<br>
+				{% endif %}
+			
 
 				<div>
 					<form method="POST">
-						{{ form.as_p }}
+						<div class="three-columns">
+							<div>
+								размер: 
+							</div>
+							<div class="span-two">
+								{{ form.amount }}
+							</div>
+							<div>
+								Депозит:	
+							</div>
+							<div class="span-two">
+								{{ form.deposit_type }}
+							</div>
+							<div>
+								От куда: 
+							</div>
+							<div class="span-two">
+								{{ form.source }}
+							</div>
+	
+						</div>
 						{% csrf_token %}
 						<div>
 							<br>
@@ -54,16 +70,38 @@
 			</div>
 			<div>
 
-				через 34-68 часов вы получите
-				<br> 120 000,00
+				через 48 часов вы получите
+				<br> <span id="after_48">---</span>p
 				<br> каждые 9 минут вы будете получать
-				<br> 530,70
+				<br> <span id="per_9">---</span>p
 
 			</div>
 		</div>
-	</div>
-	<div>
+	</div>	
+	<script>
+		var amount = document.getElementById('id_amount');
+		var type = document.getElementById('id_deposit_type');
+		
+		var after_48 = document.getElementById('after_48');
+		var per_9 = document.getElementById('per_9');
+		
+		var about_count = function(e) {
+			let temp_type = type.selectedOptions[0].textContent;
+			let temp_amount = parseFloat(amount.value) / 100;
+			
+			if (temp_amount != 0 && temp_type != '---------') {
+				let persentage = parseFloat(temp_type.split('%')[0]);
+				let res = 320 * (temp_amount * persentage);
 
-	</div>
+				after_48.innerHTML = res;
+				per_9.innerHTML = (temp_amount * persentage);
+				res = 0;
+			}
+		}
 
+		amount.onchange = about_count;
+		type.onchange = about_count;
+
+	</script>
 {% endblock %}
+

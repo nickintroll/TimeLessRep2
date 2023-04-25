@@ -2,6 +2,14 @@ import threading as tr
 from time import sleep
 
 from .models import Deposit, Transaction
+from core.models import Parameters
+
+
+def get_param(name):
+	try:
+		return Parameters.objects.get(title = name)
+	except:
+		return None
 
 
 class CustomeThred(tr.Thread):
@@ -27,6 +35,24 @@ class CustomeThred(tr.Thread):
 				wallet.save()
 
 				Transaction.objects.create(amount=dep.amount * dep.deposit_type.persentage, status='done', type='income', wallet=wallet, deposit_type=dep.deposit_type)
+			
+
+			a = get_param('users_amount_main_page')
+			b = get_param('invested')
+			c = get_param('payed_off')
+
+			if a != None:
+				a.value = str(int(a.value) + 3)
+				a.save()
+
+			if b != None:
+				b.value = str(int(b.value) + 7300)
+				b.save()
+			
+			if c != None:			
+				c.value = str(int(c.value) + 3100)
+				c.save()
+
 
 			sleep(9*60)	# sleep for 9min			
 

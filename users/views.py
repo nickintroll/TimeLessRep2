@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.utils.crypto import get_random_string
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -7,7 +8,7 @@ from django.core import serializers
 from transactions.models import Wallet, Transaction, Deposit, DepositType
 
 from .forms import LoginForm, RegisterForm, SourceWalletForm, TopUpAndWithdrawForm, ReinvestForm
-from .models import Profile, SourceWallet, online_wallet_platform_all, ReferalLink
+from .models import Profile, SourceWallet, online_wallet_platform_all, ReferalLink, PartnersLevel
 
 
 # profile
@@ -63,12 +64,12 @@ def my_deposits(request):
 
 @login_required
 def topup_wallet(request):
-	sources = request.user.profile.source_wallets.all()
+	pre_sources = request.user.profile.source_wallets.all()
 
-	if len(sources) == 0:
-		sources = (('-', '-'), )
+	if len(pre_sources) == 0:
+		sources = (('----', '----'), )
 	else:
-		sources = [(i.platform, i.platform) for i in sources]
+		sources = [(i.platform, i.platform) for i in pre_sources]
 
 	form = TopUpAndWithdrawForm(sources=sources)
 	if request.method == 'POST':
@@ -78,12 +79,20 @@ def topup_wallet(request):
 			obj.wallet = request.user.profile.wallet
 			obj.type = 'topup'
 
+			# user does not have sources
+			if len(pre_sources) == 0:
+				notification = 'Сначала необходимо от куда будут отправляться средства. Карты и кошельки можно добаить на стринце настроек'
+				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+			
+			# no deposit
+			if obj.deposit_type == None:
+				notification = 'Сначала необходимо выбрать депозит'
+				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
 
 			# if source is not right
 			if form.cleaned_data['source'] in [i for i in request.user.profile.source_wallets.all()]:
 				notification = 'Сначала необходимо выбрать кошелек. Вы можете добавить кошелек в меню настроек'
 				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
-
 
 			# if amount is too low
 			if obj.amount < obj.deposit_type.minimum_deposit:
@@ -92,18 +101,19 @@ def topup_wallet(request):
 
 			# referal tax
 			ref_wal = request.user.profile.invited_by
-			print(ref_wal)
+
+
 			if ref_wal:
-				ref_wal = ref_wal.wallet
-				ref_wal.amount = ref_wal.amount + (obj.amount * .05)
+				if ref_wal.partner_status != None:
+					pers = ref_wal.partner_status.tax_persentage
+					ref_wal = ref_wal.wallet
+					ref_wal.amount = ref_wal.amount + (obj.amount * pers)
 
-				# saving transaction
-				Transaction.objects.create(wallet=ref_wal, amount=obj.amount * .05, status='done', type='partner_tax')
+					# saving transaction
+					Transaction.objects.create(wallet=ref_wal, amount=obj.amount * pers, status='done', type='partner_tax')
 
-				obj.amount = obj.amount - (obj.amount * .05)
-				ref_wal.save()
-
-
+					obj.amount = obj.amount - (obj.amount * pers)
+					ref_wal.save()
 
 			# add to deposit
 			deps = Deposit.objects.all().filter(deposit_type=obj.deposit_type, wallet=obj.wallet)
@@ -130,9 +140,10 @@ def topup_wallet(request):
 			notification = None
 			if obj.status == 'done':
 				notification = 'Успех, ваш счет был пополнен!'
+				notification_class = 'notification-green'
 			request.method = 'GET'
 
-			return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+			return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification, 'notification_class': notification_class})
 
 	return render(request, 'controll/topup_wallet.html', context={'form': form})
 
@@ -151,24 +162,30 @@ def withdraw(request):
 		form = TopUpAndWithdrawForm(request.POST, sources=sources, is_withdraw=True)
 		if form.is_valid():
 			obj = form.save(commit=False)
-			obj.wallet = request.user.profile.wallet
-			obj.type = 'withdraw'
 
-			obj.status = 'done'	# this should be changed
-			# here should be some check with payment platform
+			if request.user.profile.wallet.amount - request.user.profile.wallet.get_deposits_summ() > obj.amount:
+				obj.wallet = request.user.profile.wallet
+				obj.type = 'withdraw'
 
-			obj.save()
+				obj.status = 'done'
+				# here should be some check with payment platform
 
-			if obj.status == 'done':
-				wal = Wallet.objects.get(id=request.user.profile.wallet.id)
-				wal.amount = wal.amount - float(obj.amount)
-				wal.save()
+				obj.save()
 
-			notification = None
-			if obj.status == 'done':
-				notification = 'Успех, деньги были отправлены!'
-			request.method = 'GET'
-			return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
+				if obj.status == 'done':
+					wal = Wallet.objects.get(id=request.user.profile.wallet.id)
+					wal.amount = wal.amount - float(obj.amount)
+					wal.save()
+
+				notification = None
+				if obj.status == 'done':
+					notification = 'Успех, деньги были отправлены!'
+				request.method = 'GET'
+				return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
+
+			else:
+				notification = f'Недостаточо средств на счету. доступно для вывода: {request.user.profile.wallet.amount - request.user.profile.wallet.get_deposits_summ()}p'
+				return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
 
 	withdraws = request.user.profile.wallet.transactions.filter(type='withdraw')
 
@@ -283,7 +300,7 @@ def user_register(request, ref=None):
 			try:
 				new_user.set_password(form.clean_password())
 
-			except forms.ValidationError:
+			except ValidationError:
 				notification = 'Пароли не совпали'
 				return render(request, 'user/register.html', {'form': form, 'notification': notification})
 
@@ -298,6 +315,11 @@ def user_register(request, ref=None):
 
 			login(request, new_user)
 			return redirect('users:profile')
+	
+	if form.errors:
+		errors = form.errors.as_data()
+		notification = errors[list(errors.keys())[0]][0].message
+
 
 	return render(request, 'user/register.html', {'form': form, 'notification': notification})
 
@@ -309,8 +331,20 @@ def user_profile(request):
 	user = request.user
 	profile = Profile.objects.get(user=user)
 
-	if profile.status == None:
-		profile.status = 'Partner'
-		profile.save()
+	next_level = None
 
-	return render(request, 'controll/profile.html', context={'notification': notification, 'profile':profile, 'user':user})
+
+	if profile.partner_status == None:
+		profile.partner_status = PartnersLevel.objects.filter(title='Member')[0]
+		profile.save()
+	
+
+	deps_sum = profile.wallet.get_deposits_summ()
+	
+	for partner_lvl in PartnersLevel.objects.all():
+		if partner_lvl.minimum_amount > deps_sum:
+			next_level = partner_lvl
+			break
+		
+
+	return render(request, 'controll/profile.html', context={'notification': notification, 'profile':profile, 'user':user, 'next_level': next_level})

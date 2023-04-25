@@ -14,16 +14,6 @@ async def get_answer(message):
 	channel_name = message.text.split(':')[0]
 
 
-	# ['brpop_timeout', 'capacity', 'channel_capacity', 'channel_name_regex', 'client_prefix', 'close_pools', 'compile_capacities', 'connection', 'consistent_hash', 'crypter', 'decode_hosts', 'deserialize', 'expiry', 'extensions', 'flush', 'get_capacity', 'group_add', 'group_discard', 'group_expiry', 'group_name_regex', 'group_send', 'hosts', 'invalid_name_error', 'make_fernet', 'match_type_and_length', 'new_channel', 'non_local_name', 'pools', 'prefix', 'receive', 'receive_buffer', 'receive_clean_locks', 'receive_cleaners', 'receive_count', 'receive_event_loop', 'receive_lock', 'receive_single', 'ring_size', 'send', 'serialize', 'valid_channel_name', 'valid_channel_names', 'valid_group_name', 'wait_received']
-	# print(dir(channel_layer))
-	# print('CHANNEL LAYER GROUPS:', channel_layer.groups)
-	# print('CHANNEL LAYER CHANS:', channel_layer.channels)
-
-
-	# for i in dir(channel_layer):
-		# print(i, ' : ', eval(f'channel_layer.{i}'))
-
-
 	await channel_layer.send(channel_name, {
 			'type': 'message',
 			'message': message.text.split(':')[1],
@@ -31,7 +21,7 @@ async def get_answer(message):
 		})
 
 
-	await message.answer(message.from_user.username + ' ваш ответ был отправлен на '+ channel_name)
+	await message.answer(message.from_user.username + '\nваш ответ был отправлен на \n'+ channel_name)
 
 
 class Command(BaseCommand):
