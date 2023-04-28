@@ -6,7 +6,7 @@
 		<div class=" info-block" style="border-radius: 0.3rem .3rem  0.3rem 0rem; padding: 1rem 1rem 0rem 1rem">
 			<div class="info-block-colored-title-top">
 				<h2>
-					Вход
+					{{ tx.login|title }}
 				</h2>
 			</div>
 			<div style="padding: 1rem 0rem 1rem 0rem;">
@@ -20,7 +20,7 @@
 					{% csrf_token %}
 					<br>
 					<h3>
-						<input type="submit" value="Войти" class="button-for-light-back long-but">	
+						<input type="submit" value="{{ tx.login|title }}" class="button-for-light-back long-but">	
 					</h3>
 				</form>
 			</div>
@@ -31,11 +31,19 @@
 		</div>
 		<div class="inline-bastards">
 			<div class="info-block-addition">
-				<a href="{% url 'users:register'%}">Регистрация</a>
+				<a href="{% url 'users:register'%}">{{ tx.register }}</a>
 			</div>	
 		</div>
 
 
 	</div>
 </div>
+
+<script>
+	let login = document.getElementById('id_username');
+	let pas = document.getElementById('id_password');
+	login.placeholder = '{{ tx.username|title }}';
+	pas.placeholder = '{{ tx.password|title }}';
+	
+</script>
 {% endblock %}

@@ -15,7 +15,7 @@
 <div class="variable-show tight-30">
 	<div>
 		<h3>
-			Реинвест
+			{{ tx.deps0 }}
 		</h3>	
 	</div>
 	<div>
@@ -28,19 +28,19 @@
 			</div>
 			{% endif %}
 			<div>
-				Выберете план
+				{{ tx.deps1 }}
 				<div>
 					{{ form.source }}
 				</div>
 			</div>
 			<div>
-				Сумма
+				{{ tx.deps2 }}
 				<div>
 					{{ form.amount }}
 				</div>
 			</div>
 			<div>
-				Куда перевести
+				{{ tx.deps3 }}
 				<div>
 					{{ form.end }}
 				</div>
@@ -53,21 +53,21 @@
 <div class="variable-show">
 	<div>
 		<h3>
-			Депозиты
+			{{ tx.deps4 }}
 		</h3>	
 	</div>
 	<div class="four-columns">
 		<div>
-			Дата первого вклада
+			{{ tx.deps5 }}
 		</div>
 		<div>
-			Сумма
+			{{ tx.deps6 }}
 		</div>
 		<div>
-			Дата окончания
+			{{ tx.deps7 }}
 		</div>
 		<div>
-			Статус
+			{{ tx.deps8 }}
 		</div>
 		{% for dep in deposits %}
 			<div>

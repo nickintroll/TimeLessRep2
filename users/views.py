@@ -6,15 +6,17 @@ from django.contrib.auth import authenticate, login
 from django.core import serializers
 
 from transactions.models import Wallet, Transaction, Deposit, DepositType
+from core.views import render_
 
 from .forms import LoginForm, RegisterForm, SourceWalletForm, TopUpAndWithdrawForm, ReinvestForm
 from .models import Profile, SourceWallet, online_wallet_platform_all, ReferalLink, PartnersLevel
 
 
+
 # profile
 @login_required
 def bonus_page(request):
-	return render(request, 'controll/bonus.html')
+	return render_(request, 'controll/bonus.html')
 
 
 @login_required
@@ -27,7 +29,7 @@ def my_partners(request):
 
 	ref_profs = Profile.objects.filter(invited_by=request.user.profile)
 
-	return render(request, 'controll/my_partners.html', context={'referal': referal, 'ref_profs': ref_profs})
+	return render_(request, 'controll/my_partners.html', context={'referal': referal, 'ref_profs': ref_profs})
 
 
 @login_required
@@ -59,7 +61,7 @@ def my_deposits(request):
 					notification = 'Вы не можете перести средства с депозита на этотже депозит'
 
 
-	return render(request, 'controll/my_deposits.html', {'deposits': deposits, 'form': form, 'notification': notification})
+	return render_(request, 'controll/my_deposits.html', {'deposits': deposits, 'form': form, 'notification': notification})
 
 
 @login_required
@@ -82,22 +84,22 @@ def topup_wallet(request):
 			# user does not have sources
 			if len(pre_sources) == 0:
 				notification = 'Сначала необходимо от куда будут отправляться средства. Карты и кошельки можно добаить на стринце настроек'
-				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
 			
 			# no deposit
 			if obj.deposit_type == None:
 				notification = 'Сначала необходимо выбрать депозит'
-				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
 
 			# if source is not right
 			if form.cleaned_data['source'] in [i for i in request.user.profile.source_wallets.all()]:
 				notification = 'Сначала необходимо выбрать кошелек. Вы можете добавить кошелек в меню настроек'
-				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
 
 			# if amount is too low
 			if obj.amount < obj.deposit_type.minimum_deposit:
 				notification = f'Минимальная сумма депозита: {obj.deposit_type.minimum_deposit}р'
-				return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
 
 			# referal tax
 			ref_wal = request.user.profile.invited_by
@@ -143,9 +145,9 @@ def topup_wallet(request):
 				notification_class = 'notification-green'
 			request.method = 'GET'
 
-			return render(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification, 'notification_class': notification_class})
+			return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification, 'notification_class': notification_class})
 
-	return render(request, 'controll/topup_wallet.html', context={'form': form})
+	return render_(request, 'controll/topup_wallet.html', context={'form': form})
 
 
 @login_required
@@ -181,15 +183,15 @@ def withdraw(request):
 				if obj.status == 'done':
 					notification = 'Успех, деньги были отправлены!'
 				request.method = 'GET'
-				return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
+				return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
 
 			else:
 				notification = f'Недостаточо средств на счету. доступно для вывода: {request.user.profile.wallet.amount - request.user.profile.wallet.get_deposits_summ()}p'
-				return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
+				return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
 
 	withdraws = request.user.profile.wallet.transactions.filter(type='withdraw')
 
-	return render(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'wthdraws': withdraws})
+	return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'wthdraws': withdraws})
 
 
 @login_required
@@ -279,7 +281,7 @@ def user_login(request):
 		else:
 			notification = 'Wrong request, check data and try again.'
 
-	return render(request, 'user/login.html', {'form': form, 'notification': notification})
+	return render_(request, 'user/login.html', {'form': form, 'notification': notification})
 
 
 def user_register(request, ref=None):
@@ -302,7 +304,7 @@ def user_register(request, ref=None):
 
 			except ValidationError:
 				notification = 'Пароли не совпали'
-				return render(request, 'user/register.html', {'form': form, 'notification': notification})
+				return render_(request, 'user/register.html', {'form': form, 'notification': notification})
 
 			new_user.save()
 			prof = Profile.objects.create(
@@ -321,7 +323,7 @@ def user_register(request, ref=None):
 		notification = errors[list(errors.keys())[0]][0].message
 
 
-	return render(request, 'user/register.html', {'form': form, 'notification': notification})
+	return render_(request, 'user/register.html', {'form': form, 'notification': notification})
 
 
 @login_required
@@ -347,4 +349,4 @@ def user_profile(request):
 			break
 		
 
-	return render(request, 'controll/profile.html', context={'notification': notification, 'profile':profile, 'user':user, 'next_level': next_level})
+	return render_(request, 'controll/profile.html', context={'notification': notification, 'profile':profile, 'user':user, 'next_level': next_level})

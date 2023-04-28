@@ -16,7 +16,7 @@
 		<div class="variable-show span-two">
 			<div>
 				<h2>
-					Пополниет баланс
+					{{ tx.topup0 }}
 				</h2>			
 			</div>
 			<div>
@@ -27,26 +27,25 @@
 					</div>
 				</div>
 				<br>
-				{% endif %}
-			
+				{% endif %}	
 
 				<div>
 					<form method="POST">
 						<div class="three-columns">
 							<div>
-								размер: 
+								{{ tx.topup1 }}
 							</div>
 							<div class="span-two">
 								{{ form.amount }}
 							</div>
 							<div>
-								Депозит:	
+								{{ tx.topup2 }}
 							</div>
 							<div class="span-two">
 								{{ form.deposit_type }}
 							</div>
 							<div>
-								От куда: 
+								{{ tx.topup3 }}
 							</div>
 							<div class="span-two">
 								{{ form.source }}
@@ -65,14 +64,13 @@
 		<div class="variable-show">
 			<div>
 				<h3>
-					Расчет прибыли
+					{{ tx.topup4 }}
 				</h3>					
 			</div>
 			<div>
-
-				через 48 часов вы получите
+				{{ tx.topup5 }}
 				<br> <span id="after_48">---</span>p
-				<br> каждые 9 минут вы будете получать
+				<br> {{ tx.topup6 }}
 				<br> <span id="per_9">---</span>p
 
 			</div>

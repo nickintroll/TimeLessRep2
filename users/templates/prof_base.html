@@ -16,6 +16,16 @@
 					{{ request.user.profile.wallet.amount }}р
 				</div>
 			</div>
+			<div id="map-opener">
+				<svg class="svg-snoweb svg-theme-light" height="100"viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" y="0">
+					<path class="svg-fill-primary" d="M17.7,28.5H82.3a5.4,5.4,0,0,0,5.4-5.4,5.4,5.4,0,0,0-5.4-5.4H17.7a5.4,5.4,0,0,0-5.4,5.4A5.4,5.4,0,0,0,17.7,28.5Z" fill-rule="evenodd">
+					</path>
+					<path class="svg-fill-primary" d="M82.3,44.6H17.7a5.4,5.4,0,0,0,0,10.8H82.3a5.4,5.4,0,1,0,0-10.8Z" fill-rule="evenodd">
+					</path>
+					<path class="svg-fill-primary" d="M50,71.5H17.7a5.4,5.4,0,0,0-5.4,5.4,5.4,5.4,0,0,0,5.4,5.4H50a5.4,5.4,0,0,0,5.4-5.4A5.4,5.4,0,0,0,50,71.5Z" fill-rule="evenodd">
+					</path>
+				   </svg>
+			</div>
 			<div class="controller-map-list">
 				<div>
 					<h3>
@@ -175,4 +185,45 @@
 		</div>	
 	</div>
 </div>
+
+
+<script>
+	var opener = document.querySelector('#map-opener');
+	var map = document.querySelector('.controller-map-meta');
+	var room = document.querySelector('.controller-room-meta');
+
+
+	opener.onclick = function(e) {
+		let items = map.querySelectorAll('.pre-filler');
+
+		if (opener.classList.contains('map-opener-active')){
+			// closing
+			console.log('closing');
+			map.style.gridColumn = 'span 2';
+			room.style.gridColumn = 'span 10';
+			
+			for (let i=0; i < items.length; i++) {
+				items[i].style.display = 'none'
+				items[i].style.visibility = 'hidden'
+			}
+
+			opener.classList.remove('map-opener-active');
+			room.classList.remove('hide-content');
+		} else {
+			// opening
+			console.log('opening');
+			map.style.gridColumn = 'span 10';
+			room.style.gridColumn = 'span 2';
+
+			for (let i=0; i < items.length; i++) {
+				items[i].style.textAlign = 'center';
+				items[i].style.display = 'inline-block'
+				items[i].style.visibility = 'visible'
+			}
+			opener.classList.add('map-opener-active');
+			room.classList.add('hide-content');
+		}
+	}
+</script>
 {% endblock %}
+

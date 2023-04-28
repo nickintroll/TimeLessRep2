@@ -10,7 +10,7 @@ Registration
 		<div class="info-block tight-15" style="border-radius: 0.3rem .3rem  0.3rem 0rem; padding: 1rem 1rem 0.6rem 1rem">
 			<div class="info-block-colored-title-top">
 				<h2>
-					Регистрация
+					{{ tx.register }}
 				</h2>
 			</div>
 			<div>
@@ -29,7 +29,7 @@ Registration
 					{% csrf_token %}
 					<br>
 					
-					<input type="submit" value="Зарегистрироаться" class="button-for-light-back long-but">
+					<input type="submit" value="{{ tx.register }}" class="button-for-light-back long-but">
 				</form>
 			</div>	
 		</div>
@@ -38,11 +38,21 @@ Registration
 		</div>
 
 		<div class="info-block-addition">
-			<a href="{% url 'users:login'%}">Войти</a>
+			<a href="{% url 'users:login'%}">
+				{{ tx.login|title }}
+			</a>
 		</div>
 
 	</div>
 
 </div>
+<script>
+	let login = document.getElementById('id_username');
+	let pas1 = document.getElementById('id_password1');
+	let pas2 = document.getElementById('id_password2');
+	login.placeholder = '{{ tx.username|title }}';
+	pas1.placeholder = '{{ tx.password|title }}';
+	pas2.placeholder = '{{ tx.rep_passwd|title }}';
 
+</script>
 {% endblock %}

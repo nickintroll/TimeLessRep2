@@ -9,14 +9,14 @@
 	<div class="variable-show">
 		<div>
 			<h2>
-				Мой профиль
+				{{ tx.profile0 }}
 			</h2>	
 		</div>
 		<div>
 			<div>
 				<div>
 					<h4>
-						Мой статус:
+						{{ tx.profile1 }}
 					</h4>
 					<div>
 						{{ profile.partner_status.title|title }}
@@ -34,26 +34,26 @@
 	<div class="variable-show">
 		<div>
 			<h3>
-				Финансы
+				{{ tx.profile4 }}
 			</h3>	
 		</div>
 		<div>
 			<div>
 				<h4>
-					Баланс
+					{{ tx.profile5 }}
 				</h4>
 				{{ profile.wallet.amount }}p
 			</div>	
 			<div>
 				<h4>
-					Сумма депозитов
+					{{ tx.profile6 }}
 				</h4>
 				{{ profile.wallet.get_deposits_summ }}р
 			</div>
 
 			<div>
 				<h4>
-					Сумма выплат
+					{{ tx.profile7 }}
 				</h4>
 				{{ profile.wallet.get_withdraw_summ }}
 			</div>
@@ -63,19 +63,19 @@
 	<div class="variable-show">
 		<div>
 			<h3>
-				Партнеры
+				{{ tx.profile8 }}
 			</h3>	
 		</div>
 		<div>
 			<div>
 				<h4>
-					Всего партнеров
+					{{ tx.profile9 }}
 				</h4>
 				{{ profile.invited.all.count }} чел.
 			</div>
 			<div>
 				<h4>
-					Прибыль с партнеров
+					{{ tx.profile10 }}
 				</h4>
 				{{ profile.wallet.get_partners_summ }} р
 			</div>
@@ -84,9 +84,9 @@
 	</div>	
 </div>
 <div>
-	<h2>
-		Статистика дохода
-	</h2>
+	<!-- <h2> -->
+		<!-- {{ tx.profile11 }} -->
+	<!-- </h2> -->
 </div>
 <script>
 	// javascript:location.reload(true)

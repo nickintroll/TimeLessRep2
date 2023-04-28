@@ -16,12 +16,12 @@
 	<div class="variable-show tight-40 no-padding">
 		<div>
 			<h2>
-				Вывод средств
+				{{ tx.withd0 }}
 			</h2>
 			<h4>
 				<div>
-					На Банковские карты выплаты идут от 5мин до 24 часов. <br>
-					Перед тем, как сделать выплату, укажите кошелек в настройках!
+					{{ tx.withd1 }} <br>
+					{{ tx.withd2 }}
 				</div>	
 			</h4>
 		</div>
@@ -35,13 +35,13 @@
 			<form method="POST">
 				<div class="three-columns">
 					<div>
-						Размер: 
+						{{ tx.withd3 }}
 					</div>	
 					<div class="span-two">
 						{{ form.amount }}
 					</div>	
 					<div>
-						Куда: 
+						{{ tx.withd4 }}
 					</div>	
 					<div class="span-two">
 						{{ form.source }}
@@ -61,18 +61,18 @@
 	<div class="variable-show">
 		<div>
 			<h2>
-				История выплат
+				{{ tx.withd5 }}
 			</h2>
 		</div>
 		<div class="four-columns">
 			<div>
-				Дата	
+				{{ tx.withd6 }}
 			</div>
 			<div class="span-two">
-				Сумма	
+				{{ tx.withd7 }}
 			</div>
 			<div>
-				Статус
+				{{ tx.withd8 }}
 			</div>
 			{% for trans in wthdraws %}
 				<div>

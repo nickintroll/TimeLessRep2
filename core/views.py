@@ -1,6 +1,36 @@
 from django.shortcuts import render
-# Create your views here.
-from .models import Parameters
+
+from .models import Parameters, TextBlock
+
+
+def get_texts(lang):
+	texts = {}
+	
+	for block in TextBlock.objects.all():
+		try:
+			texts[block.title] = block.texts.filter(language=lang)[0].text
+		except IndexError:
+			print('Missing text for "', block.title, '" for ', lang)
+
+	return texts
+
+
+def render_(req, template, context={}, req_form=True):
+	lang = 'ru'
+	print(req.COOKIES)
+	if not 'lang' in req.COOKIES:
+		context['texts'] = get_texts(lang)
+
+		req = render(req, template, context)
+		req.set_cookie('lang', lang)
+
+	else:
+		context['tx'] = get_texts(req.COOKIES['lang'])
+
+		req = render(req, template, context)
+
+	return req
+
 
 def get_param(name):
 	try:
@@ -8,21 +38,26 @@ def get_param(name):
 	except:
 		return None
 
+
 def main_page(request):
 	a = get_param('users_amount_main_page').value
 	b = get_param('invested').value
 	c = get_param('payed_off').value
 		
-	return render(request, 'main/main.html', {'users_amount':a, 'invested': b, 'payed_off': c})
+	return render_(request, 'main/main.html', {'users_amount':a, 'invested': b, 'payed_off': c})
+
 
 def about_us(request):
-	return render(request, 'info/about_us.html')
+	return render_(request, 'info/about_us.html')
+
 
 def partners(request):
-	return render(request, 'info/partners.html')
+	return render_(request, 'info/partners.html')
+
 
 def faq(request):
-	return render(request, 'info/faq.html')
+	return render_(request, 'info/faq.html')
+
 
 def reviews(request):
-	return render(request, 'info/reviews.html')
+	return render_(request, 'info/reviews.html')

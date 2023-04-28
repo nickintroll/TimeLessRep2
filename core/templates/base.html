@@ -37,7 +37,7 @@
 		<div class="phone-padding">
 			<div>
 				<div>
-					<a href="">рус</a>/<a href="">eng</a>
+					<a href="#" id="trans_but">рус/eng</a>
 				</div>
 			</div>
 			<div>
@@ -140,4 +140,19 @@
 </body>
 {% block domready %}
 {% endblock %}
+<script>
+	var trans_but = document.getElementById('trans_but');
+	trans_but.onclick = function() {
+		console.log(document.cookie)
+		
+		if (document.cookie.includes('lang=ru')){
+			document.cookie = 'lang=; max-age=-1; path=/;';
+			document.cookie = 'lang=en;';
+		} else {
+			document.cookie = 'lang=; max-age=-1; path=/;';
+			document.cookie = 'lang=ru;';
+		}
+		window.location.reload();
+	}
+</script>
 </html>

@@ -9,16 +9,16 @@
 	<div class="variable-show span-two">
 		<div>
 			<h2>
-				Партнерский Уровень
+				{{ tx.mypartners0 }}
 			</h2>	
 		</div>
 		<div>
 			<div>
-				Вы можете повысить статус своей партнерской программы и получать более высокие проценты от своих партнеров
+				{{ tx.mypartners1 }}
 			</div>
 			<br>
 			<div class="button-for-light-back" style="width: fit-content;">
-				Повысить статус
+				{{ tx.mypartners2 }}
 			</div>	
 		</div>	
 	</div>
@@ -26,13 +26,13 @@
 	<div class="variable-show">
 		<div>
 			<h3>
-				Моя рефиральная ссылка
+				{{ tx.mypartners3 }}
 			</h3>	
 		</div>
 		<div>
 			<div>
 				<h3>
-					<a href="{% url 'users:register' %}{{ referal.link }}">Ссылка</a>
+					<a href="{% url 'users:register' %}{{ referal.link }}">{{ tx.mypartners4 }}</a>
 				</h3>
 				<textarea id="ref_link">{{ request.get_host }}{% url 'users:register' %}{{ referal.link }}</textarea>
 			</div>
@@ -42,14 +42,14 @@
 	</div>	
 	<div class="variable-show span-three">
 		<div>
-			Ваши 
+			{{ tx.mypartners5 }}
 		</div>
 		<div class="two-columns">
 			<div>
-				Логин
+				{{ tx.mypartners6 }}
 			</div>
 			<div>
-				E-Mail	
+				{{ tx.mypartners7 }}
 			</div>
 			{% for prof in ref_profs %}
 				<div>

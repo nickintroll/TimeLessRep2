@@ -744,6 +744,32 @@ input[type='text'], input[type='password']{
 	border: 2px solid rgb(141, 144, 53);
 }
 
+#map-opener{
+	display: none;
+	visibility: hidden;
+
+	padding: 0.6rem;
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 0.4rem;
+	border: 2px solid rgb(255, 255, 255, 0.4);
+	transition: 0.8s;
+}
+
+#map-opener:active{
+	transition: 0.3s;
+	background-color: rgba(255, 255, 255, 0.4);
+	border: 2px solid rgb(255, 255, 255, 0.8)
+}
+.map-opener-active{
+	transition: 0.5s;
+}
+
+
+.hide-content{
+	display: none !important;
+	visibility:hidden !important;
+}
+
 @media only screen and (max-width: 600px) {
 	.filler{
 		display: none;
@@ -773,10 +799,14 @@ input[type='text'], input[type='password']{
 		grid-column: span 2 !important;
 		/* background-color: red !important; */
 	}
-
 }
 
+
 @media only screen and (max-width: 800px) {
+	#map-opener{
+		display: block;
+		visibility: visible;
+	}
 	.pre-filler{
 		display: none;
 		visibility:hidden;
