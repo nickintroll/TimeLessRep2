@@ -67,7 +67,7 @@ class Text(models.Model):
 for i in lines:
 	if i[0] == '-':
 		i = i.split('|')
-		TextBlock.objects.create(id=i[0].replace('-', ''), title=i[1])
+		TextBlock.objects.create(id=i[0].replace('-', ''), title=i[1].replace('\n', ''))
 
 
 for i in lines:
