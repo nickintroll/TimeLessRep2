@@ -33,13 +33,15 @@ ALLOWED_HOSTS = ['*']
 # REdirects
 from django.urls import reverse_lazy
 
-# LOGIN_REDIRECT_URL = reverse_lazy('users:profile_me')
-# LOGIN_URL = reverse_lazy('account:login')
 LOGOUT_REDIRECT_URL = reverse_lazy('core:main')
 LOGIN_REDIRECT_URL = reverse_lazy('users:login')
 LOGIN_URL = reverse_lazy('users:login')
 
 STATIC_URL = '/static/'
+
+
+# db_backing_up
+PG_COPY_BACKUP_PATH = 'db_backup'
 
 
 # Application definition
@@ -58,6 +60,7 @@ INSTALLED_APPS = [
 
 	# installed apps
 	'channels',
+	'pg_copy'
 ]
 
 MIDDLEWARE = [
@@ -106,10 +109,17 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
+	'default': {
+		'ENGINE': 'django.db.backends.postgresql',
+		'NAME': 'crypto_db',
+		'USER': 'crypto_u',
+		'PASSWORD': 'autodetails8W7orkA6llThe2Time',
+		'HOST': 'localhost'
+	}
 }
 
 

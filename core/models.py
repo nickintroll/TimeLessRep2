@@ -61,3 +61,18 @@ class Text(models.Model):
 				self.source = False
 
 		super().save(*args, kwargs)
+
+
+"""
+for i in lines:
+	if i[0] == '-':
+		i = i.split('|')
+		TextBlock.objects.create(id=i[0].replace('-', ''), title=i[1])
+
+
+for i in lines:
+	if i[0] != '-':
+		i = i.split('|')
+		block = TextBlock.objects.get(id=int(i[2]))
+		print(Text.objects.create(id=i[0], language=i[1], block=block, text=i[3]))
+"""
