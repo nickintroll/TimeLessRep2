@@ -44,17 +44,17 @@ def cart_detail(request):
 def create_order_form(request):
 	cart = Cart(request)
 	form = OrderForm()
+
 	if request.method == 'POST':
 		form = OrderForm(request.POST)
 		if form.is_valid():
-			order = form.save(commit=False)
+			order = form.save()
 			for prod in cart:
 				OrderItem(
 					order = order, 
 					product = prod['product'], 
 					quantity = int(prod['quantity'])
 				).save()
-			order.save(commit=True)
 			# send notification
 			return redirect('cart:order', order.slug)
 			

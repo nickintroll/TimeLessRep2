@@ -34,6 +34,8 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
+	list_display = ['parent', 'name', 'slug']
+	list_filter = ['parent', ]
 	pass
 
 

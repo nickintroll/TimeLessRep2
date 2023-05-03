@@ -53,7 +53,6 @@ class SubCategory(models.Model):
 		return super().save(*args, **kwargs)
 
 
-
 class Product(models.Model):
 	category = models.ForeignKey(SubCategory, related_name='products', on_delete=models.CASCADE)
 
@@ -85,7 +84,6 @@ class Product(models.Model):
 		return super().save(*args, **kwargs)
 
 
-
 class Photo(models.Model):
 	image = models.ImageField(upload_to='prods/%Y%m%d')
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
@@ -95,7 +93,7 @@ class ProductAttribute(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='attributes')
 
 	name = models.CharField(max_length=120)
-	value = models.CharField(max_length=60)
+	value = models.CharField(max_length=400)
 
 
 class Order(models.Model):
