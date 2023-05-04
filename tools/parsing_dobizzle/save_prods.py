@@ -17,6 +17,8 @@ def work_on_line(line, counter):
 		counter += 1
 		# product 
 		print(counter, i['title'], list(i.keys()))
+		if counter < 230:
+			continue
 
 		if not 'Weight:' in list(i.keys()):
 			i['Weight:'] = '0'
@@ -42,12 +44,16 @@ def work_on_line(line, counter):
 		if i['img']!= '':
 			img_tmp = NamedTemporaryFile(delete=True, dir='./media', suffix='.png')
 			with urlopen(i['img']) as uo:
-				if uo.status == 200:
-					img_tmp.write(uo.read())
-					img_tmp.flush()
-					img = File(img_tmp)
-					img.name=img.name.split('/')[-1]
-					Photo(product=prod, image=img).save()
+				try:
+					if uo.status == 200:
+						img_tmp.write(uo.read())
+						img_tmp.flush()
+						img = File(img_tmp)
+						img.name=img.name.split('/')[-1]
+						Photo(product=prod, image=img).save()
+				except:
+					print('---no-photo---')
+		
 		# attrs
 		leftover = i
 		del leftover['title'], i['img']

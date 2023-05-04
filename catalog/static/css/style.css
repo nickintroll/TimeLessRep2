@@ -36,15 +36,13 @@ a:hover{
 	background-size: 100% 4px;
 }
 
-h1{
+h1, h2{
 	font-family: 'PT Serif', serif;
-	color: black1
+	color: black;
 }
-h2{
-	font-family: 'PT Serif', serif;
-	color: black
+h3{
+	color: black;
 }
-
 h4{
 	font-family: 'Yanone Kaffeesatz', sans-serif;
 }
@@ -188,13 +186,13 @@ h4{
 
 .catalog-grid-meta{
 	display: grid;
-	gap: 0.4rem;
+	gap: 0.1rem;
 	grid-template-columns: repeat(5, 1fr);
 }
 
 .catalog-catalog-grid{
 	display: grid;
-	gap: 0.4rem;
+	gap: 0.1rem;
 	grid-template-columns: repeat(5, 1fr);
 }
 
@@ -258,11 +256,11 @@ h4{
 
 	position: absolute;
 	border-radius: 0 0 0.2rem 0;
-	border: 1px solid rgb(210, 210, 100);
+	border: 1px solid rgb(235, 210, 210);
 
-	background-color: rgb(255, 251, 139);
+	background-color: rgb(255, 254, 219);
 	padding: 0.2rem 0.98rem 0.1rem 0.98rem;
-
+	color: rgb(60, 55, 43);
 	
 	font-weight: bold;
 }
@@ -295,7 +293,7 @@ h4{
 
 }
 .product-image > img{
-	max-width: 100%;
+	max-width: 170px;
 	max-height: 100%;
 }
 

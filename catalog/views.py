@@ -26,12 +26,14 @@ class CatalogView(ListView):
 		if form.is_valid() and form.cleaned_data['request'] != None:
 			context['form'] = form
 			
+			print(form.cleaned_data['request'])
+
 			context['object_list'] = Product.objects.all().annotate(
 				search = SearchVector(
-					'title', # add here more fields to search into
+					'title', 'description', 'vendor_code'
 				)
 			).filter(
-				search=form.cleaned_data['request']
+				search=form.cleaned_data['request'],
 			)
 		context['total_names'] = list(Product.objects.all().values_list('title', flat=True))
 		return context
@@ -58,9 +60,9 @@ class CatalogCategoryView(ListView):
 
 		page = context['page_obj'].number
 		if is_category:
-			context['object_list'] = Product.objects.all().filter(category__parent=category)[self.paginate_by*(page - 1):page*self.paginate_by]
+			context['object_list'] = Product.objects.all().filter(category__parent=category)
 		else:
-			context['object_list'] = Product.objects.all().filter(category=category)[self.paginate_by*(page - 1):page*self.paginate_by]
+			context['object_list'] = Product.objects.all().filter(category=category)
 
 		context['form'] = CatalogSearchForm()
 
@@ -72,11 +74,22 @@ class CatalogCategoryView(ListView):
 				search = SearchVector(
 					'title', # add here more fields to search into
 				)
-			).filter(
-				search=form.cleaned_data['request']
 			)
+			
+			if is_category:
+				context['object_list'] = context['object_list'].filter(
+					search=form.cleaned_data['request'],
+					category__parent=category
+			)
+			else:
+				context['object_list'] = context['object_list'].filter(
+					search=form.cleaned_data['request'],
+					category=category
+					)
+		else:
+			context['object_list'] = context['object_list'][self.paginate_by*(page - 1):page*self.paginate_by]
 
-		context['total_names'] = list(context['object_list'].values_list('title', flat=True))
+		# context['total_names'] = list(context['object_list'].values_list('title', flat=True))
 
 		return context	
 

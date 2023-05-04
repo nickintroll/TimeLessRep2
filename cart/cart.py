@@ -23,7 +23,7 @@ class Cart(object):
 		if not prod_id in self.cart:
 			self.cart[prod_id] = {
 				'quantity': 0,
-				'price': str(product.weight),
+				'price': str(product.weight) if product.weight else '',
 			}
 		
 		if override_quantity:

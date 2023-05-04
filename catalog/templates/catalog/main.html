@@ -59,11 +59,10 @@
 				{% for prod in object_list %}
 				<div class="product-item infinite-item">
 					<h3 class="product-title">
-						<a href="{{ prod.get_absolute_url }}">{{ prod.title }}</a>
+						<a href="{{ prod.get_absolute_url }}" alt="{{prod.title}}" >{{ prod.title|truncatechars:16 }}</a>
 					</h3>
-
 					<div class="product-image">
-						<img src="{{ prod.images.all.0.image.url }}" alt="">
+						<img src="{{ prod.images.all.0.image.url }}">
 					</div>
 					<div class="product-descript">
 						{% if prod.description %}
