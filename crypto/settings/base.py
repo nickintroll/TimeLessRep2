@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
-
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -24,9 +23,6 @@ SECRET_KEY = '=vr_^lmegwi6m$-+eq0thu+$8*+2t^*@&q!e@ytmk#p%0^y%#m'
 
 # to handle ids, apperantly its not always set up right...
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -60,7 +56,7 @@ INSTALLED_APPS = [
 
 	# installed apps
 	'channels',
-	'pg_copy'
+	# 'pg_copy'
 ]
 
 MIDDLEWARE = [
@@ -95,7 +91,7 @@ WSGI_APPLICATION = 'crypto.wsgi.application'
 ASGI_APPLICATION = 'crypto.routing.application'
 
 
-CHANNEL_LAYERS = {
+CHANNEL_LAYERS = {	
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
 		'CONFIG': {
@@ -160,6 +156,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-if not DEBUG:
-	STATIC_ROOT = '/home/www/crypto/statics'
 

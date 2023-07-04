@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-<div class="centered content-width">
+w<div class="centered content-width">
 	<div style="padding: .5rem; margin-top: -2rem;">
 		<div class="info-block" style="padding-bottom: 1.5rem;">
 			<div class="three-columns destroy-grid">
@@ -432,7 +432,7 @@
 
 {% block domready %}
 	<script>
-		var url = 'ws://' + window.location.host;
+		var url = 'wss://' + window.location.host + '/ws/';
 		var ChatSocket = new WebSocket(url);
 
 		var chat_place = document.getElementById('chat');
@@ -446,8 +446,9 @@
 		ChatSocket.onopen = function() {
 			console.log('Chat socket successfully opened');
 		};
+
 		ChatSocket.onclose = function(e) {
-			console.error('Chat socket closed unexpectedly');
+			console.error('Chat socket closed unexpectedly('+ e.code +')');
 		};
 
 		// recieving message and adding to chat

@@ -17,6 +17,7 @@ def get_texts(lang):
 
 def render_(req, template, context={}, req_form=True):
 	lang = 'ru'
+
 	print(req.COOKIES)
 	if not 'lang' in req.COOKIES:
 		context['texts'] = get_texts(lang)
@@ -25,9 +26,15 @@ def render_(req, template, context={}, req_form=True):
 		req.set_cookie('lang', lang)
 
 	else:
-		context['tx'] = get_texts(req.COOKIES['lang'])
+		if req.COOKIES['lang'] in ['ru', 'en']:
+			context['tx'] = get_texts(req.COOKIES['lang'])
 
-		req = render(req, template, context)
+			req = render(req, template, context)
+		else:
+			context['texts'] = get_texts(lang)
+
+			req = render(req, template, context)
+			req.set_cookie('lang', lang)		
 
 	return req
 

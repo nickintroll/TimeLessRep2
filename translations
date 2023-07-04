@@ -451,3 +451,12 @@
 308|en|152|Registration
 309|ru|153|Повторите пароль
 310|en|153|repeat password
+
+
+for i in a:
+	i = i.split('|')
+	TextBlock.objects.create(id=i[0].replace('-', ''), title=i[1])
+
+for i in a:
+	i = i.split('|')
+	Text.objects.create(id=i[0], language=i[1], block=TextBlock.objects.get(id=i[2]), text=i[3])

@@ -29,12 +29,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 	async def send_message_to_tg(self, bot, text, chat_id=-896489471):
 		chan = get_channel_layer()
-
-		print('SENDING MESSAGE TO TG')
 		await bot.send_message(text=text, chat_id=chat_id)
 
 	async def message(self, event, type='message'):
-		print('MESSAGE TRIGGERED')
 		message = event['message']
 		await self.send(text_data=json.dumps({
             'message': message
