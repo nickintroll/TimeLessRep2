@@ -52,9 +52,9 @@ Registration
 	let login = document.getElementById('id_username');
 	let pas1 = document.getElementById('id_password1');
 	let pas2 = document.getElementById('id_password2');
-	login.placeholder = '{{ tx.username|title||no_breaks }}';
-	pas1.placeholder = '{{ tx.password|title||no_breaks }}';
-	pas2.placeholder = '{{ tx.rep_passwd|title||no_breaks }}';
+	login.placeholder = '{{ tx.username|title|no_breaks }}';
+	pas1.placeholder = '{{ tx.password|title|no_breaks }}';
+	pas2.placeholder = '{{ tx.rep_passwd|title|no_breaks }}';
 
 </script>
 {% endblock %}
