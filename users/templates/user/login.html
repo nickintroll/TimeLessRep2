@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load extra_tags %}
+
 
 {% block content %}
 <div class="full-heigt">
@@ -42,8 +44,9 @@
 <script>
 	let login = document.getElementById('id_username');
 	let pas = document.getElementById('id_password');
-	login.placeholder = '{{ tx.username|title }}';
-	pas.placeholder = '{{ tx.password|title }}';
+	login.placeholder = '{{ tx.username|title|no_breaks }}';
+	pas.placeholder = '{{ tx.password|title|no_breaks }}';
+
 	
 </script>
 {% endblock %}

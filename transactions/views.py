@@ -27,6 +27,12 @@ def income_task_kill(request):
 		if secret_income_thread != None:
 			secret_income_thread.stop()
 			secret_income_thread = None
-		else: print('secret_income_thread is none')
+		else: 
+			print('secret_income_thread is none')
 	return redirect('core:main')
 
+
+def receive_payment_data(request):
+	print('req:',request)
+	print('req.GET:',request.GET)
+	print('req.POST:', request.POST)
