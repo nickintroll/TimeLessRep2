@@ -89,11 +89,12 @@ class Transaction(models.Model):
 	handle_date = models.DateTimeField(blank=True, null=True)
 	imOrderId = models.TextField(blank=True, null=True)
 	imOperationId = models.TextField(blank=True, null=True)
-	
+
 
 	def handle(self):
 		# here should be changing user's wallet
 		self.handle_date = datetime.datetime.now()
+		self.status = 'done'
 		self.save()
 
 

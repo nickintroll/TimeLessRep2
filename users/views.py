@@ -67,16 +67,16 @@ def my_deposits(request):
 
 @login_required
 def topup_wallet(request):
-	pre_sources = request.user.profile.source_wallets.all()
+	# pre_sources = request.user.profile.source_wallets.all()
 
-	if len(pre_sources) == 0:
-		sources = (('----', '----'), )
-	else:
-		sources = [(i.platform, i.platform) for i in pre_sources]
+	# if len(pre_sources) == 0:
+		# sources = (('----', '----'), )
+	# else:
+		# sources = [(i.platform, i.platform) for i in pre_sources]
 
-	form = TopUpAndWithdrawForm(sources=sources)
+	form = TopUpAndWithdrawForm()
 	if request.method == 'POST':
-		form = TopUpAndWithdrawForm(request.POST, sources=sources)
+		form = TopUpAndWithdrawForm(request.POST)
 		if form.is_valid():
 			obj = form.save(commit=False)
 			obj.wallet = request.user.profile.wallet
