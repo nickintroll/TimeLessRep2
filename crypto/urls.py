@@ -13,3 +13,4 @@ urlpatterns = [
 	# predefined
     path('admin/', admin.site.urls),
 ]
+

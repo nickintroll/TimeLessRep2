@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.core import serializers
 
 from transactions.models import Wallet, Transaction, Deposit, DepositType
+from transactions.ImTools import get_new_form
 from core.views import render_
 
 from .forms import LoginForm, RegisterForm, SourceWalletForm, TopUpAndWithdrawForm, ReinvestForm
@@ -81,30 +82,37 @@ def topup_wallet(request):
 			obj.wallet = request.user.profile.wallet
 			obj.type = 'topup'
 
-			# user does not have sources
-			if len(pre_sources) == 0:
-				notification = 'Сначала необходимо от куда будут отправляться средства. Карты и кошельки можно добаить на стринце настроек'
-				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
-			
+
 			# no deposit
 			if obj.deposit_type == None:
 				notification = 'Сначала необходимо выбрать депозит'
-				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
-
-			# if source is not right
-			if form.cleaned_data['source'] in [i for i in request.user.profile.source_wallets.all()]:
-				notification = 'Сначала необходимо выбрать кошелек. Вы можете добавить кошелек в меню настроек'
 				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
 
 			# if amount is too low
 			if obj.amount < obj.deposit_type.minimum_deposit:
 				notification = f'Минимальная сумма депозита: {obj.deposit_type.minimum_deposit}р'
 				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+			
+			data = get_new_form(obj.amount)
+
+			payment_form_url = data['formUrl']
+			oprationId = data['data']['OperationId']
+			orderId = data['orderId']
+			
+			obj.imOrderId = orderId
+			obj.imOperationId = oprationId
+
+			obj.save()
+
+			return render(request, 'payment/ImForm.html', {'formUrl': payment_form_url, 'amount': amount})
+
+			"""
+			### HERE IS OLD LOGIC, WHEN PAYMENTS WERE HAPPENING INSIDE BACKEND ###
+			#(basially testing logic)
+
 
 			# referal tax
 			ref_wal = request.user.profile.invited_by
-
-
 			if ref_wal:
 				if ref_wal.partner_status != None:
 					pers = ref_wal.partner_status.tax_persentage
@@ -124,15 +132,10 @@ def topup_wallet(request):
 			else:
 				deps = deps[0]
 				deps.amount = deps.amount + obj.amount
-				deps.save()			
-
-
-			# here should be some check with payment platform
-			obj.status = 'done'
-			
-
+				deps.save()						
 			obj.save()
 
+			# after checking with payment platform
 			if obj.status == 'done':
 				wal = Wallet.objects.get(id=request.user.profile.wallet.id)
 				request.user.profile.wallet.amount = wal.amount + float(obj.amount)
@@ -146,6 +149,7 @@ def topup_wallet(request):
 			request.method = 'GET'
 
 			return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification, 'notification_class': notification_class})
+			"""
 
 	return render_(request, 'controll/topup_wallet.html', context={'form': form})
 

@@ -20,7 +20,7 @@ urlpatterns = [
 	path('history/', views.history, name='history'),
 	path('topup_wallet/', views.topup_wallet, name='topup_wallet'),
 	path('promo_matireals/', views.promo_matireals, name='promo_matireals'),
-	path('settings/', views.settings, name='settings'),
+	# path('settings/', views.settings, name='settings'),
 
 	# for saving payment_wallets
 	path('register/<str:ref>', views.user_register, name='register'),

@@ -33,9 +33,13 @@ def income_task_kill(request):
 
 
 def receive_payment_data(request):
-	print(request.POST)
-	print(request.GET)
+	print('OBJ:', request)
+	print('POST:', request.POST)
+	print('GET:', request.GET)
+	print('COOKIES:', request.COOKIES)
+	print('HEADERS:', request.COOKIES)
+	
 	pass
 
 def payment_form(request):
-	return render('preForm.html')
+	return render(request, 'preForm.html')
