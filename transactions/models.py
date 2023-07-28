@@ -9,15 +9,6 @@ wallet_status_vars = (
 	('working', 'working')
 )
 
-transaction_types = (
-	('topup','topup'),
-	('withdraw','withdraw'),
-	('working','working'),
-	('income', 'income'),
-	('deposit', 'deposit'),
-	('partner_tax', 'partner_tax')
-)
-
 
 class Wallet(models.Model):
 	owner = models.OneToOneField(Profile, related_name='wallet', on_delete=models.CASCADE)
@@ -75,6 +66,13 @@ transaction_status_vars = (
 	('working','working'),
 	('done', 'done')
 )
+transaction_types = (
+	('topup','topup'),
+	('withdraw','withdraw'),
+	('income', 'income'),
+	('deposit', 'deposit'),
+	('partner_tax', 'partner_tax')
+)
 
 
 class Transaction(models.Model):
@@ -92,10 +90,34 @@ class Transaction(models.Model):
 
 
 	def handle(self):
-		# here should be changing user's wallet
-		self.handle_date = datetime.datetime.now()
-		self.status = 'done'
-		self.save()
+		if self.type == 'topup':
+			# adding money to deposit
+			deposit = Deposit.objects.all().filter(deposit_type=self.deposit_type, wallet=self.wallet)
+			if len(deposit) == 0:
+				Deposit.objects.create(deposit_type=self.deposit_type, wallet=self.wallet, amount=self.amount)
+			else:
+				deposit = deposit[0]
+				deposit.amount = deposit.amount + deposit.amount
+				deposit.save()
+
+
+			# referal tax
+			ref_wal = self.wallet.owner.invited_by
+			if ref_wal:
+				if ref_wal.partner_status != None:
+					pers = ref_wal.partner_status.tax_persentage
+					ref_wal = ref_wal.wallet
+					ref_wal.amount = ref_wal.amount + (obj.amount * pers)
+					# saving transaction
+					Transaction.objects.create(wallet=ref_wal, amount=obj.amount * pers, status='done', type='partner_tax')
+					obj.amount = obj.amount - (obj.amount * pers)
+					ref_wal.save()
+
+
+			self.handle_date = datetime.datetime.now()
+			self.status = 'done'
+			self.save()
+			return True
 
 
 class Deposit(models.Model):

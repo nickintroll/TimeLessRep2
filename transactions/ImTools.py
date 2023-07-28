@@ -24,16 +24,17 @@ def unpack_request(req):
 	return final
 
 
-def get_new_form(amount=100):
+def get_new_form(user, deposit, amount=100):
 	orderId = str(int(time.time()))
 	amount = str(amount)
 	formId = '700541'
-	cardGuid = ''
-	comment = 'test'
+	cardGuid = f'{user}:{deposit}' # those will be id's 
+	comment = additional_data
 	backUrl = 'https://newinvestfuture.com/user/prof/'
 	language = 'ru'
 	hash = ''
 	signHash = ''
+
 	# Hash
 	hashArray = [orderId, amount, formId, cardGuid, comment, backUrl, language, secretKeyForForm]
 	hashSignatureString = '::'.join(hashArray)
@@ -46,6 +47,7 @@ def get_new_form(amount=100):
 	signHash = hashlib.sha256(
 		bytes(signString, 'utf-8')
 	).hexdigest()
+
 	headers = {
 		'Sign': signHash,
 		'Authorization': 'Bearer ' + token,
@@ -60,14 +62,15 @@ def get_new_form(amount=100):
 		'language': language,
 		'hash': hash,
 	}
+
 	req = requests.post('https://api.intellectmoney.ru/p2p/GetFormUrl',
 		requestData,
 		headers=headers
 	)
 	data = unpack_request(req)
+
 	return {
 		'formUrl':data['Url'],
 		'data': data,
 		'orderId': orderId
 	}	
-

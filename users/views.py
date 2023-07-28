@@ -11,7 +11,7 @@ from core.views import render_
 
 from .forms import LoginForm, RegisterForm, SourceWalletForm, TopUpAndWithdrawForm, ReinvestForm
 from .models import Profile, SourceWallet, online_wallet_platform_all, ReferalLink, PartnersLevel
-
+import time
 
 
 # profile
@@ -72,7 +72,7 @@ def topup_wallet(request):
 	# if len(pre_sources) == 0:
 		# sources = (('----', '----'), )
 	# else:
-		# sources = [(i.platform, i.platform) for i in pre_sources]
+		# sources = [(i.platform, i.platform) for i in pre_sources]	
 
 	form = TopUpAndWithdrawForm()
 	if request.method == 'POST':
@@ -93,9 +93,9 @@ def topup_wallet(request):
 				notification = f'Минимальная сумма депозита: {obj.deposit_type.minimum_deposit}р'
 				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
 			
-			data = get_new_form(obj.amount)
-
-			payment_form_url = data['formUrl']
+			data = get_new_form(amount=obj.amount, user=request.user.profile.id, deposit=obj.deposit_type.id)
+			print(data)
+			payment_form_url = data['formUrl'].replace('amp;', '')
 			oprationId = data['data']['OperationId']
 			orderId = data['orderId']
 			
@@ -104,44 +104,11 @@ def topup_wallet(request):
 
 			obj.save()
 
-			return render(request, 'payment/ImForm.html', {'formUrl': payment_form_url, 'amount': amount})
+			return render(request, 'payment/ImForm.html', {'formUrl': payment_form_url, 'amount': obj.amount})
 
 			"""
 			### HERE IS OLD LOGIC, WHEN PAYMENTS WERE HAPPENING INSIDE BACKEND ###
 			#(basially testing logic)
-
-
-			# referal tax
-			ref_wal = request.user.profile.invited_by
-			if ref_wal:
-				if ref_wal.partner_status != None:
-					pers = ref_wal.partner_status.tax_persentage
-					ref_wal = ref_wal.wallet
-					ref_wal.amount = ref_wal.amount + (obj.amount * pers)
-
-					# saving transaction
-					Transaction.objects.create(wallet=ref_wal, amount=obj.amount * pers, status='done', type='partner_tax')
-
-					obj.amount = obj.amount - (obj.amount * pers)
-					ref_wal.save()
-
-			# add to deposit
-			deps = Deposit.objects.all().filter(deposit_type=obj.deposit_type, wallet=obj.wallet)
-			if len(deps) == 0:
-				Deposit.objects.create(deposit_type=obj.deposit_type, wallet=obj.wallet, amount=obj.amount)
-			else:
-				deps = deps[0]
-				deps.amount = deps.amount + obj.amount
-				deps.save()						
-			obj.save()
-
-			# after checking with payment platform
-			if obj.status == 'done':
-				wal = Wallet.objects.get(id=request.user.profile.wallet.id)
-				request.user.profile.wallet.amount = wal.amount + float(obj.amount)
-				wal.amount = wal.amount + float(obj.amount)
-				wal.save()
-
 			notification = None
 			if obj.status == 'done':
 				notification = 'Успех, ваш счет был пополнен!'
@@ -354,3 +321,4 @@ def user_profile(request):
 		
 
 	return render_(request, 'controll/profile.html', context={'notification': notification, 'profile':profile, 'user':user, 'next_level': next_level})
+

@@ -54,14 +54,14 @@ class SourceWalletForm(forms.ModelForm):
 
 
 class TopUpAndWithdrawForm(forms.ModelForm):
-	source = forms.ChoiceField()
+	# source = forms.ChoiceField()
 	class Meta:
 		model = Transaction
 		fields = ('amount', 'deposit_type')
 	
 	def __init__(self ,*args, is_withdraw=False, **kwargs):
 		super(TopUpAndWithdrawForm, self).__init__(*args, **kwargs)
-		self.fields['source'].choices = sources
+		# self.fields['source'].choices = sources
 
 		if is_withdraw == True:
 			del self.fields['deposit_type']

@@ -8,6 +8,8 @@ class PartnersLevel(models.Model):
 	tax_persentage = models.FloatField()
 	title = models.CharField(max_length=100)
 
+	def __str__(self):
+		return str(self.title)
 
 # Create your models here.
 class Profile(models.Model):
