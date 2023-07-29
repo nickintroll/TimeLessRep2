@@ -67,13 +67,7 @@ def my_deposits(request):
 
 @login_required
 def topup_wallet(request):
-	# pre_sources = request.user.profile.source_wallets.all()
-
-	# if len(pre_sources) == 0:
-		# sources = (('----', '----'), )
-	# else:
-		# sources = [(i.platform, i.platform) for i in pre_sources]	
-
+	
 	form = TopUpAndWithdrawForm()
 	if request.method == 'POST':
 		form = TopUpAndWithdrawForm(request.POST)
@@ -81,7 +75,7 @@ def topup_wallet(request):
 			obj = form.save(commit=False)
 			obj.wallet = request.user.profile.wallet
 			obj.type = 'topup'
-
+			obj.status = 'working'
 
 			# no deposit
 			if obj.deposit_type == None:
@@ -107,42 +101,21 @@ def topup_wallet(request):
 
 			return render(request, 'payment/ImForm.html', {'formUrl': payment_form_url, 'amount': obj.amount})
 
-			"""
-			### HERE IS OLD LOGIC, WHEN PAYMENTS WERE HAPPENING INSIDE BACKEND ###
-			#(basially testing logic)
-			notification = None
-			if obj.status == 'done':
-				notification = 'Успех, ваш счет был пополнен!'
-				notification_class = 'notification-green'
-			request.method = 'GET'
-
-			return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification, 'notification_class': notification_class})
-			"""
-
 	return render_(request, 'controll/topup_wallet.html', context={'form': form})
 
 
 @login_required
 def withdraw(request):
-	sources = request.user.profile.source_wallets.all()
-
-	if len(sources) == 0:
-		sources = (('-', '-'), )
-	else:
-		sources = [(i.platform, i.platform) for i in sources]
-
-	form = TopUpAndWithdrawForm(sources=sources, is_withdraw=True)
+	form = TopUpAndWithdrawForm(is_withdraw=True)
 	if request.method == 'POST':
-		form = TopUpAndWithdrawForm(request.POST, sources=sources, is_withdraw=True)
+		form = TopUpAndWithdrawForm(request.POST, is_withdraw=True)
 		if form.is_valid():
 			obj = form.save(commit=False)
 
 			if request.user.profile.wallet.amount - request.user.profile.wallet.get_deposits_summ() > obj.amount:
 				obj.wallet = request.user.profile.wallet
 				obj.type = 'withdraw'
-
-				obj.status = 'done'
-				# here should be some check with payment platform
+				obj.status = 'working'
 
 				obj.save()
 
@@ -151,19 +124,17 @@ def withdraw(request):
 					wal.amount = wal.amount - float(obj.amount)
 					wal.save()
 
-				notification = None
-				if obj.status == 'done':
-					notification = 'Успех, деньги были отправлены!'
+				notification = 'Успех, запрос на вывод оставлен'
 				request.method = 'GET'
-				return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
+				return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(is_withdraw=True), 'notification': notification})
 
 			else:
 				notification = f'Недостаточо средств на счету. доступно для вывода: {request.user.profile.wallet.amount - request.user.profile.wallet.get_deposits_summ()}p'
-				return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'notification': notification})
+				return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(is_withdraw=True), 'notification': notification})
 
 	withdraws = request.user.profile.wallet.transactions.filter(type='withdraw')
 
-	return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(sources=sources, is_withdraw=True), 'wthdraws': withdraws})
+	return render_(request, 'controll/withdraw.html', context={'form': TopUpAndWithdrawForm(is_withdraw=True), 'wthdraws': withdraws})
 
 
 @login_required
@@ -173,7 +144,7 @@ def promo_matireals(request):
 
 @login_required
 def history(request):
-	trans = Transaction.objects.all().filter(wallet=request.user.profile.wallet)
+	trans = Transaction.objects.all().filter(wallet=request.user.profile.wallet, status='done')
 	trans = serializers.serialize('json', trans)
 	return render(request, 'controll/history.html', {'trans': trans})
 

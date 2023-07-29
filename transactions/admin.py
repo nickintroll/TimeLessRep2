@@ -9,7 +9,9 @@ class WalletAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-	list_display = ('wallet', 'amount', 'date', 'type')
+	list_display = ('wallet', 'amount', 'type', 'date', 'status')
+	list_filter = ['status',]
+	list_editable = ['status', ]
 
 
 @admin.register(DepositType)
@@ -20,3 +22,4 @@ class DepositTypeAdmin(admin.ModelAdmin):
 @admin.register(Deposit)
 class DepositAdmin(admin.ModelAdmin):
 	list_display = ('wallet', 'deposit_type', 'amount', 'created')
+	

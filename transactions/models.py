@@ -87,6 +87,18 @@ class Transaction(models.Model):
 	handle_date = models.DateTimeField(blank=True, null=True)
 	imOrderId = models.TextField(blank=True, null=True)
 	imOperationId = models.TextField(blank=True, null=True)
+	comment = models.TextField(blank=True, null=True)
+
+	def save(self, *args, **kwargs):
+		try:
+			# this will work only if object is not new(but served by IM or my manager thorugh admin panel)
+			trans = Transaction.objects.get(id=self.id)
+		except:
+			return super().save(*args, **kwargs)
+		res = super().save(*args, **kwargs)
+		if trans.type == 'withdraw' and self.status == 'done' and trans.status=='working':
+			self.handle()
+		return res
 
 
 	def handle(self):
@@ -114,11 +126,15 @@ class Transaction(models.Model):
 					obj.amount = obj.amount - (obj.amount * pers)
 					ref_wal.save()
 
+		if self.type == 'withdraw':
+			self.wallet.amount -= self.amount
+			self.wallet.save()
 
-			self.handle_date = datetime.datetime.now()
-			self.status = 'done'
-			self.save()
-			return True
+		self.handle_date = datetime.datetime.now()
+		self.status = 'done'
+		self.save()	
+		
+		return True
 
 
 class Deposit(models.Model):

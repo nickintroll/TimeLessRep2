@@ -20,13 +20,12 @@ class RegisterForm(forms.ModelForm):
 	password1 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder':'Passowrd'}))
 	password2 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder':'Repeat passowrd'}))
 
-
 	class Meta:
 		model = User
-		fields = ('username', 'email')
+		fields = ('username', )
 		widgets = {
 			'username': forms.TextInput(attrs={'placeholder': 'Username'}),
-			'email': forms.TextInput(attrs={'placeholder': 'Email'})
+			# 'email': forms.TextInput(attrs={'placeholder': 'Email'})
 		}
 
 	def clean_password(self):
@@ -40,7 +39,7 @@ class RegisterForm(forms.ModelForm):
 		super().__init__(*args, **kwargs)
 		self.fields["username"].label = ''
 		self.fields["username"].help_text = ''
-		self.fields["email"].label = ''
+		# self.fields["email"].label = ''
 
 
 class SourceWalletForm(forms.ModelForm):
@@ -57,7 +56,10 @@ class TopUpAndWithdrawForm(forms.ModelForm):
 	# source = forms.ChoiceField()
 	class Meta:
 		model = Transaction
-		fields = ('amount', 'deposit_type')
+		fields = ('amount', 'deposit_type', 'comment')
+		widgets = {
+			'comment': forms.Textarea(attrs={'placeholder': 'Card info, example: /Карта для перевода,пример\n 3300 0202 1111 4444 \n Ivan Ivanovich Ivanov\n +7 999 111 11 11 \n\n*На русском либо на англ \nТакже можете отсавить контактные данные для общения с менеджером'}),
+			}
 	
 	def __init__(self ,*args, is_withdraw=False, **kwargs):
 		super(TopUpAndWithdrawForm, self).__init__(*args, **kwargs)
@@ -65,6 +67,11 @@ class TopUpAndWithdrawForm(forms.ModelForm):
 
 		if is_withdraw == True:
 			del self.fields['deposit_type']
+
+		else:
+			del self.fields['comment']
+
+
 	# def is_valid(self, *args, **kwargs):
 		# return super().is_valid(*args, **kwargs)
 

@@ -37,9 +37,19 @@
 							</div>
 							<div class="span-two">
 								{{ form.deposit_type }}
-								{{ form.amount }}
 							</div>	
-							<input type="submit" value="Пополнить">
+							<div>
+								{{ tx.topup1 }}
+							</div>
+							<div>
+								{{ form.amount }}
+							</div>
+							<div>
+							</div>
+							<div class="span-three">
+								<br>
+							</div>
+							<input type="submit" value="Пополнить" class="span-two">
 						</div>
 						{% csrf_token %}
 					</form>

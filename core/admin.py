@@ -9,7 +9,7 @@ class ParametersAdmin(admin.ModelAdmin):
 @admin.register(Text)
 class TextAdmin(admin.ModelAdmin):
 	list_display = ('block', 'language', 'text')
-
+	search_fields = ('text', )
 
 @admin.register(TextBlock)
 class TextBlockAdmin(admin.ModelAdmin):
