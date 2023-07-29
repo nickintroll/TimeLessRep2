@@ -6,6 +6,5 @@ ADMINS = (
 	('admin1', '')
 )
 
-CSRF_TRUSTED_ORIGINS = ['http://newinvestfuture.com/', 'http*://newinvestfuture.com/']
+CSRF_TRUSTED_ORIGINS = ['http://newinvestfuture.com', 'http*://newinvestfuture.com']
 ALLOWED_HOSTS = ['*', ]
-

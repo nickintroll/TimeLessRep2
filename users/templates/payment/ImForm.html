@@ -2,14 +2,11 @@
 
 
 {% block content %}
-    <h4>
-        {{ amount }}p
-    </h4>
+<div class="centered">
+    <h3>
+        Пополнение депозита на <strong>{{ amount }}p</strong>
+    </h3>
     <iFrame src="{{ formUrl }}"></iFrame>
-    {{ formUrl }}
-
-    <script>
-
-    </script>
+</div>
 
 {% endblock %}

@@ -86,15 +86,16 @@ def topup_wallet(request):
 			# no deposit
 			if obj.deposit_type == None:
 				notification = 'Сначала необходимо выбрать депозит'
-				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(), 'notification': notification})
 
 			# if amount is too low
 			if obj.amount < obj.deposit_type.minimum_deposit:
 				notification = f'Минимальная сумма депозита: {obj.deposit_type.minimum_deposit}р'
-				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(sources=sources), 'notification': notification})
+				return render_(request, 'controll/topup_wallet.html', context={'form': TopUpAndWithdrawForm(), 'notification': notification})
 			
 			data = get_new_form(amount=obj.amount, user=request.user.profile.id, deposit=obj.deposit_type.id)
-			print(data)
+			# print(data)	# data with form
+
 			payment_form_url = data['formUrl'].replace('amp;', '')
 			oprationId = data['data']['OperationId']
 			orderId = data['orderId']

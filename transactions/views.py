@@ -38,21 +38,21 @@ def receive_payment_data(request):
 	# request.POST: <QueryDict: {'orderId': ['1690471072'], 'formId': ['700541'], 'paymentId': ['4048756720'], 'amount': ['100.00'], 'date': ['2023-07-27 18:17:52'], 'comment': ['test'], 'status': ['0'], 'hash': ['9481E2C18361C52C3665A5B057B3F6BF3BF6A84F']}>
 	# Transaction.objects.filter(imOrderId='1690471072')
 	data = request.POST
-	if not 'status' in data:
-		return HttpResponse()
-	else:
-		if status != '0':
-			# error
-			return HttpResponse()
-		else:
-			try:
-				transaction = Transaction.objects.get(imOrderId=data['orderId'][0])
-			except:
-				return HttpResponse()
+	
+	if 'status' in data:
+		if data['status'] == '0':
+			if 'orderId' in data:
+				print('this is a transaction')
+				try:
+					transaction = Transaction.objects.get(imOrderId=data['orderId'][0])
+				except:
+					return HttpResponse()
 
-			transaction.handle()
+				transaction.handle()
+				return HttpResponse('data is being processed')
+	print('this is not a transaction')
+	return HttpResponse()
 
-	return HttpResponse('data is being processed')
 
 
 def payment_form(request):

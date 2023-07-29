@@ -99,7 +99,8 @@ class Transaction(models.Model):
 				deposit = deposit[0]
 				deposit.amount = deposit.amount + deposit.amount
 				deposit.save()
-
+			self.wallet.amount += deposit.amount
+			self.wallet.save()
 
 			# referal tax
 			ref_wal = self.wallet.owner.invited_by

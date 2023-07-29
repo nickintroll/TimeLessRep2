@@ -2,10 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
 /* h* */
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow&display=swap');
-
-
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');
-
 
 
 .debug, .debug *{
@@ -29,13 +26,18 @@ body{
 	margin: 0;
 }
 
+iframe{
+	min-height: 285px !important;
+	border: none;
+}
+
 a{
 	/* color: inherit; */
 	text-decoration: none;
 	transition: 0.1s;
 }
 
-a:hover{
+a:ver{
 	transition: 0.3s;
 	color: rgb(111, 1, 19);
 }

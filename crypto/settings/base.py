@@ -55,8 +55,7 @@ INSTALLED_APPS = [
 	'transactions',
 
 	# installed apps
-	'channels',
-	# 'pg_copy'
+	'channels'
 ]
 
 MIDDLEWARE = [
